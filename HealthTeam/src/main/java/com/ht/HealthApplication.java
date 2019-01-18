@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableCaching
 public class HealthApplication {
     public static void main(String[] args) {
+    	//启动
         SpringApplication.run(HealthApplication.class, args);
         System.err.println("////////////////////////////////////////////////////////////////////\n" + 
         		"//                          _ooOoo_                               //\n" + 
