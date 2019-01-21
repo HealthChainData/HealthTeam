@@ -150,7 +150,7 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	public Tree<DeptDO> tree() {
 		Tree<DeptDO> tree = new Tree<DeptDO>();
-		tree = sysDeptService.getTree();
+		tree = sysDeptService.getTreeByFlag();
 		return tree;
 	}
 

@@ -20,6 +20,8 @@ public interface DeptDao {
 	
 	List<DeptDO> list(Map<String,Object> map);
 	
+	List<DeptDO> getTreeByFlag(Map<String,Object> map);
+	
 	int count(Map<String,Object> map);
 	
 	int save(DeptDO dept);

@@ -32,6 +32,11 @@
 		</if>
 	</select>
 
+	<select id="getTreeByFlag" resultType="com.ht.system.domain.DeptDO">
+		select `dept_id`,`parent_id`,`name`,`order_num`,`del_flag` from
+		sys_dept where del_flag=1
+	</select>
+
 	<select id="count" resultType="int">
 		select count(*) from sys_dept
 		<where>
