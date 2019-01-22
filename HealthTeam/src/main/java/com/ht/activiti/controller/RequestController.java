@@ -25,11 +25,11 @@ import com.ht.system.service.UserService;
 public class RequestController {
 
 	@Autowired
-	private DictService  dictService;
-	
+	private DictService dictService;
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private RequestService requestService;
 
@@ -42,31 +42,31 @@ public class RequestController {
 	@GetMapping("/list")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
-		List<RequestDO> salaryList = requestService.list(query);
+		List<RequestDO> requestList = requestService.list(query);
 		int total = requestService.count(query);
-		PageUtils pageUtils = new PageUtils(salaryList, total);
+		PageUtils pageUtils = new PageUtils(requestList, total);
 		return pageUtils;
 	}
 
-	@RequestMapping(value="/add")
+	@RequestMapping(value = "/add")
 	public ModelAndView toAdd() {
 		return new ModelAndView("act/request/add");
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/queryTypeList/{type}")
-	public List<Map<String,Object>> queryTypeList(@PathVariable String type){
-		Map<String,Object> param = new HashMap<String, Object>();
+	@RequestMapping(value = "/queryTypeList/{type}")
+	public List<Map<String, Object>> queryTypeList(@PathVariable String type) {
+		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("requestType", type);
 		return dictService.queryDictByType(param);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/isExistsUser/{userName}")
-	public Map<String,Object> isExistsUser(@PathVariable String userName){
-		Map<String,Object> result = new HashMap<String, Object>();
-		Map<String,Object> param = new HashMap<String, Object>();
-		param.put("username", userName);
+	@RequestMapping(value = "/isExistsUser/{userName}")
+	public Map<String, Object> isExistsUser(@PathVariable String user) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("username", user);
 		int count = userService.count(param);
 		result.put("isExists", false);
 		if (count > 0) {
@@ -74,4 +74,5 @@ public class RequestController {
 		}
 		return result;
 	}
+
 }
