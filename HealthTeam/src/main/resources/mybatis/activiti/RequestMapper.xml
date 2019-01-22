@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ht.activiti.dao.RequestDao">
+
+	<select id="get" resultType="com.ht.activiti.domain.RequestDO">
+		select `id`,`request_name`,`request_type`,`request_desc`,`request_pic`,`request_src`,`create_user_id`,`create_user_name`,`create_time`,`expect_time`,`owner_id`,`request_progress`,`request_status`,`update_user_id`,`update_time` from sys_request where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.ht.activiti.domain.RequestDO">
+		select `id`,`request_name`,`request_type`,`request_desc`,`request_pic`,`request_src`,`create_user_id`,`create_user_name`,`create_time`,`expect_time`,`owner_id`,`request_progress`,`request_status`,`update_user_id`,`update_time` from sys_request
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="requestName != null and requestName != ''"> and request_name = #{requestName} </if>
+		  		  <if test="requestType != null and requestType != ''"> and request_type = #{requestType} </if>
+		  		  <if test="requestDesc != null and requestDesc != ''"> and request_desc = #{requestDesc} </if>
+		  		  <if test="requestPic != null and requestPic != ''"> and request_pic = #{requestPic} </if>
+		  		  <if test="requestSrc != null and requestSrc != ''"> and request_src = #{requestSrc} </if>
+		  		  <if test="createUserId != null and createUserId != ''"> and create_user_id = #{createUserId} </if>
+		  		  <if test="createUserName != null and createUserName != ''"> and create_user_name = #{createUserName} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="expectTime != null and expectTime != ''"> and expect_time = #{expectTime} </if>
+		  		  <if test="ownerId != null and ownerId != ''"> and owner_id = #{ownerId} </if>
+		  		  <if test="requestProgress != null and requestProgress != ''"> and request_progress = #{requestProgress} </if>
+		  		  <if test="requestStatus != null and requestStatus != ''"> and request_status = #{requestStatus} </if>
+		  		  <if test="updateUserId != null and newc != ''"> and update_user_id = #{updateUserId} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+        <choose>
+            
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sys_request
+		<where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="requestName != null and requestName != ''"> and request_name = #{requestName} </if>
+		  		  <if test="requestType != null and requestType != ''"> and request_type = #{requestType} </if>
+		  		  <if test="requestDesc != null and requestDesc != ''"> and request_desc = #{requestDesc} </if>
+		  		  <if test="requestPic != null and requestPic != ''"> and request_pic = #{requestPic} </if>
+		  		  <if test="requestSrc != null and requestSrc != ''"> and request_src = #{requestSrc} </if>
+		  		  <if test="createUserId != null and createUserId != ''"> and create_user_id = #{createUserId} </if>
+		  		  <if test="createUserName != null and createUserName != ''"> and create_user_name = #{createUserName} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="expectTime != null and expectTime != ''"> and expect_time = #{expectTime} </if>
+		  		  <if test="ownerId != null and ownerId != ''"> and owner_id = #{ownerId} </if>
+		  		  <if test="requestProgress != null and requestProgress != ''"> and request_progress = #{requestProgress} </if>
+		  		  <if test="requestStatus != null and requestStatus != ''"> and request_status = #{requestStatus} </if>
+		  		  <if test="updateUserId != null and newc != ''"> and update_user_id = #{updateUserId} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.ht.activiti.domain.RequestDO">
+		insert into sys_request
+		(
+			`id`,
+			`request_name`,
+			`request_type`,
+			`request_desc`,
+			`request_pic`,
+			`request_src`,
+			`create_user_id`,
+			`create_user_name`,
+			`create_time`,
+			`expect_time`,
+			`owner_id`,
+			`request_progress`,
+			`request_status`,
+			`update_user_id`,
+			`update_time`
+		)
+		values
+		(
+			#{id}, 
+			#{requestName}, 
+			#{requestType}, 
+			#{requestDesc}, 
+			#{requestPic}, 
+			#{requestSrc}, 
+			#{createUserId}, 
+			#{createUserName}, 
+			#{createTime}, 
+			#{expectTime}, 
+			#{ownerId}, 
+			#{requestProgress}, 
+			#{requestStatus}, 
+			#{updateUserId}, 
+			#{updateTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.ht.activiti.domain.RequestDO">
+		update sys_request 
+		<set>
+			<where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="requestName != null and requestName != ''"> and request_name = #{requestName} </if>
+		  		  <if test="requestType != null and requestType != ''"> and request_type = #{requestType} </if>
+		  		  <if test="requestDesc != null and requestDesc != ''"> and request_desc = #{requestDesc} </if>
+		  		  <if test="requestPic != null and requestPic != ''"> and request_pic = #{requestPic} </if>
+		  		  <if test="requestSrc != null and requestSrc != ''"> and request_src = #{requestSrc} </if>
+		  		  <if test="createUserId != null and createUserId != ''"> and create_user_id = #{createUserId} </if>
+		  		  <if test="createUserName != null and createUserName != ''"> and create_user_name = #{createUserName} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="expectTime != null and expectTime != ''"> and expect_time = #{expectTime} </if>
+		  		  <if test="ownerId != null and ownerId != ''"> and owner_id = #{ownerId} </if>
+		  		  <if test="requestProgress != null and requestProgress != ''"> and request_progress = #{requestProgress} </if>
+		  		  <if test="requestStatus != null and requestStatus != ''"> and request_status = #{requestStatus} </if>
+		  		  <if test="updateUserId != null and newc != ''"> and update_user_id = #{updateUserId} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		</where>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from sys_request where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sys_request where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
