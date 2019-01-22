@@ -129,4 +129,19 @@
 		select distinct `type` , description from sys_dict
 	</select>
 
+    
+	<resultMap type="java.util.HashMap" id="dictTypeMap">
+		<result column="" property=""/>
+		<result column="" property=""/>
+		<result column="" property=""/>
+	</resultMap>
+    <select id="queryDictByType" resultMap="dictTypeMap" parameterType="java.util.Map">
+		select name,value,type from sys_dict 
+		<where>
+			<if test="requestType != null and requestType != ''">
+				type = #{requestType}
+			</if>
+		</where>
+		 order by sort asc
+    </select>
 </mapper>

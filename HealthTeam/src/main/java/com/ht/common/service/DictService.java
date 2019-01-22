@@ -52,5 +52,10 @@ public interface DictService {
 	 * @return
 	 */
 	List<DictDO> listByType(String type);
-
+	/**
+	 * 根据type查询字典名称与值
+	 * @param param
+	 * @return
+	 */
+	List<Map<String, Object>> queryDictByType(Map<String,Object> param);
 }

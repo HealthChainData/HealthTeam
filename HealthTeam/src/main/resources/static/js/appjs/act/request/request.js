@@ -12,7 +12,7 @@ function load() {
 				// showToggle : true,
 				// showColumns : true,
 				iconSize : 'outline',
-				toolbar : '#exampleToolbar',
+				//toolbar : '#exampleToolbar',
 				striped : true, // 设置为true会有隔行变色效果
 				dataType : "json", // 服务器返回的数据类型
 				pagination : true, // 设置为true会在底部显示分页条
@@ -122,17 +122,29 @@ function load() {
 							var b = '<a class="btn btn-primary btn-sm ' + s_add_h + '" href="#" title="推进"  mce_href="#" onclick="add(\''
 								+ item.id
 								+ '\')">推进</i></a> ';
-							var c = '<a class="btn btn-warning btn-sm ' + s_push_h + '" href="#" title="移交"  mce_href="#" onclick="push(\''
+							var c = '<a class="btn btn-primary btn-sm ' + s_push_h + '" href="#" title="移交"  mce_href="#" onclick="push(\''
 								+ item.id
 								+ '\')">移交</a> ';
 							var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="搁置"  mce_href="#" onclick="removeone(\''
 								+ item.id
 								+ '\')">搁置</a> ';
-							var e = '<a class="btn btn-success btn-sm＂ href="#" title="激活"  mce_href="#" onclick="resetPwd(\''
+							var e = '<a class="btn btn-primary btn-sm '+s_activate_h+'＂ href="#" title="激活"  mce_href="#" onclick="resetPwd(\''
 								+ item.id
 								+ '\')">激活</a> ';
 							return a + b + c + d + e;
 						}
 					} ]
 			});
+}
+
+function add() {
+	// iframe层
+	layer.open({
+		type : 2,
+		title : '增加请求',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '520px' ],
+		content : prefix + '/add'
+	});
 }

@@ -32,4 +32,6 @@ public interface DictDao {
 	int batchRemove(Long[] ids);
 
 	List<DictDO> listType();
+	
+	List<Map<String, Object>> queryDictByType(Map<String,Object> param);
 }

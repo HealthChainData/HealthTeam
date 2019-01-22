@@ -106,4 +106,10 @@ public class DictServiceImpl implements DictService {
         return dictDao.list(param);
     }
 
+	@Override
+	public List<Map<String, Object>> queryDictByType(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dictDao.queryDictByType(param);
+	}
+
 }

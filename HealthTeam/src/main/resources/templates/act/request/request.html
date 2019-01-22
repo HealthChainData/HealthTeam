@@ -4,36 +4,61 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content ">
+    <div class="wrapper wrapper-content ">
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-body">
                     <div class="fixed-table-toolbar">
                         <div class="columns pull-left">
-                            <button shiro:hasPermission="sys:user:add" type="button"
-                                class="btn  btn-primary" onclick="add()">
+                            <button shiro:hasPermission="sys:user:add" type="button" class="btn  btn-primary" onclick="add()">
                                 <i class="fa fa-plus hidden" aria-hidden="true"></i>添加
                             </button>
                             <!-- <button shiro:hasPermission="sys:user:batchRemove" type="button"
                                 class="btn  btn-danger" onclick="batchRemove()">
                                 <i class="fa fa-trash hidden" aria-hidden="true"></i>删除
                             </button> -->
-                        </div>
-                        <div class="columns pull-right">
-                            <div class="columns pull-right">
+                           
+                             <div class="columns pull-right">
                                 <button class="btn btn-success" onclick="reLoad()">查询</button>
                             </div>
-
-                            <div class="columns pull-right col-md-2 nopadding">
-                                <input id="searchName" type="text" class="form-control"
-                                    placeholder="姓名">
+                             <div class="columns pull-right col-md-2 nopadding">
+                                <label class="radio-inline"> <input type="radio"
+                                        name="type" value="0" /> 全部
+                                    </label> <label class="radio-inline"> <input type="radio"
+                                        name="type" value="1" /> 本人
+                                    </label>
                             </div>
-                            <div class="columns pull-right col-md-4 nopadding">
-                                <select data-placeholder="--选择类别--" name="type" id="type"
-                                        class="form-control chosen-select" tabindex="2" required>
+                            <div class="columns pull-right col-md-3 nopadding">
+                                <select data-placeholder="--选择来源--" name="source" id="source" class="form-control chosen-select" tabindex="2" required>
+                                    <option value="">--选择来源--</option>
+                                </select>
+                            </div>
+                            <div class="columns pull-right col-md-3 nopadding">
+                                <select data-placeholder="--选择类别--" name="type" id="type" class="form-control chosen-select" tabindex="2" required>
                                     <option value="">--选择类别--</option>
                                 </select>
                             </div>
+                            <div class="columns pull-right col-md-3 nopadding">
+                                <select data-placeholder="--选择状态--" name="status" id="status" class="form-control chosen-select" tabindex="2" required>
+                                    <option value="">--选择状态--</option>
+                                </select>
+                            </div>
+                            
+                             <!-- <div class="columns pull-left col-md-3 nopadding">
+                                <label class="col-sm-3 control-label">菜单类型：</label>
+                                <div class="col-sm-8">
+                                    <label class="radio-inline"> <input type="radio"
+                                        name="type" value="0" /> 目录
+                                    </label> <label class="radio-inline"> <input type="radio"
+                                        name="type" value="1" /> 菜单
+                                    </label> <label class="radio-inline"> <input type="radio"
+                                        name="type" value="2" /> 按钮
+                                    </label>
+                                </div>
+                            </div>  -->
+                            
+                        </div>
+                        <div class="columns pull-left">
                         </div>
                     </div>
                     <table id="exampleTable" data-mobile-responsive="true">
@@ -41,36 +66,42 @@
                 </div>
             </div>
         </div>
-		<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
-		<div>
-			<script type="text/javascript">
-				var s_edit_h = 'hidden';
-				var s_remove_h = 'hidden';
-				var s_resetPwd_h = 'hidden';
-			</script>
-		</div>
-		<div shiro:hasPermission="act:process:edit">
-			<script type="text/javascript">
-				var s_edit_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="act:process:remove">
-			<script type="text/javascript">
-				var s_remove_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="act:process:resetPwd">
-			<script type="text/javascript">
-				var s_add_h = '';
-			</script>
-		</div>
-		<div shiro:hasPermission="act:process:push">
-			<script type="text/javascript">
-				var s_push_h = '';
-			</script>
-		</div>
-	</div>
+        <!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+        <div>
+            <script type="text/javascript">
+                var s_edit_h = 'hidden';
+                var s_remove_h = 'hidden';
+                var s_resetPwd_h = 'hidden';
+            </script>
+        </div>
+        <div shiro:hasPermission="act:process:edit">
+            <script type="text/javascript">
+                var s_edit_h = '';
+            </script>
+        </div>
+        <div shiro:hasPermission="act:process:remove">
+            <script type="text/javascript">
+                var s_remove_h = '';
+            </script>
+        </div>
+        <div shiro:hasPermission="act:process:resetPwd">
+            <script type="text/javascript">
+                var s_add_h = '';
+            </script>
+        </div>
+        <div shiro:hasPermission="act:process:push">
+            <script type="text/javascript">
+                var s_push_h = '';
+            </script>
+        </div>
+        <div shiro:hasPermission="act:process:activate">
+            <script type="text/javascript">
+                var s_activate_h = '';
+            </script>
+        </div>
+    </div>
     <div th:include="include :: footer"></div>
     <script type="text/javascript" src="/js/appjs/act/request/request.js"></script>
 </body>
+
 </html>
