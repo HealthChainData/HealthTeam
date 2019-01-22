@@ -34,9 +34,9 @@ public class RequestController {
 	    @GetMapping("/list")
 	    public PageUtils list(@RequestParam Map<String, Object> params) {
 	        Query query = new Query(params);
-	        List<RequestDO> salaryList = requestService.list(query);
+	        List<RequestDO> requestList = requestService.list(query);
 	        int total = requestService.count(query);
-	        PageUtils pageUtils = new PageUtils(salaryList, total);
+	        PageUtils pageUtils = new PageUtils(requestList, total);
 	        return pageUtils;
 	    }
 
