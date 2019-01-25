@@ -26,7 +26,12 @@ import com.ht.common.utils.ShiroUtils;
 import com.ht.system.domain.MenuDO;
 import com.ht.system.service.MenuService;
 
+import java.util.Enumeration;
 import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
 @Controller
 public class LoginController extends BaseController {

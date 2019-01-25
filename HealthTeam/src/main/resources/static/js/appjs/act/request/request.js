@@ -1,6 +1,9 @@
 var prefix = "/activiti"
 $(function() {
 	load();
+	loadType();
+	loadSource();
+	loadStauts();
 });
 function load() {
 	$('#exampleTable')
@@ -87,7 +90,7 @@ function load() {
                         valign : 'center',
 					},
 					{
-						field : 'ownerId',
+						field : 'username',
 						title : '责任人',
                         align : 'center',
                         valign : 'center',
@@ -105,7 +108,7 @@ function load() {
                         valign : 'center',
 					},
 					{
-						field : 'updateUserId',
+						field : 'updateTime',
 						title : '最后更新',
                         align : 'center',
                         valign : 'center',
@@ -146,5 +149,87 @@ function add() {
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
 		content : prefix + '/add'
+	});
+}
+
+function loadType(){
+	var html = "";
+	$.ajax({
+		url : '/common/dict/list/request_type',
+		success : function(data) {
+			//加载数据
+			for (var i = 0; i < data.length; i++) {
+				html += '<option value="' + data[i].value + '">' + data[i].name + '</option>'
+			}
+			$(".chosen-select-type").append(html);
+			$(".chosen-select-type").chosen({
+				maxHeight : 200
+			});
+			//点击事件
+			$('.chosen-select-type').on('change', function(e, params) {
+				console.log(params.selected);
+				var opt = {
+					query : {
+						type : params.selected,
+					}
+				}
+				$('#exampleTable').bootstrapTable('refresh', opt);
+			});
+		}
+	});
+}
+
+
+function loadStauts(){
+	var html = "";
+	$.ajax({
+		url : '/common/dict/list/request_status',
+		success : function(data) {
+			//加载数据
+			for (var i = 0; i < data.length; i++) {
+				html += '<option value="' + data[i].value + '">' + data[i].name + '</option>'
+			}
+			$(".chosen-select-status").append(html);
+			$(".chosen-select-status").chosen({
+				maxHeight : 200
+			});
+			//点击事件
+			$('.chosen-select-status').on('change', function(e, params) {
+				console.log(params.selected);
+				var opt = {
+					query : {
+						type : params.selected,
+					}
+				}
+				$('#exampleTable').bootstrapTable('refresh', opt);
+			});
+		}
+	});
+}
+
+function loadSource(){
+	var html = "";
+	$.ajax({
+		url : '/common/dict/list/request_src',
+		success : function(data) {
+			//加载数据
+			for (var i = 0; i < data.length; i++) {
+				html += '<option value="' + data[i].value + '">' + data[i].name + '</option>'
+			}
+			$(".chosen-select-source").append(html);
+			$(".chosen-select-source").chosen({
+				maxHeight : 200
+			});
+			//点击事件
+			$('.chosen-select-source').on('change', function(e, params) {
+				console.log(params.selected);
+				var opt = {
+					query : {
+						type : params.selected,
+					}
+				}
+				$('#exampleTable').bootstrapTable('refresh', opt);
+			});
+		}
 	});
 }
