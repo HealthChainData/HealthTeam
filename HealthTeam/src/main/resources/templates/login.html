@@ -21,73 +21,68 @@
             window.top.location = window.location;
         }
     </script>
-
 </head>
 
 <body class="signin">
 <div class="signinpanel">
     <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-6 row-left">
             <div class="signin-info">
+				<div id="login-icon">
+					<img src="/img/Icon_tx.png" >
+				</div>
                 <div class="logopanel m-b">
-                    <h1>健康链数据</h1>
+                    <h1>WELCOME TO<br><span class="language" data-en="Health Chain Data Knowledge Worker Platform" data-jian="健康链数据知识工作者平台"  data-fan="健康鏈數據知識工作者平台">健康链数据知识工作者平台</span></h1>
                 </div>
-                <div class="m-b"></div>
-                <h3>
-                    欢迎使用 <strong>健康链数据管理系统</strong>
-                </h3>
-                <ul class="m-b">
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>
-                        思路决定出路，观念决定方向，性格决定命运，生活方式决定健康
-                    </li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>
-                    一个人的身体，决不是个人的，要把它看作是社会的宝贵财富。凡是有志为社会出力，为国家成大事的青年，一定要十分珍视自己的身体健康</li>
-                    <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i>
-                    为你提供一生完整的健康数据</li>
-                    
-                </ul>
             </div>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-12 col-md-6 col-xs-12 h100">
+          <div class="loginForm">
+               <div id="logo">
+					<img src="/img/LOGO.png" >
+			   </div>
             <form id="signupForm">
-                <h3 class="text-center">用户登录</h3>
-                <p class="m-t-md text-center">欢迎登录健康链数据后台管理系统</p>
-                <input type="text" name="username" class="form-control uname"
-                       th:value="${username}"/>
-                <input type="password" name="password"
-                       class="form-control pword m-b" th:value="${password}"/>
-                <a id="login" class="btn btn-login btn-block">登录</a>
-                <!--按钮模块-->
-                <!--<div class="outside-login">
-                    <div class="outside-login-tit">
-                        <span>代码链接</span>
-                    </div>
-                    <div class="outside-login-cot">
-                        <a class="outside-login-btn wxoa actived oschina J-btnSwitchLoginType" target="_Blank"
-                           href="https://www.oschina.net/p/bootdo">
-                            <em><i class="fa fa-home"></i></em>
-                            <span>oschina主页</span>
-                        </a>
-                        <a class="outside-login-btn wxoa actived my J-btnSwitchLoginType" target="_Blank"
-                           href="https://gitee.com/lcg0124/bootdo">
-                            <em><i class="fa fa-git-square"></i></em>
-                            <span>码云仓库</span>
-                        </a>
-                        <a class="outside-login-btn wxoa actived git J-btnSwitchLoginType" target="_Blank"
-                           href="https://github.com/lcg0124/bootdo">
-                            <em><i class="fa fa-github"></i></em>
-                            <span>GitHub仓库</span>
-                        </a>
-                    </div>
-                </div>-->
-
+                <div class="form-control uname"><label class="language" data-en="Username" data-jian="记住密码"  data-fan="用戶名">用户名</label><input type="text" name="username" placeholder="请输入用户名"
+                       th:value="${username}"/></div>
+                <div class="form-control pword m-b"><label class="language" data-en="Password" data-jian="密码"  data-fan="密碼">密码</label><input type="password" name="password" placeholder="请输入密码" th:value="${password}"/></div>
+					   
+					   <select class="select-language">
+					   	<option value ="zh-Hans">中文（简体）</option>
+						<option value ="zh-Hant">中文（繁体）</option>
+						<option value ="en">English</option>
+					   </select>
+                <a id="login" class="btn-login btn-block language" data-en="Log In" data-jian="登录"  data-fan="登錄">登录</a>
+ 
             </form>
+			<div class="mima">
+				<div id="jimima">
+					<input type="checkbox" />
+					<span class="language" data-en="Remember Password" data-jian="记住密码"  data-fan="記住密碼">记住密码</span>
+				</div>
+				<a id="wmima">
+					<span class="language" data-en="Forget Password?" data-jian="忘记密码？"  data-fan="忘記密碼？">忘记密码？</span>
+				</a>
+			</div>
+            <div class="banquan"><span class="language" data-en="Copyright 2019 Shenzhen Chain Kang Data Co. Ltd." data-jian="版权所有2019深圳链康数据有限公司"  data-fan="版權所有2019深圳鏈康數據有限公司">版权所有2019深圳链康数据有限公司</span></div>
+           </div>
         </div>
     </div>
-    <div class="signup-footer">
-        <div class="pull-left">© Copyright Health Chain Data (HK) Limited, All Rights Reserved
-        </div>
-    </div>
+	
+<!-- <div id="google_translate_element" style="position:absolute;bottom:10px;right:10px;z-index:2000;opacity:0.7"></div>
+<script>
+function googleTranslateElementInit() {
+ 
+	new google.translate.TranslateElement(
+		{
+			includedLanguages: 'en,zh-CN'
+		}, 
+		'google_translate_element'
+	);
+ 
+}
+</script>
+<!--谷歌被墙，原来是translate.google.com，现在用cn-->
+<script src="//translate.google.cn/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
 </div>
 <script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
 <!-- 全局js -->
@@ -107,6 +102,29 @@
         $("#login").on('click',function(){$("#signupForm").submit();});
         validateRule();
         $("body").keydown(keyDownLogon);
+		$(".select-language").change(function(){
+			//alert($(this).val())
+			var _this=$(this)
+			if (_this.val()=="en") {
+				for(var i=0;i<$(".language").length;i++){
+					$(".language").eq(i).text($(".language").eq(i).attr("data-en"))
+				}
+				$("[name='username']").attr("placeholder","please enter user name")
+				$("[name='password']").attr("placeholder","please enter your password")
+			} else if (_this.val()=="zh-Hans") {
+				for(var i=0;i<$(".language").length;i++){
+					$(".language").eq(i).text($(".language").eq(i).attr("data-jian"))
+				}
+				$("[name='username']").attr("placeholder","请输入用户名")
+				$("[name='password']").attr("placeholder","请输入密码")
+			} else if (_this.val()=="zh-Hant") {
+				for(var i=0;i<$(".language").length;i++){
+					$(".language").eq(i).text($(".language").eq(i).attr("data-fan"))
+				}
+				$("[name='username']").attr("placeholder","請輸入用戶名")
+				$("[name='password']").attr("placeholder","請輸入密碼")
+			}
+		})
     });
 
     $.validator.setDefaults({
@@ -114,7 +132,6 @@
             login();
         }
     });
-
     function login() {
         $.ajax({
             type: "POST",
