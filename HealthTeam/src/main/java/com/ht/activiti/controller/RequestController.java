@@ -32,7 +32,7 @@ import com.ht.system.service.UserService;
 
 @RequestMapping("activiti")
 @RestController
-public class RequestController extends BaseController{
+public class RequestController extends BaseController {
 
 	@Autowired
 	private DictService dictService;
@@ -52,6 +52,9 @@ public class RequestController extends BaseController{
 	@GetMapping("/list")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
+		if (query.get("ownerId")!=null && query.get("ownerId").equals("1")) {
+			query.put("ownerId", getUserId());
+		}
 		List<RequestDO> requestList = requestService.list(query);
 		int total = requestService.count(query);
 		PageUtils pageUtils = new PageUtils(requestList, total);
@@ -84,18 +87,23 @@ public class RequestController extends BaseController{
 		}
 		return result;
 	}
-	
+
 	@PostMapping("/exit")
 	@ResponseBody
 	boolean exit(@RequestParam Map<String, Object> params) {
 		// 存在，不通过，false
 		return userService.exit(params);
 	}
-	
+
 	@Log("保存请求")
 	@PostMapping("/save")
 	@ResponseBody
-	R save(RequestDO request) {
+	R save(RequestDO request, String username) {
+		UserDO user = userService.getUserByName(username);
+		if (user != null) {
+			request.setOwnerId(user.getUserId().toString());
+		}
+		request.setCreateTime(new Date());
 		request.setCreateUserId(getUserId().toString());
 		request.setCreateUserName(getUsername());
 		request.setRequestProgress("0");

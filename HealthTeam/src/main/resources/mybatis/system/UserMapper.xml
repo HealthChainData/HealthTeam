@@ -7,6 +7,12 @@
 		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district` from sys_user where user_id = #{value}
 	</select>
 
+    <select id="getUserByName" resultType="com.ht.system.domain.UserDO">
+		select
+        `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`
+        from sys_user where username = #{username}
+	</select>
+
     <select id="list" resultType="com.ht.system.domain.UserDO">
         select
         `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`

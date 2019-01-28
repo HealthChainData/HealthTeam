@@ -8,24 +8,24 @@
 	</select>
 
 	<select id="list" resultType="com.ht.activiti.domain.RequestDO">
-		select `id`,`request_name`,`request_type`,`request_desc`,`request_pic`,`request_src`,`create_user_id`,`create_user_name`,`create_time`,`expect_time`,`owner_id`,`request_progress`,`request_status`,`update_user_id`,`update_time` from sys_request
-        <where>  
+		SELECT sys_request.*, sys_user.username FROM sys_request,sys_user where sys_request.owner_id=sys_user.user_id
+          
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="requestName != null and requestName != ''"> and request_name = #{requestName} </if>
-		  		  <if test="requestType != null and requestType != ''"> and request_type = #{requestType} </if>
-		  		  <if test="requestDesc != null and requestDesc != ''"> and request_desc = #{requestDesc} </if>
-		  		  <if test="requestPic != null and requestPic != ''"> and request_pic = #{requestPic} </if>
-		  		  <if test="requestSrc != null and requestSrc != ''"> and request_src = #{requestSrc} </if>
-		  		  <if test="createUserId != null and createUserId != ''"> and create_user_id = #{createUserId} </if>
-		  		  <if test="createUserName != null and createUserName != ''"> and create_user_name = #{createUserName} </if>
-		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-		  		  <if test="expectTime != null and expectTime != ''"> and expect_time = #{expectTime} </if>
-		  		  <if test="ownerId != null and ownerId != ''"> and owner_id = #{ownerId} </if>
-		  		  <if test="requestProgress != null and requestProgress != ''"> and request_progress = #{requestProgress} </if>
-		  		  <if test="requestStatus != null and requestStatus != ''"> and request_status = #{requestStatus} </if>
-		  		  <if test="updateUserId != null and newc != ''"> and update_user_id = #{updateUserId} </if>
-		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
-		  		</where>
+		  		  <if test="requestName != null and requestName != ''"> and sys_request.request_name = #{requestName} </if>
+		  		  <if test="requestType != null and requestType != ''"> and sys_request.request_type = #{requestType} </if>
+		  		  <if test="requestDesc != null and requestDesc != ''"> and sys_request.request_desc = #{requestDesc} </if>
+		  		  <if test="requestPic != null and requestPic != ''"> and sys_request.request_pic = #{requestPic} </if>
+		  		  <if test="requestSrc != null and requestSrc != ''"> and sys_request.request_src = #{requestSrc} </if>
+		  		  <if test="createUserId != null and createUserId != ''"> and sys_request.create_user_id = #{createUserId} </if>
+		  		  <if test="createUserName != null and createUserName != ''"> and sys_request.create_user_name = #{createUserName} </if>
+		  		  <if test="createTime != null and createTime != ''"> and sys_request.create_time = #{createTime} </if>
+		  		  <if test="expectTime != null and expectTime != ''"> and sys_request.expect_time = #{expectTime} </if>
+		  		  <if test="ownerId != null and ownerId != ''"> and sys_request.owner_id = #{ownerId} </if>
+		  		  <if test="requestProgress != null and requestProgress != ''"> and sys_request.request_progress = #{requestProgress} </if>
+		  		  <if test="requestStatus != null and requestStatus != ''"> and sys_request.request_status = #{requestStatus} </if>
+		  		  <if test="updateUserId != null and newc != ''"> and sys_request.update_user_id = #{updateUserId} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and sys_request.update_time = #{updateTime} </if>
+		  		
         <choose>
             
 			<otherwise>
