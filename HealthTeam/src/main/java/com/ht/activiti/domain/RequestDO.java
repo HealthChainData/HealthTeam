@@ -2,6 +2,8 @@ package com.ht.activiti.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class RequestDO {
 	/** 主键ID */
 	private String id;
@@ -20,8 +22,10 @@ public class RequestDO {
 	/** 创建者姓名 */
 	private String createUserName;
 	/** 创建时间 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createTime;
 	/** 期待完成时间 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expectTime;
 	/** 责任人ID */
 	private String ownerId;
@@ -32,13 +36,10 @@ public class RequestDO {
 	/** 更新者Id */
 	private String updateUserId;
 	/** 更新时间 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date updateTime;
 
 	private String username;
-	
-	
-
-	
 
 	public String getUsername() {
 		return username;

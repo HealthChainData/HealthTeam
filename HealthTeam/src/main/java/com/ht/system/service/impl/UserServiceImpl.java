@@ -258,5 +258,18 @@ public class UserServiceImpl implements UserService {
 		UserDO user = userMapper.getUserByName(username);
 		return user;
 	}
+	
+	@Override
+	public UserDO getUserById(String userID) {
+		UserDO user = userMapper.getUserById(userID);
+		return user;
+	}
+
+	@Override
+	public List<UserDO> userList() {
+		// TODO Auto-generated method stub
+		return userMapper.userList();
+	}
+	
 
 }

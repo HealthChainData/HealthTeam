@@ -5,27 +5,23 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.ht.activiti.domain.RequestDO;
-
+import com.ht.activiti.domain.RequestStepDO;
 
 
 @Service
-public interface RequestService {
+public interface RequestStepService {
 	
-    RequestDO get(String id);
+	RequestStepDO get(String id);
 	
-	List<RequestDO> list(Map<String, Object> map);
+	List<RequestStepDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
-	int save(RequestDO request);
+	int save(RequestStepDO requestStep);
 	
-	int update(RequestDO request);
+	int update(RequestStepDO requestStep);
 	
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
-	
-	int getRequestId();
-	
 }

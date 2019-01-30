@@ -24,4 +24,7 @@ public interface RequestDao {
 	int remove(String id);
 	
 	int batchRemove(String[] ids);
+	
+	int getRequestId();
+
 }

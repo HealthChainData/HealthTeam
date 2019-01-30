@@ -53,4 +53,8 @@ public interface UserService {
     Map<String, Object> updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception;
     
     UserDO getUserByName(String username);
+    
+    UserDO getUserById(String userId);
+    
+    List<UserDO> userList();
 }

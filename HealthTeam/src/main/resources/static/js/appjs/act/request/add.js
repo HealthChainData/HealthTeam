@@ -4,20 +4,8 @@ $().ready(function() {
 
     loadType();
     loadSource();
-    validateRule();
-    
-    // 点击事件
-    // $('#ownerUser').on('blur', function(e, params) {
-    //     var value = $(this).val();
-    //     var url = prefix+"/isExistsUser/"+value;
-    //     var data = loadDate(url);
-    //     console.info(data);
-    //     if (!data.isExists) {
-    //         alert('用户不存在');
-    //     }else{
-    //         alert('用户存在');
-    //     }
-    // });
+	validateRule();
+	loadUser();
 
 });
 $.validator.setDefaults({
@@ -25,31 +13,6 @@ $.validator.setDefaults({
 		save();
 	}
 });
-// function loadType(){
-// 	var html = "";
-    
-//     var url = prefix + "/queryTypeList/request_type";
-//     var data = loadDate(url);
-//     //加载数据
-//     for (var i = 0; i < data.length; i++) {
-//         html += '<option value="' + data[i].value + '">' + data[i].name + '</option>'
-//     }
-//     $("#requestType").append(html);
-//     $("#requestType").chosen({
-//         maxHeight : 200
-//     });
-//     html = "";
-//     url = prefix + "/queryTypeList/request_src";
-//     var data = loadDate(url);
-//     //加载数据
-//     for (var i = 0; i < data.length; i++) {
-//         html += '<option value="' + data[i].value + '">' + data[i].name + '</option>'
-//     }
-//     $("#requestSource").append(html);
-//     $("#requestSource").chosen({
-//         maxHeight : 200
-//     });
-// }
 
 function loadType(){
 	var html = "";
@@ -92,6 +55,33 @@ function loadSource(){
 			});
 			//点击事件
 			$('.chosen-select-source').on('change', function(e, params) {
+				console.log(params.selected);
+				var opt = {
+					query : {
+						type : params.selected,
+					}
+				}
+				$('#exampleTable').bootstrapTable('refresh', opt);
+			});
+		}
+	});
+}
+
+function loadUser(){
+	var html = "";
+	$.ajax({
+		url : prefix +"/userList",
+		success : function(data) {
+			//加载数据
+			for (var i = 0; i < data.length; i++) {
+				html += '<option value="' + data[i].userId + '">' + data[i].name + '</option>'
+			}
+			$(".chosen-select-user").append(html);
+			$(".chosen-select-user").chosen({
+				maxHeight : 200
+			});
+			//点击事件
+			$('.chosen-select-user').on('change', function(e, params) {
 				console.log(params.selected);
 				var opt = {
 					query : {

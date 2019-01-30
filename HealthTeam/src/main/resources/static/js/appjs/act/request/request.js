@@ -118,21 +118,21 @@ function load() {
 					field: 'id',
 					align: 'center',
 					valign: 'center',
-					formatter: function (item, index) {
+					formatter : function(value, row, index) {
 						var a = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="查看"  onclick="edit(\'' +
-							item.id +
+							row.id +
 							'\')">查看</a> ';
-						var b = '<a class="btn btn-primary btn-sm ' + s_add_h + '" href="#" title="推进"  mce_href="#" onclick="add(\'' +
-							item.id +
+						var b = '<a class="btn btn-primary btn-sm ' + s_add_h + '" href="#" title="推进"  mce_href="#" onclick="push(\'' +
+							row.id +
 							'\')">推进</i></a> ';
-						var c = '<a class="btn btn-primary btn-sm ' + s_push_h + '" href="#" title="移交"  mce_href="#" onclick="push(\'' +
-							item.id +
+						var c = '<a class="btn btn-primary btn-sm ' + s_push_h + '" href="#" title="移交"  mce_href="#" onclick="turnover(\'' +
+							row.id +
 							'\')">移交</a> ';
 						var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="搁置"  mce_href="#" onclick="removeone(\'' +
-							item.id +
+							row.id +
 							'\')">搁置</a> ';
 						var e = '<a class="btn btn-primary btn-sm ' + s_activate_h + '＂ href="#" title="激活"  mce_href="#" onclick="resetPwd(\'' +
-							item.id +
+							row.id +
 							'\')">激活</a> ';
 						return a + b + c + d + e;
 					}
@@ -152,6 +152,64 @@ function add() {
 		content: prefix + '/add'
 	});
 }
+
+function edit(id) {
+	// iframe层
+	layer.open({
+		type: 2,
+		title: '请求详情',
+		maxmin: true,
+		shadeClose: false, // 点击遮罩关闭层
+		area: ['1200px', '720px'],
+		content: prefix + '/details' + id
+	});
+}
+
+function push(id) {
+	// iframe层
+	layer.open({
+		type: 2,
+		title: '进度更新',
+		maxmin: true,
+		shadeClose: false, // 点击遮罩关闭层
+		area: ['800px', '520px'],
+		content: prefix + '/push' + id
+	});
+}
+
+function turnover(id) {
+	// iframe层
+	layer.open({
+		type: 2,
+		title: '移交事务',
+		maxmin: true,
+		shadeClose: false, // 点击遮罩关闭层
+		area: ['800px', '420px'],
+		content: prefix + '/turnover' + id
+	});
+}
+
+// function push(id) {
+// 	layer.confirm('确定要推进更新当前请求？', {
+// 		btn : [ '确定', '取消' ]
+// 	}, function() {
+// 		$.ajax({
+// 			url : prefix + '/push',
+// 			type : "post",
+// 			data : {
+// 				'id' : id
+// 			},
+// 			success : function(r) {
+// 				if (r.code == 0) {
+// 					layer.msg("更新成功，进度+10");
+// 					reLoad();
+// 				} else {
+// 					layer.msg("更新失败");
+// 				}
+// 			}
+// 		});
+// 	})
+// }
 
 function loadType() {
 	var html = "";

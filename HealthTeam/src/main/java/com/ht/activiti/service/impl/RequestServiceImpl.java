@@ -58,4 +58,10 @@ public class RequestServiceImpl implements RequestService{
 		return requestDao.batchRemove(ids);
 	}
 
+	@Override
+	public int getRequestId() {
+		// TODO Auto-generated method stub
+		return requestDao.getRequestId();
+	}
+
 }

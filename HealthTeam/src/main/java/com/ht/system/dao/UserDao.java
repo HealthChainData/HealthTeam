@@ -33,5 +33,9 @@ public interface UserDao {
 	Long[] listAllDept();
 	
 	UserDO getUserByName(String username);
+	
+	UserDO getUserById(String userId);
+	
+	List<UserDO> userList();
 
 }

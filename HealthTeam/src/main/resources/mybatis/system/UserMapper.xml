@@ -13,6 +13,12 @@
         from sys_user where username = #{username}
 	</select>
 
+     <select id="getUserById" resultType="com.ht.system.domain.UserDO">
+		select
+        `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`
+        from sys_user where user_id = #{userId}
+	</select>
+
     <select id="list" resultType="com.ht.system.domain.UserDO">
         select
         `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`
@@ -54,6 +60,12 @@
         <if test="offset != null and limit != null">
             limit #{offset}, #{limit}
         </if>
+    </select>
+
+     <select id="userList" resultType="com.ht.system.domain.UserDO">
+        select
+        `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`
+        from sys_user where status=1
     </select>
 
     <select id="count" resultType="int">
