@@ -1,7 +1,8 @@
 var prefix = "/activiti"
 $().ready(function () {
-	 validateRule();
-	 loads();
+	validateRule();
+	loads();
+	loadProgress();
 
 });
 $.validator.setDefaults({
@@ -37,20 +38,21 @@ function save() {
 }
 
 function validateRule() {
-    var icon = "<i class='fa fa-times-circle'></i> ";
-    $("#pushForm").validate({
-        rules: {
-            name: {
-                required: true
-            }
-        },
-        messages: {
-            name: {
-                required: icon + ""
-            }
-        }
-    })
+	var icon = "<i class='fa fa-times-circle'></i> ";
+	$("#pushForm").validate({
+		rules: {
+			name: {
+				required: true
+			}
+		},
+		messages: {
+			name: {
+				required: icon + ""
+			}
+		}
+	})
 }
+
 function loads() {
 	$('#exampleTables')
 		.bootstrapTable({
@@ -118,4 +120,15 @@ function loads() {
 				},
 			]
 		});
+}
+
+function loadProgress() {
+	var html = "";
+	for (var i = 0; i <= 100; i++) {
+		html += '<option value="' + i+'%' + '">' + i+'%' + '</option>'
+	}
+	$(".chosen-select-progress").append(html);
+	$(".chosen-select-progress").chosen({
+		maxHeight: 200
+	});
 }

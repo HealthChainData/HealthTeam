@@ -152,14 +152,14 @@ public class RequestController extends BaseController {
 		request.setCreateTime(new Date());
 		request.setCreateUserId(getUserId().toString());
 		request.setCreateUserName(getUsername());
-		request.setRequestProgress("0");
+		request.setRequestProgress("0%");
 		request.setRequestStatus("进行中");
 		request.setUpdateTime(new Date());
 		if (requestService.save(request) > 0) {
 			requestStep.setRequestId(String.valueOf(requestId));
 			requestStep.setStepName("新增事务请求");
 			requestStep.setStepDesc(getUsername() + "指定给" + user.getName() + "的一个新任务");
-			requestStep.setProgressAdd("0");
+			requestStep.setProgressAdd("0%");
 			requestStep.setBeforeOwnerId(user.getUserId().toString());
 			requestStep.setAfterOwnerId(user.getUserId().toString());
 			requestStep.setRecoTime(new Date());
@@ -234,16 +234,18 @@ public class RequestController extends BaseController {
 
 	@PostMapping("/pushSave")
 	@ResponseBody
-	R pushSave(String stepName, String stepDesc, int progressAdd) {
+	R pushSave(String stepName, String stepDesc, String progressAdd) {
 		RequestDO request = requestService.get(id);
 		String progress = request.getRequestProgress();
+		progress = progress.substring(0, progress.indexOf("%"));
+		progressAdd = progressAdd.substring(0, progressAdd.indexOf("%"));
 		int progressInt = Integer.parseInt(progress);
-		progressInt = progressInt + progressAdd;
+		progressInt = progressInt + Integer.parseInt(progressAdd);
 		if (progressInt >= 100) {
 			progressInt = 100;
 			request.setRequestStatus("已完成");
 		}
-		request.setRequestProgress(String.valueOf(progressInt));
+		request.setRequestProgress(String.valueOf(progressInt)+"%");
 		request.setUpdateUserId(getUserId().toString());
 		request.setExpectTime(new Date());
 		request.setUpdateTime(new Date());
@@ -253,7 +255,7 @@ public class RequestController extends BaseController {
 			requestStep.setRequestId(id);
 			requestStep.setStepName(stepName);
 			requestStep.setStepDesc(stepDesc);
-			requestStep.setProgressAdd(String.valueOf(progressAdd));
+			requestStep.setProgressAdd(String.valueOf(progressAdd)+"%");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("requestId", id);
 			List<RequestStepDO> list = requestStepService.list(param);
