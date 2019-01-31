@@ -77,12 +77,19 @@ public class RequestController extends BaseController {
 	@RequestMapping(value = "/push{id}")
 	public ModelAndView toPush(@PathVariable("id") String id) {
 		this.id = id;
+		RequestDO request = requestService.get(id);
+		if(!request.getOwnerId().equals(getUser().getUserId().toString())) {
+			return new ModelAndView("error/200");
+		}
 		return new ModelAndView("act/request/push");
 	}
-	
 	@RequestMapping(value = "/turnover{id}")
 	public ModelAndView toTurnnover(@PathVariable("id") String id) {
 		this.id = id;
+		RequestDO request = requestService.get(id);
+		if(!request.getOwnerId().equals(getUser().getUserId().toString())) {
+			return new ModelAndView("error/200");
+		}
 		return new ModelAndView("act/request/turnover");
 	}
 
@@ -135,7 +142,7 @@ public class RequestController extends BaseController {
 	@Log("保存请求")
 	@PostMapping("/save")
 	@ResponseBody
-	R save(RequestDO request,RequestStepDO requestStep) {
+	R save(RequestDO request, RequestStepDO requestStep) {
 		int requestId = requestService.getRequestId() + 1;
 		request.setId(String.valueOf(requestId));
 		UserDO user = userService.getUserById(request.getOwnerId());
@@ -151,7 +158,7 @@ public class RequestController extends BaseController {
 		if (requestService.save(request) > 0) {
 			requestStep.setRequestId(String.valueOf(requestId));
 			requestStep.setStepName("新增事务请求");
-			requestStep.setStepDesc(getUsername() + "指定给" + user.getName() + "的一个新事务");
+			requestStep.setStepDesc(getUsername() + "指定给" + user.getName() + "的一个新任务");
 			requestStep.setProgressAdd("0");
 			requestStep.setBeforeOwnerId(user.getUserId().toString());
 			requestStep.setAfterOwnerId(user.getUserId().toString());
@@ -187,7 +194,19 @@ public class RequestController extends BaseController {
 		int total = requestStepService.count(param);
 		return new PageUtils(requestStepList, total);
 	}
-
+	
+	@ResponseBody
+	@RequestMapping("/listById")
+	public PageUtils ListById(@RequestParam Map<String, Object> params) {
+		Query query = new Query(params);
+		query.put("id", id);
+		List<RequestDO> requestList = requestService.list(query);
+		int total = requestService.count(query);
+		PageUtils pageUtils = new PageUtils(requestList, total);
+		return pageUtils;
+	}
+	
+	
 	/*
 	 * @PostMapping("/push")
 	 * 
@@ -212,7 +231,7 @@ public class RequestController extends BaseController {
 	 * (requestStepService.save(requestStep) > 0) { return R.ok(); } } return
 	 * R.error(); }
 	 */
-	
+
 	@PostMapping("/pushSave")
 	@ResponseBody
 	R pushSave(String stepName, String stepDesc, int progressAdd) {
@@ -220,8 +239,8 @@ public class RequestController extends BaseController {
 		String progress = request.getRequestProgress();
 		int progressInt = Integer.parseInt(progress);
 		progressInt = progressInt + progressAdd;
-		if(progressInt>=100) {
-			progressInt=100;
+		if (progressInt >= 100) {
+			progressInt = 100;
 			request.setRequestStatus("已完成");
 		}
 		request.setRequestProgress(String.valueOf(progressInt));
@@ -252,33 +271,29 @@ public class RequestController extends BaseController {
 		}
 		return R.error();
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/userList")
 	public List<UserDO> userList() {
-		/*
-		 * Map<String, Object> map = new HashMap<>(); map.put("status", 1);
-		 */
 		List<UserDO> userList = userService.userList();
 		return userList;
 	}
-	
+
 	@PostMapping("/turnoverSave")
 	@ResponseBody
 	R turnoverSave(String ownerId) {
-		RequestDO request = requestService.get(id);	
+		RequestDO request = requestService.get(id);
 		UserDO user = userService.getUserById(ownerId);
 		String beforeOwnerId = request.getOwnerId();
 		request.setOwnerId(ownerId);
 		request.setUpdateUserId(getUserId().toString());
 		request.setUpdateTime(new Date());
-		request.setExpectTime(new Date());
 		int r = requestService.update(request);
 		if (r > 0) {
 			RequestStepDO requestStep = new RequestStepDO();
 			requestStep.setRequestId(id);
 			requestStep.setStepName("事务移交");
-			requestStep.setStepDesc(getUser().getName()+"将事务移交给"+user.getName());
+			requestStep.setStepDesc(getUser().getName() + "将事务移交给" + user.getName());
 			requestStep.setProgressAdd("0");
 			requestStep.setBeforeOwnerId(beforeOwnerId);
 			requestStep.setAfterOwnerId(request.getOwnerId());
@@ -291,4 +306,62 @@ public class RequestController extends BaseController {
 		return R.error();
 	}
 
+	@PostMapping("/shelve")
+	@ResponseBody
+	R sheleve(String id) {
+		RequestDO request = requestService.get(id);
+		if(!request.getOwnerId().equals(getUser().getUserId().toString())) {
+			return R.no();
+		}
+		String beforeOwnerId = request.getOwnerId();
+		request.setRequestStatus("已搁置");
+		request.setUpdateUserId(getUserId().toString());
+		request.setUpdateTime(new Date());
+		int r = requestService.update(request);
+		if (r > 0) {
+			RequestStepDO requestStep = new RequestStepDO();
+			requestStep.setRequestId(id);
+			requestStep.setStepName("事务搁置");
+			requestStep.setStepDesc(getUser().getName() + "将事务搁置");
+			requestStep.setProgressAdd("0");
+			requestStep.setBeforeOwnerId(beforeOwnerId);
+			requestStep.setAfterOwnerId(request.getOwnerId());
+			requestStep.setRecoTime(new Date());
+			requestStep.setRecoUserId(getUserId().toString());
+			if (requestStepService.save(requestStep) > 0) {
+				return R.ok();
+			}
+		}
+		return R.error();
+	}
+	
+
+	@PostMapping("/activate")
+	@ResponseBody
+	R activate(String id) {
+		RequestDO request = requestService.get(id);
+		if(!request.getOwnerId().equals(getUser().getUserId().toString())) {
+			return R.no();
+		}
+		String beforeOwnerId = request.getOwnerId();
+		request.setRequestStatus("进行中");
+		request.setUpdateUserId(getUserId().toString());
+		request.setUpdateTime(new Date());
+		int r = requestService.update(request);
+		if (r > 0) {
+			RequestStepDO requestStep = new RequestStepDO();
+			requestStep.setRequestId(id);
+			requestStep.setStepName("事务激活");
+			requestStep.setStepDesc(getUser().getName() + "将事务激活");
+			requestStep.setProgressAdd("0");
+			requestStep.setBeforeOwnerId(beforeOwnerId);
+			requestStep.setAfterOwnerId(request.getOwnerId());
+			requestStep.setRecoTime(new Date());
+			requestStep.setRecoUserId(getUserId().toString());
+			if (requestStepService.save(requestStep) > 0) {
+				return R.ok();
+			}
+		}
+		return R.error();
+	}
 }

@@ -50,9 +50,9 @@ function load() {
 						width : '50px',
 						checkbox : true
                     },*/
-				{
-					checkbox: true
-				},
+				// {
+				// 	checkbox: true
+				// },
 				{
 					field: 'requestName',
 					title: '请求名称',
@@ -118,7 +118,7 @@ function load() {
 					field: 'id',
 					align: 'center',
 					valign: 'center',
-					formatter : function(value, row, index) {
+					formatter: function (value, row, index) {
 						var a = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="查看"  onclick="edit(\'' +
 							row.id +
 							'\')">查看</a> ';
@@ -128,10 +128,10 @@ function load() {
 						var c = '<a class="btn btn-primary btn-sm ' + s_push_h + '" href="#" title="移交"  mce_href="#" onclick="turnover(\'' +
 							row.id +
 							'\')">移交</a> ';
-						var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="搁置"  mce_href="#" onclick="removeone(\'' +
+						var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="搁置"  mce_href="#" onclick="shelve(\'' +
 							row.id +
 							'\')">搁置</a> ';
-						var e = '<a class="btn btn-primary btn-sm ' + s_activate_h + '＂ href="#" title="激活"  mce_href="#" onclick="resetPwd(\'' +
+						var e = '<a class="btn btn-primary btn-sm ' + s_activate_h + '＂ href="#" title="激活"  mce_href="#" onclick="activate(\'' +
 							row.id +
 							'\')">激活</a> ';
 						return a + b + c + d + e;
@@ -211,6 +211,55 @@ function turnover(id) {
 // 	})
 // }
 
+function shelve(id) {
+	layer.confirm('确定要搁置当前请求？', {
+		btn : [ '确定', '取消' ]
+	}, function() {
+		$.ajax({
+			url : prefix + '/shelve',
+			type : "post",
+			data : {
+				'id' : id
+			},
+			success : function(r) {
+				if (r.code == 0) {
+					layer.msg("搁置成功");
+					reLoad();
+				}else if (r.code == 2) {
+					layer.msg("您不是该事务负责人，不能进行此操作");
+					reLoad();
+				} else {
+					layer.msg("搁置失败");
+				}
+			}
+		});
+	})
+}
+
+function activate(id) {
+	layer.confirm('确定要激活当前请求？', {
+		btn : [ '确定', '取消' ]
+	}, function() {
+		$.ajax({
+			url : prefix + '/activate',
+			type : "post",
+			data : {
+				'id' : id
+			},
+			success : function(r) {
+				if (r.code == 0) {
+					layer.msg("激活成功");
+					reLoad();
+				}else if (r.code == 2) {
+					layer.msg("您不是该事务负责人，不能进行此操作");
+					reLoad();
+				} else {
+					layer.msg("激活失败");
+				}
+			}
+		});
+	})
+}
 function loadType() {
 	var html = "";
 	$.ajax({
@@ -269,7 +318,7 @@ function reLoad() {
 			requestType: $('.chosen-select-type').val(),
 			requestStatus: $('.chosen-select-status').val(),
 			requestSrc: $('.chosen-select-source').val(),
-			ownerId:$("input[name='ownerId']:checked").val(),
+			ownerId: $("input[name='ownerId']:checked").val(),
 		}
 	}
 	$('#exampleTable').bootstrapTable('refresh', opt);
