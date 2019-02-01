@@ -23,6 +23,10 @@ public class R extends HashMap<String, Object> {
 		return error(4, "重复操作");
 	}
 	
+	public static R done() {
+		return error(5, "已经完成");
+	}
+	
 	public static R userIsNull() {
 		return error(3, "请选择用户");
 	}

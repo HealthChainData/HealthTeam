@@ -96,6 +96,9 @@ public class RequestController extends BaseController {
 		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return new ModelAndView("error/200");
 		}
+		if(request.getRequestStatus().equals("已完成")) {
+			return new ModelAndView("error/201");
+		}
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		if(request.getUpdateTime()!=null) {
@@ -111,6 +114,9 @@ public class RequestController extends BaseController {
 		RequestDO request = requestService.get(id);
 		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return new ModelAndView("error/200");
+		}
+		if(request.getRequestStatus().equals("已完成")) {
+			return new ModelAndView("error/201");
 		}
 		UserDO user = userService.getUserById(request.getOwnerId());
 		request.setUsername(user.getName());
@@ -330,6 +336,9 @@ public class RequestController extends BaseController {
 		if(request.getRequestStatus().equals("已搁置")) {
 			return R.repeat();
 		}
+		if(request.getRequestStatus().equals("已完成")) {
+			return R.done();
+		}
 		String beforeOwnerId = request.getOwnerId();
 		request.setRequestStatus("已搁置");
 		request.setUpdateUserId(getUserId().toString());
@@ -361,6 +370,9 @@ public class RequestController extends BaseController {
 		}
 		if(!request.getRequestStatus().equals("已搁置")) {
 			return R.repeat();
+		}
+		if(request.getRequestStatus().equals("已完成")) {
+			return R.done();
 		}
 		String beforeOwnerId = request.getOwnerId();
 		request.setRequestStatus("进行中");

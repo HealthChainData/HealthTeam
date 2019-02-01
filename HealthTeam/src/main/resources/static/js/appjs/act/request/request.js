@@ -213,25 +213,28 @@ function turnover(id) {
 
 function shelve(id) {
 	layer.confirm('确定要搁置当前请求？', {
-		btn : [ '确定', '取消' ]
-	}, function() {
+		btn: ['确定', '取消']
+	}, function () {
 		$.ajax({
-			url : prefix + '/shelve',
-			type : "post",
-			data : {
-				'id' : id
+			url: prefix + '/shelve',
+			type: "post",
+			data: {
+				'id': id
 			},
-			success : function(r) {
+			success: function (r) {
 				if (r.code == 0) {
 					layer.msg("搁置成功");
 					reLoad();
-				}else if (r.code == 2) {
+				} else if (r.code == 2) {
 					layer.msg("您不是该事务负责人，不能进行此操作");
 					reLoad();
-				}else if (r.code == 4) {
+				} else if (r.code == 4) {
 					layer.msg("当前已经是搁置状态");
 					reLoad();
-				}  else {
+				} else if (r.code == 5) {
+					layer.msg("当前任务已完成");
+					reLoad();
+				} else {
 					layer.msg("搁置失败");
 				}
 			}
@@ -241,31 +244,35 @@ function shelve(id) {
 
 function activate(id) {
 	layer.confirm('确定要激活当前请求？', {
-		btn : [ '确定', '取消' ]
-	}, function() {
+		btn: ['确定', '取消']
+	}, function () {
 		$.ajax({
-			url : prefix + '/activate',
-			type : "post",
-			data : {
-				'id' : id
+			url: prefix + '/activate',
+			type: "post",
+			data: {
+				'id': id
 			},
-			success : function(r) {
+			success: function (r) {
 				if (r.code == 0) {
 					layer.msg("激活成功");
 					reLoad();
-				}else if (r.code == 2) {
+				} else if (r.code == 2) {
 					layer.msg("您不是该事务负责人，不能进行此操作");
 					reLoad();
-				}else if (r.code == 4) {
+				} else if (r.code == 4) {
 					layer.msg("当前已经是激活状态");
 					reLoad();
-				}  else {
+				} else if (r.code == 5) {
+					layer.msg("当前任务已完成");
+					reLoad();
+				} else {
 					layer.msg("激活失败");
 				}
 			}
 		});
 	})
 }
+
 function loadType() {
 	var html = "";
 	$.ajax({
