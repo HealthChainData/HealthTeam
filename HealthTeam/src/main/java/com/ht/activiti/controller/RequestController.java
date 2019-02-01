@@ -79,7 +79,9 @@ public class RequestController extends BaseController {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		request.setCreateTimes(sdf.format(request.getCreateTime()));
-		request.setExpectTimes(sdf.format(request.getExpectTime()));
+		if(request.getExpectTimes()!=null) {
+			request.setExpectTimes(sdf.format(request.getExpectTime()));
+		}
 		if(request.getUpdateTime()!=null) {
 			request.setUpdateTimes(sdf.format(request.getUpdateTime()));
 		}
