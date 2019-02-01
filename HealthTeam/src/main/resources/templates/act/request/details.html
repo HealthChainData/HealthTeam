@@ -49,8 +49,8 @@
 							<div class="form-group col-md-6">
 								<label class="col-sm-3 control-label">目前进度：</label>
 								<div class="col-sm-8">
-								    <div class="progress">
-									  <div class="progress-bar" role="progressbar"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" th:style="width: 50%;">
+								    <div class="progress" style="margin: 8px 0;">
+									  <div class="progress-bar" role="progressbar" th:text="${request.requestProgress}"  th:aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" th:style="'width:'+${request.requestProgress}+';min-width: 2em;'">
 									    
 									  </div>
 									</div>

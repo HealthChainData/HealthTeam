@@ -12,41 +12,55 @@
 					<div class="ibox-content">
 						
 
-						<form class="form-horizontal m-t" id="requestForm">
-							<div class="form-group">
-								<label class="col-sm-3 control-label">请求名称：</label>
+						<form class="form-horizontal m-t row" id="requestForm">
+							<div class="form-group col-sm-6">
+								<label class="col-sm-4 control-label">请求名称：</label>
 								<div class="col-sm-8">
 									<input id="requestName" name="requestName" class="form-control" type="text" th:value="${request.requestName}" readonly>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">目前进度：</label>
-								<div class="col-sm-8">
-									<input id="requestProgress" name="requestProgress" class="form-control" type="text" th:value="${request.requestProgress}" readonly>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">最后更新：</label>
+							<div class="form-group col-sm-6">
+								<label class="col-sm-4 control-label">最后更新：</label>
 								<div class="col-sm-8">
 									<input id="updateTimes" name="updateTimes" class="form-control" type="text" th:value="${request.updateTimes}" readonly>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">目前进度：</label>
+								<div class="col-sm-9" style="padding-right: 25px;">
+								    <div class="progress" style="margin: 8px 0;">
+									  <div class="progress-bar" role="progressbar" th:text="${request.requestProgress}"  th:aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" th:style="'width:'+${request.requestProgress}+';min-width: 2em;'">
+									    
+									  </div>
+									</div>
+									<!--<input id="requestProgress" name="requestProgress" class="form-control" type="text" th:value="${request.requestProgress}" readonly>-->
+								</div>
+							</div>
+							
 						</form>
 
 						<!-- <table id="exampleTables" data-mobile-responsive="true"> </table>-->
 							
 						
 						<p style="color:salmon">请填写您的步骤以及进度：</p>
-						<form class="form-horizontal m-t" id="pushForm">
-							<div class="form-group">
-								<label class="col-sm-3 control-label">步驟名称：</label>
+						<form class="form-horizontal m-t row" id="pushForm">
+							<div class="form-group col-sm-6">
+								<label class="col-sm-4 control-label">步驟名称：</label>
 								<div class="col-sm-8">
 									<input id="stepName" name="stepName" class="form-control" type="text" required>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">步驟描述：</label>
+							<div class="form-group col-sm-6">
+								<label class="col-sm-4 control-label">状态推进：</label>
 								<div class="col-sm-8">
+									<select data-placeholder="--请求类型--" name="progressAdd" id="progressAdd" class="form-control chosen-select-progress" tabindex="2"
+									    required>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">步驟描述：</label>
+								<div class="col-sm-9" style="padding-right: 24px;">
 									<textarea id="stepDesc" name="stepDesc" class="form-control" required></textarea>
 								</div>
 							</div>
@@ -56,14 +70,7 @@
 									<input id="progressAdd" name="progressAdd" class="form-control" type="text" required>
 								</div>
 							</div> -->
-							<div class="form-group">
-								<label class="col-sm-3 control-label">状态推进：</label>
-								<div class="col-sm-8">
-									<select data-placeholder="--请求类型--" name="progressAdd" id="progressAdd" class="form-control chosen-select-progress" tabindex="2"
-									    required>
-									</select>
-								</div>
-							</div>
+
 							<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
 									<button type="submit" class="btn btn-primary">提交</button>
