@@ -11,62 +11,71 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 
-						<form class="form-horizontal m-t" id="requestForm">
-							<div class="form-group">
-								<label class="col-sm-3 control-label">请求名称：</label>
-								<div class="col-sm-8">
-									<input id="requestName" name="requestName" class="form-control" type="text" th:value="${request.requestName}" readonly>
+						<form class="form-horizontal m-t row" id="requestForm">
+						    <div class="col-xs-12 nopadding">
+								<div class="form-group col-xs-6">
+									<label class="col-sm-3 control-label">请求名称：</label>
+									<div class="col-sm-8">
+										<input id="requestName" name="requestName" class="form-control" type="text" th:value="${request.requestName}" readonly>
+									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">请求描述：</label>
-								<div class="col-sm-8">
-									<textarea style="width:300px;height:100px;" type="text" th:text="${request.requestDesc}"></textarea>
+							<div class="col-xs-12 nopadding">
+								<div class="form-group col-md-6">
+									<label class="col-sm-3 control-label">请求描述：</label>
+									<div class="col-sm-8">
+										<textarea readonly style="width:100%;height:100px;" class="form-control" type="text" th:text="${request.requestDesc}"></textarea>
+									</div>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group col-md-6">
 								<label class="col-sm-3 control-label">相关截图：</label>
 								<div class="col-sm-8">
 									<input id="requestPic" name="requestPic" class="form-control" type="text" th:value="${request.requestPic}" readonly>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group col-md-6">
 								<label class="col-sm-3 control-label">请求来源：</label>
 								<div class="col-sm-8">
 									<input id="requestSrc" name="requestSrc" class="form-control" type="text" th:value="${request.requestSrc}" readonly>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group col-md-6">
 								<label class="col-sm-3 control-label">责任人：</label>
 								<div class="col-sm-8">
 									<input id="username" name="username" class="form-control" type="text" th:value="${request.username}" readonly>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group col-md-6">
 								<label class="col-sm-3 control-label">目前进度：</label>
 								<div class="col-sm-8">
-									<input id="requestProgress" name="requestProgress" class="form-control" type="text" th:value="${request.requestProgress}" readonly>
+								    <div class="progress">
+									  <div class="progress-bar" role="progressbar"  aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" th:style="width: 50%;">
+									    
+									  </div>
+									</div>
+									<!--<input id="requestProgress" name="requestProgress" class="form-control" type="text" th:value="${request.requestProgress}" readonly> -->
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group col-md-6">
 								<label class="col-sm-3 control-label">目前状态：</label>
 								<div class="col-sm-8">
 									<input id="requestStatus" name="requestStatus" class="form-control" type="text" th:value="${request.requestStatus}" readonly>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group col-md-6">
 								<label class="col-sm-3 control-label">创建时间：</label>
 								<div class="col-sm-8">
 									<input id="createTimes" name="createTimes" class="form-control" type="text" th:value="${request.createTimes}" readonly>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group col-md-6">
 								<label class="col-sm-3 control-label">预定期限：</label>
 								<div class="col-sm-8">
 									<input id="expectTimes" name="expectTimes" class="form-control" type="text" th:value="${request.expectTimes}" readonly>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group col-md-6">
 								<label class="col-sm-3 control-label">最后更新：</label>
 								<div class="col-sm-8">
 									<input id="updateTimes" name="updateTimes" class="form-control" type="text" th:value="${request.updateTimes}" readonly>
@@ -77,7 +86,8 @@
 						<!-- <table id="exampleTables" data-mobile-responsive="true"> -->
 
 						</table>
-						<table id="exampleTable" data-mobile-responsive="true">
+						<br/>
+						<table  id="exampleTable" data-mobile-responsive="true">
 							<p style="color:salmon">操作记录：</p>
 						</table>
 					</div>
