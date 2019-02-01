@@ -79,7 +79,9 @@ public class RequestController extends BaseController {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		request.setCreateTimes(sdf.format(request.getCreateTime()));
-		request.setExpectTimes(sdf.format(request.getExpectTime()));
+		if(request.getExpectTime()!=null) {
+			request.setExpectTimes(sdf.format(request.getExpectTime()));
+		}
 		if(request.getUpdateTime()!=null) {
 			request.setUpdateTimes(sdf.format(request.getUpdateTime()));
 		}
@@ -238,30 +240,6 @@ public class RequestController extends BaseController {
 		return pageUtils;
 	}
 
-	/*
-	 * @PostMapping("/push")
-	 * 
-	 * @ResponseBody
-	 */
-	/*
-	 * R batchRemove(String id) { RequestDO request = requestService.get(id); String
-	 * progress = request.getRequestProgress(); int progressInt =
-	 * Integer.parseInt(progress); progressInt = progressInt + 10;
-	 * request.setRequestProgress(String.valueOf(progressInt));
-	 * request.setUpdateUserId(getUserId().toString()); request.setExpectTime(new
-	 * Date()); int r = requestService.update(request); if (r > 0) { RequestStepDO
-	 * requestStep = new RequestStepDO(); requestStep.setRequestId(id);
-	 * requestStep.setStepName("更新进度"); requestStep.setStepDesc("进度更新10%");
-	 * requestStep.setProgressAdd(String.valueOf(progressInt)); List<RequestStepDO>
-	 * list = requestStepService.list(null); RequestStepDO requestStep1 = null; if
-	 * (list != null) { requestStep1 = list.get(0); }
-	 * requestStep.setBeforeOwnerId(request.getOwnerId());
-	 * requestStep.setAfterOwnerId(request.getOwnerId());
-	 * requestStep.setRecoTime(new Date());
-	 * requestStep.setRecoUserId(getUserId().toString()); if
-	 * (requestStepService.save(requestStep) > 0) { return R.ok(); } } return
-	 * R.error(); }
-	 */
 
 	@PostMapping("/pushSave")
 	@ResponseBody
