@@ -10,12 +10,32 @@
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
-						<table id="exampleTables" data-mobile-responsive="true">
-							
-						</table>
+
+						
+						<form class="form-horizontal m-t" id="requestForm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">请求名称：</label>
+								<div class="col-sm-8">
+									<input id="requestName" name="requestName" class="form-control" type="text" th:value="${request.requestName}" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">责任人：</label>
+								<div class="col-sm-8">
+									<input id="username" name="username" class="form-control" type="text" th:value="${request.username}" readonly>
+								</div>
+							</div>
+						</form>
+
+						<!-- <table id="exampleTables" data-mobile-responsive="true"></table> -->
 						
 						<form class="form-horizontal m-t" id="turnoverForm">
-							
+							<div class="form-group">
+								<label class="col-sm-3 control-label"><p style="color:salmon">移交原因：</p></label>
+								<div class="col-sm-8">
+									<textarea id="stepDesc" name="stepDesc" class="form-control" required></textarea>
+								</div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label"><p style="color:salmon">选择移交责任人：</p></label>
 								<div class="col-sm-8">

@@ -1,7 +1,7 @@
 var prefix = "/activiti"
 $().ready(function () {
 	validateRule();
-	loads();
+	//loads();
 	loadProgress();
 
 });

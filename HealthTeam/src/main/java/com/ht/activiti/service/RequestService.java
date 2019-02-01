@@ -16,6 +16,8 @@ public interface RequestService {
 	
 	List<RequestDO> list(Map<String, Object> map);
 	
+	List<RequestDO> lists(Map<String, Object> map);
+	
 	int count(Map<String, Object> map);
 	
 	int save(RequestDO request);

@@ -10,9 +10,32 @@
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
-						<table id="exampleTables" data-mobile-responsive="true">
+						
+
+						<form class="form-horizontal m-t" id="requestForm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">请求名称：</label>
+								<div class="col-sm-8">
+									<input id="requestName" name="requestName" class="form-control" type="text" th:value="${request.requestName}" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">目前进度：</label>
+								<div class="col-sm-8">
+									<input id="requestProgress" name="requestProgress" class="form-control" type="text" th:value="${request.requestProgress}" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">最后更新：</label>
+								<div class="col-sm-8">
+									<input id="updateTimes" name="updateTimes" class="form-control" type="text" th:value="${request.updateTimes}" readonly>
+								</div>
+							</div>
+						</form>
+
+						<!-- <table id="exampleTables" data-mobile-responsive="true"> </table>-->
 							
-						</table>
+						
 						<p style="color:salmon">请填写您的步骤以及进度：</p>
 						<form class="form-horizontal m-t" id="pushForm">
 							<div class="form-group">

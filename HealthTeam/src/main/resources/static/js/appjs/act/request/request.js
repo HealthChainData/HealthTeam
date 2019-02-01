@@ -228,7 +228,10 @@ function shelve(id) {
 				}else if (r.code == 2) {
 					layer.msg("您不是该事务负责人，不能进行此操作");
 					reLoad();
-				} else {
+				}else if (r.code == 4) {
+					layer.msg("当前已经是搁置状态");
+					reLoad();
+				}  else {
 					layer.msg("搁置失败");
 				}
 			}
@@ -253,7 +256,10 @@ function activate(id) {
 				}else if (r.code == 2) {
 					layer.msg("您不是该事务负责人，不能进行此操作");
 					reLoad();
-				} else {
+				}else if (r.code == 4) {
+					layer.msg("当前已经是激活状态");
+					reLoad();
+				}  else {
 					layer.msg("激活失败");
 				}
 			}

@@ -1,5 +1,6 @@
 package com.ht.activiti.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.mail.Session;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,34 +64,55 @@ public class RequestController extends BaseController {
 		if (query.get("ownerId") != null && query.get("ownerId").equals("1")) {
 			query.put("ownerId", getUserId());
 		}
-		List<RequestDO> requestList = requestService.list(query);
+		List<RequestDO> requestList = requestService.lists(query);
 		int total = requestService.count(query);
 		PageUtils pageUtils = new PageUtils(requestList, total);
 		return pageUtils;
 	}
 
 	@RequestMapping(value = "/details{id}")
-	public ModelAndView toDetails(@PathVariable("id") String id) {
+	public ModelAndView toDetails(Model model, @PathVariable("id") String id) {
 		this.id = id;
+		RequestDO request = requestService.get(id);
+		UserDO user = userService.getUserById(request.getOwnerId());
+		request.setUsername(user.getName());
+		String format = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		request.setCreateTimes(sdf.format(request.getCreateTime()));
+		request.setExpectTimes(sdf.format(request.getExpectTime()));
+		if(request.getUpdateTime()!=null) {
+			request.setUpdateTimes(sdf.format(request.getUpdateTime()));
+		}
+		model.addAttribute("request", request);
 		return new ModelAndView("act/request/details");
 	}
 
 	@RequestMapping(value = "/push{id}")
-	public ModelAndView toPush(@PathVariable("id") String id) {
+	public ModelAndView toPush(Model model,@PathVariable("id") String id) {
 		this.id = id;
 		RequestDO request = requestService.get(id);
-		if(!request.getOwnerId().equals(getUser().getUserId().toString())) {
+		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return new ModelAndView("error/200");
 		}
+		String format = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		if(request.getUpdateTime()!=null) {
+			request.setUpdateTimes(sdf.format(request.getUpdateTime()));
+		}
+		model.addAttribute("request", request);
 		return new ModelAndView("act/request/push");
 	}
+
 	@RequestMapping(value = "/turnover{id}")
-	public ModelAndView toTurnnover(@PathVariable("id") String id) {
+	public ModelAndView toTurnnover(Model model,@PathVariable("id") String id) {
 		this.id = id;
 		RequestDO request = requestService.get(id);
-		if(!request.getOwnerId().equals(getUser().getUserId().toString())) {
+		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return new ModelAndView("error/200");
 		}
+		UserDO user = userService.getUserById(request.getOwnerId());
+		request.setUsername(user.getName());
+		model.addAttribute("request", request);
 		return new ModelAndView("act/request/turnover");
 	}
 
@@ -143,6 +166,15 @@ public class RequestController extends BaseController {
 	@PostMapping("/save")
 	@ResponseBody
 	R save(RequestDO request, RequestStepDO requestStep) {
+		if (request.getOwnerId() == null || request.getOwnerId() == "") {
+			return R.userIsNull();
+		}
+		if (request.getRequestType() == null || request.getRequestType() == "") {
+			return R.typeIsNull();
+		}
+		if (request.getRequestSrc() == null || request.getRequestSrc() == "") {
+			return R.srcIsNull();
+		}
 		int requestId = requestService.getRequestId() + 1;
 		request.setId(String.valueOf(requestId));
 		UserDO user = userService.getUserById(request.getOwnerId());
@@ -194,7 +226,7 @@ public class RequestController extends BaseController {
 		int total = requestStepService.count(param);
 		return new PageUtils(requestStepList, total);
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/listById")
 	public PageUtils ListById(@RequestParam Map<String, Object> params) {
@@ -205,8 +237,7 @@ public class RequestController extends BaseController {
 		PageUtils pageUtils = new PageUtils(requestList, total);
 		return pageUtils;
 	}
-	
-	
+
 	/*
 	 * @PostMapping("/push")
 	 * 
@@ -245,7 +276,7 @@ public class RequestController extends BaseController {
 			progressInt = 100;
 			request.setRequestStatus("已完成");
 		}
-		request.setRequestProgress(String.valueOf(progressInt)+"%");
+		request.setRequestProgress(String.valueOf(progressInt) + "%");
 		request.setUpdateUserId(getUserId().toString());
 		request.setExpectTime(new Date());
 		request.setUpdateTime(new Date());
@@ -255,7 +286,7 @@ public class RequestController extends BaseController {
 			requestStep.setRequestId(id);
 			requestStep.setStepName(stepName);
 			requestStep.setStepDesc(stepDesc);
-			requestStep.setProgressAdd(String.valueOf(progressAdd)+"%");
+			requestStep.setProgressAdd(String.valueOf(progressAdd) + "%");
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("requestId", id);
 			List<RequestStepDO> list = requestStepService.list(param);
@@ -283,7 +314,10 @@ public class RequestController extends BaseController {
 
 	@PostMapping("/turnoverSave")
 	@ResponseBody
-	R turnoverSave(String ownerId) {
+	R turnoverSave(String ownerId,String stepDesc) {
+		if (ownerId == null || ownerId == "") {
+			return R.userIsNull();
+		}
 		RequestDO request = requestService.get(id);
 		UserDO user = userService.getUserById(ownerId);
 		String beforeOwnerId = request.getOwnerId();
@@ -295,7 +329,7 @@ public class RequestController extends BaseController {
 			RequestStepDO requestStep = new RequestStepDO();
 			requestStep.setRequestId(id);
 			requestStep.setStepName("事务移交");
-			requestStep.setStepDesc(getUser().getName() + "将事务移交给" + user.getName());
+			requestStep.setStepDesc(stepDesc);
 			requestStep.setProgressAdd("0");
 			requestStep.setBeforeOwnerId(beforeOwnerId);
 			requestStep.setAfterOwnerId(request.getOwnerId());
@@ -312,8 +346,11 @@ public class RequestController extends BaseController {
 	@ResponseBody
 	R sheleve(String id) {
 		RequestDO request = requestService.get(id);
-		if(!request.getOwnerId().equals(getUser().getUserId().toString())) {
+		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return R.no();
+		}
+		if(request.getRequestStatus().equals("已搁置")) {
+			return R.repeat();
 		}
 		String beforeOwnerId = request.getOwnerId();
 		request.setRequestStatus("已搁置");
@@ -336,14 +373,16 @@ public class RequestController extends BaseController {
 		}
 		return R.error();
 	}
-	
 
 	@PostMapping("/activate")
 	@ResponseBody
 	R activate(String id) {
 		RequestDO request = requestService.get(id);
-		if(!request.getOwnerId().equals(getUser().getUserId().toString())) {
+		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return R.no();
+		}
+		if(!request.getRequestStatus().equals("已搁置")) {
+			return R.repeat();
 		}
 		String beforeOwnerId = request.getOwnerId();
 		request.setRequestStatus("进行中");

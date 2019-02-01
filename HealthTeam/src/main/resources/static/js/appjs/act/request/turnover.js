@@ -1,8 +1,8 @@
 var prefix = "/activiti"
 $().ready(function () {
-	 validateRule();
-	 loadUser();
-	 loads();
+	validateRule();
+	loadUser();
+	//loads();
 
 });
 $.validator.setDefaults({
@@ -11,25 +11,25 @@ $.validator.setDefaults({
 	}
 });
 
-function loadUser(){
+function loadUser() {
 	var html = "";
 	$.ajax({
-		url : prefix +"/userList",
-		success : function(data) {
+		url: prefix + "/userList",
+		success: function (data) {
 			//加载数据
 			for (var i = 0; i < data.length; i++) {
 				html += '<option value="' + data[i].userId + '">' + data[i].name + '</option>'
 			}
 			$(".chosen-select-user").append(html);
 			$(".chosen-select-user").chosen({
-				maxHeight : 200
+				maxHeight: 200
 			});
 			//点击事件
-			$('.chosen-select-user').on('change', function(e, params) {
+			$('.chosen-select-user').on('change', function (e, params) {
 				console.log(params.selected);
 				var opt = {
-					query : {
-						type : params.selected,
+					query: {
+						type: params.selected,
 					}
 				}
 				$('#exampleTable').bootstrapTable('refresh', opt);
@@ -55,6 +55,8 @@ function save() {
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);
 
+			} else if (data.code == 3) {
+				parent.layer.alert("请选择用户")
 			} else {
 				parent.layer.alert(data.msg)
 			}
@@ -65,19 +67,19 @@ function save() {
 }
 
 function validateRule() {
-    var icon = "<i class='fa fa-times-circle'></i> ";
-    $("#turnoverForm").validate({
-        rules: {
-            name: {
-                required: true
-            }
-        },
-        messages: {
-            name: {
-                required: icon + ""
-            }
-        }
-    })
+	var icon = "<i class='fa fa-times-circle'></i> ";
+	$("#turnoverForm").validate({
+		rules: {
+			name: {
+				required: true
+			}
+		},
+		messages: {
+			name: {
+				required: icon + ""
+			}
+		}
+	})
 }
 
 function loads() {

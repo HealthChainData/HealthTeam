@@ -38,6 +38,21 @@ public class RequestDO {
 	/** 更新时间 */
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date updateTime;
+	
+	/** 创建时间 */
+	private String createTimes;
+	/** 期待完成时间 */
+	private String expectTimes;
+	/** 最后更新时间 */
+	private String updateTimes;
+
+	public String getUpdateTimes() {
+		return updateTimes;
+	}
+
+	public void setUpdateTimes(String updateTimes) {
+		this.updateTimes = updateTimes;
+	}
 
 	private String username;
 
@@ -168,5 +183,23 @@ public class RequestDO {
 	public Date getUpdateTime() {
 		return updateTime;
 	}
+
+	public String getCreateTimes() {
+		return createTimes;
+	}
+
+	public void setCreateTimes(String createTimes) {
+		this.createTimes = createTimes;
+	}
+
+	public String getExpectTimes() {
+		return expectTimes;
+	}
+
+	public void setExpectTimes(String expectTimes) {
+		this.expectTimes = expectTimes;
+	}
+
+	
 
 }

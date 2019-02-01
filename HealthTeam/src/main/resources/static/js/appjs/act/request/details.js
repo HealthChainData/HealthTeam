@@ -1,7 +1,7 @@
 var prefix = "/activiti"
 $(function () {
 	load();
-	loads();
+	//loads();
 });
 function load() {
 	$('#exampleTable')

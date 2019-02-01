@@ -18,6 +18,22 @@ public class R extends HashMap<String, Object> {
 	public static R no() {
 		return error(2, "没有权限");
 	}
+	
+	public static R repeat() {
+		return error(4, "重复操作");
+	}
+	
+	public static R userIsNull() {
+		return error(3, "请选择用户");
+	}
+	
+	public static R typeIsNull() {
+		return error(4, "请选择请求类型");
+	}
+	
+	public static R srcIsNull() {
+		return error(5, "请选择请求来源");
+	}
 
 	public static R error(String msg) {
 		return error(500, msg);

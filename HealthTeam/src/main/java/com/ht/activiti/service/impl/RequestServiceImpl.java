@@ -27,6 +27,12 @@ public class RequestServiceImpl implements RequestService{
 		// TODO Auto-generated method stub
 		return requestDao.list(map);
 	}
+	
+	@Override
+	public List<RequestDO> lists(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return requestDao.lists(map);
+	}
 
 	@Override
 	public int count(Map<String, Object> map) {
