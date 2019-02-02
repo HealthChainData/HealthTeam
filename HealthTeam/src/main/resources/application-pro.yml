@@ -1,5 +1,5 @@
 bootdo:
-  uploadPath: F:\uploaded_files
+  uploadPath: E:/uploadedFiles/
   username: test
   passward: 111111
 logging:

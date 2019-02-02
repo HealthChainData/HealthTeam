@@ -65,7 +65,7 @@ public class RequestServiceImpl implements RequestService{
 	}
 
 	@Override
-	public int getRequestId() {
+	public RequestDO getRequestId() {
 		// TODO Auto-generated method stub
 		return requestDao.getRequestId();
 	}

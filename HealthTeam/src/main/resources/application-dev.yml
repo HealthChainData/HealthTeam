@@ -1,5 +1,5 @@
 ht:
-  uploadPath: F:\uploaded_files
+  uploadPath: E:/uploadedFiles/
   username: admin
   password: 111111
 logging:

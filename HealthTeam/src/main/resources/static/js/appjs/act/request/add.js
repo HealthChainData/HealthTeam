@@ -142,12 +142,17 @@ function validateRule() {
 }
 
 function save() {
+	var formData = new FormData($("#requestForm")[0]);
 	$.ajax({
 		cache: true,
 		type: "POST",
 		url: prefix + "/save",
-		data: $('#requestForm').serialize(), // 你的formid
+		data: formData,
+		//data: $('#requestForm').serialize(), // 你的formid
 		async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
 		error: function (request) {
 			parent.layer.alert("Connection error");
 		},
@@ -170,5 +175,23 @@ function save() {
 
 		}
 	});
-
 }
+
+
+// layui.use('upload', function () {
+// 	var upload = layui.upload;
+// 	//执行实例
+// 	var uploadInst = upload.render({
+// 		elem: '#file1', //绑定元素
+// 		url: prefix + "/upload", //上传接口
+// 		size: 100000,
+// 		accept: 'file',
+// 		done: function (r) {
+// 			 layer.msg(r.msg);
+// 			// app.getData();
+// 		},
+// 		error: function (r) {
+// 			layer.msg(r.msg);
+// 		}
+// 	});
+// });

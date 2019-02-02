@@ -28,6 +28,6 @@ public interface RequestService {
 	
 	int batchRemove(String[] ids);
 	
-	int getRequestId();
+	RequestDO getRequestId();
 	
 }

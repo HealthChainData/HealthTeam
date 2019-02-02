@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.Session;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ht.activiti.domain.RequestDO;
@@ -25,10 +27,15 @@ import com.ht.activiti.domain.RequestStepDO;
 import com.ht.activiti.service.RequestService;
 import com.ht.activiti.service.RequestStepService;
 import com.ht.common.annotation.Log;
+import com.ht.common.config.BootdoConfig;
 import com.ht.common.config.Constant;
 import com.ht.common.controller.BaseController;
 import com.ht.common.domain.DictDO;
+import com.ht.common.domain.FileDO;
 import com.ht.common.service.DictService;
+import com.ht.common.service.FileService;
+import com.ht.common.utils.FileType;
+import com.ht.common.utils.FileUtil;
 import com.ht.common.utils.MD5Utils;
 import com.ht.common.utils.PageUtils;
 import com.ht.common.utils.Query;
@@ -45,6 +52,12 @@ public class RequestController extends BaseController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private BootdoConfig bootdoConfig;
+
+	@Autowired
+	private FileService sysFileService;
 
 	@Autowired
 	private RequestService requestService;
@@ -79,10 +92,10 @@ public class RequestController extends BaseController {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		request.setCreateTimes(sdf.format(request.getCreateTime()));
-		if(request.getExpectTime()!=null) {
+		if (request.getExpectTime() != null) {
 			request.setExpectTimes(sdf.format(request.getExpectTime()));
 		}
-		if(request.getUpdateTime()!=null) {
+		if (request.getUpdateTime() != null) {
 			request.setUpdateTimes(sdf.format(request.getUpdateTime()));
 		}
 		model.addAttribute("request", request);
@@ -90,18 +103,18 @@ public class RequestController extends BaseController {
 	}
 
 	@RequestMapping(value = "/push{id}")
-	public ModelAndView toPush(Model model,@PathVariable("id") String id) {
+	public ModelAndView toPush(Model model, @PathVariable("id") String id) {
 		this.id = id;
 		RequestDO request = requestService.get(id);
 		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return new ModelAndView("error/200");
 		}
-		if(request.getRequestStatus().equals("已完成")) {
+		if (request.getRequestStatus().equals("已完成")) {
 			return new ModelAndView("error/201");
 		}
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		if(request.getUpdateTime()!=null) {
+		if (request.getUpdateTime() != null) {
 			request.setUpdateTimes(sdf.format(request.getUpdateTime()));
 		}
 		model.addAttribute("request", request);
@@ -109,13 +122,13 @@ public class RequestController extends BaseController {
 	}
 
 	@RequestMapping(value = "/turnover{id}")
-	public ModelAndView toTurnnover(Model model,@PathVariable("id") String id) {
+	public ModelAndView toTurnnover(Model model, @PathVariable("id") String id) {
 		this.id = id;
 		RequestDO request = requestService.get(id);
 		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return new ModelAndView("error/200");
 		}
-		if(request.getRequestStatus().equals("已完成")) {
+		if (request.getRequestStatus().equals("已完成")) {
 			return new ModelAndView("error/201");
 		}
 		UserDO user = userService.getUserById(request.getOwnerId());
@@ -173,7 +186,7 @@ public class RequestController extends BaseController {
 	@Log("保存请求")
 	@PostMapping("/save")
 	@ResponseBody
-	R save(RequestDO request, RequestStepDO requestStep) {
+	R save(RequestDO request, RequestStepDO requestStep,@RequestParam("file")MultipartFile file) {
 		if (request.getOwnerId() == null || request.getOwnerId() == "") {
 			return R.userIsNull();
 		}
@@ -183,12 +196,28 @@ public class RequestController extends BaseController {
 		if (request.getRequestSrc() == null || request.getRequestSrc() == "") {
 			return R.srcIsNull();
 		}
-		int requestId = requestService.getRequestId() + 1;
+		int requestId = 1;
+		if (requestService.getRequestId() != null) {
+			requestId = Integer.parseInt(requestService.getRequestId().getId())+1;
+		}
 		request.setId(String.valueOf(requestId));
+		if(!file.getOriginalFilename().equals("")) {
+			String fileName = file.getOriginalFilename();
+			fileName = FileUtil.renameToUUID(fileName);
+			FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
+			try {
+				FileUtil.uploadFile(file.getBytes(), bootdoConfig.getUploadPath(), fileName);
+			} catch (Exception e) {
+				return R.error();
+			}
+			if (sysFileService.save(sysFile) > 0) {
+				fileUrl = sysFile.getUrl();
+			}
+			if(fileUrl!=null) {
+				request.setRequestPic(fileUrl);
+			}
+		}
 		UserDO user = userService.getUserById(request.getOwnerId());
-		/*
-		 * if (user != null) { request.setOwnerId(user.getName()); }
-		 */
 		request.setCreateTime(new Date());
 		request.setCreateUserId(getUserId().toString());
 		request.setCreateUserName(getUsername());
@@ -207,6 +236,28 @@ public class RequestController extends BaseController {
 			if (requestStepService.save(requestStep) > 0) {
 				return R.ok();
 			}
+		}
+		return R.error();
+	}
+	String fileUrl = null;
+	@ResponseBody
+	@PostMapping("/upload")
+	R upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+		if ("test".equals(getUsername())) {
+			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		String fileName = file.getOriginalFilename();
+		fileName = FileUtil.renameToUUID(fileName);
+		FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
+		try {
+			FileUtil.uploadFile(file.getBytes(), bootdoConfig.getUploadPath(), fileName);
+		} catch (Exception e) {
+			return R.error();
+		}
+
+		if (sysFileService.save(sysFile) > 0) {
+			fileUrl = sysFile.getUrl();
+			return R.ok().put("fileName",sysFile.getUrl());
 		}
 		return R.error();
 	}
@@ -245,7 +296,6 @@ public class RequestController extends BaseController {
 		PageUtils pageUtils = new PageUtils(requestList, total);
 		return pageUtils;
 	}
-
 
 	@PostMapping("/pushSave")
 	@ResponseBody
@@ -298,7 +348,7 @@ public class RequestController extends BaseController {
 
 	@PostMapping("/turnoverSave")
 	@ResponseBody
-	R turnoverSave(String ownerId,String stepDesc) {
+	R turnoverSave(String ownerId, String stepDesc) {
 		if (ownerId == null || ownerId == "") {
 			return R.userIsNull();
 		}
@@ -333,10 +383,10 @@ public class RequestController extends BaseController {
 		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return R.no();
 		}
-		if(request.getRequestStatus().equals("已搁置")) {
+		if (request.getRequestStatus().equals("已搁置")) {
 			return R.repeat();
 		}
-		if(request.getRequestStatus().equals("已完成")) {
+		if (request.getRequestStatus().equals("已完成")) {
 			return R.done();
 		}
 		String beforeOwnerId = request.getOwnerId();
@@ -368,10 +418,10 @@ public class RequestController extends BaseController {
 		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return R.no();
 		}
-		if(!request.getRequestStatus().equals("已搁置")) {
+		if (!request.getRequestStatus().equals("已搁置")) {
 			return R.repeat();
 		}
-		if(request.getRequestStatus().equals("已完成")) {
+		if (request.getRequestStatus().equals("已完成")) {
 			return R.done();
 		}
 		String beforeOwnerId = request.getOwnerId();

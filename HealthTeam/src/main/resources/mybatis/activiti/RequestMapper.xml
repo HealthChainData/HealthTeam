@@ -105,8 +105,8 @@
 		  		</where>
 	</select>
 
-	<select id="getRequestId" resultType="int">
-		select id from sys_request ORDER BY id desc LIMIT 1;
+	<select id="getRequestId" resultType="com.ht.activiti.domain.RequestDO">
+		select * from sys_request ORDER BY id desc LIMIT 1;
 	</select>
 	 
 	<insert id="save" parameterType="com.ht.activiti.domain.RequestDO">
