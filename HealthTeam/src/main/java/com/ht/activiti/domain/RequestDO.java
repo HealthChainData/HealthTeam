@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class RequestDO {
 	/** 主键ID */
-	private String id;
+	private Integer id;
 	/** 请求名称 */
 	private String requestName;
 	/** 请求类型 */
@@ -64,11 +64,13 @@ public class RequestDO {
 		this.username = username;
 	}
 
-	public String getId() {
+	
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

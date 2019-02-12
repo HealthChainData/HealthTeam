@@ -196,11 +196,6 @@ public class RequestController extends BaseController {
 		if (request.getRequestSrc() == null || request.getRequestSrc() == "") {
 			return R.srcIsNull();
 		}
-		int requestId = 1;
-		if (requestService.getRequestId() != null) {
-			requestId = Integer.parseInt(requestService.getRequestId().getId())+1;
-		}
-		request.setId(String.valueOf(requestId));
 		if(!file.getOriginalFilename().equals("")) {
 			String fileName = file.getOriginalFilename();
 			fileName = FileUtil.renameToUUID(fileName);
@@ -225,7 +220,7 @@ public class RequestController extends BaseController {
 		request.setRequestStatus("进行中");
 		request.setUpdateTime(new Date());
 		if (requestService.save(request) > 0) {
-			requestStep.setRequestId(String.valueOf(requestId));
+			requestStep.setRequestId(request.getId().toString());
 			requestStep.setStepName("新增事务请求");
 			requestStep.setStepDesc(getUsername() + "指定给" + user.getName() + "的一个新任务");
 			requestStep.setProgressAdd("0%");
@@ -400,6 +395,7 @@ public class RequestController extends BaseController {
 			requestStep.setStepName("事务搁置");
 			requestStep.setStepDesc(getUser().getName() + "将事务搁置");
 			requestStep.setProgressAdd("0");
+			
 			requestStep.setBeforeOwnerId(beforeOwnerId);
 			requestStep.setAfterOwnerId(request.getOwnerId());
 			requestStep.setRecoTime(new Date());

@@ -48,7 +48,7 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.ht.activiti.domain.RequestStepDO">
+	<insert id="save" parameterType="com.ht.activiti.domain.RequestStepDO" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_request_step
 		(
 			`id`, 
@@ -63,7 +63,7 @@
 		)
 		values
 		(
-			#{id}, 
+			#{id,jdbcType=INTEGER}, 
 			#{requestId}, 
 			#{stepName}, 
 			#{stepDesc}, 

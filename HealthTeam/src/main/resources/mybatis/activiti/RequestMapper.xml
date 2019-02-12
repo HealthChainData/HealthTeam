@@ -109,7 +109,7 @@
 		select * from sys_request ORDER BY id desc LIMIT 1;
 	</select>
 	 
-	<insert id="save" parameterType="com.ht.activiti.domain.RequestDO">
+	<insert id="save" parameterType="com.ht.activiti.domain.RequestDO" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_request
 		(
 			`id`,
@@ -130,7 +130,7 @@
 		)
 		values
 		(
-			#{id}, 
+			#{id,jdbcType=INTEGER}, 
 			#{requestName}, 
 			#{requestType}, 
 			#{requestDesc}, 
