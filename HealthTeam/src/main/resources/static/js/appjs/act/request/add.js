@@ -162,7 +162,6 @@ function save() {
 				parent.reLoad();
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);
-
 			} else if (data.code == 3) {
 				parent.layer.alert("请选择用户")
 			} else if (data.code == 4) {

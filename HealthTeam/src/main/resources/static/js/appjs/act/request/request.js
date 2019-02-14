@@ -188,28 +188,9 @@ function turnover(id) {
 		content: prefix + '/turnover' + id
 	});
 }
-
-// function push(id) {
-// 	layer.confirm('确定要推进更新当前请求？', {
-// 		btn : [ '确定', '取消' ]
-// 	}, function() {
-// 		$.ajax({
-// 			url : prefix + '/push',
-// 			type : "post",
-// 			data : {
-// 				'id' : id
-// 			},
-// 			success : function(r) {
-// 				if (r.code == 0) {
-// 					layer.msg("更新成功，进度+10");
-// 					reLoad();
-// 				} else {
-// 					layer.msg("更新失败");
-// 				}
-// 			}
-// 		});
-// 	})
-// }
+function reLoad() {
+	load();
+}
 
 function shelve(id) {
 	layer.confirm('确定要搁置当前请求？', {
