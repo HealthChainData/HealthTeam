@@ -4,14 +4,15 @@
 <mapper namespace="com.ht.clinic.dao.ClinicDao">
 
 	<select id="get" resultType="com.ht.clinic.domain.ClinicDO">
-		select `clinic_id`,`clinic_name`,`clinic_address`,`status`,`clinic_tel`,`clinic_head`,`clinic_head_mobile`,`clinic_contact`,`clinic_contact_mobile`,`clinic_parent_id`,`energy_money`,`super_admin_id`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time`,`note` from b_clinic where clinic_id = #{value}
+		select `clinic_id`,`clinic_name`,`agency_number`,`clinic_address`,`status`,`clinic_tel`,`clinic_head`,`clinic_head_mobile`,`clinic_contact`,`clinic_contact_mobile`,`clinic_parent_id`,`energy_money`,`super_admin_id`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time`,`note` from b_clinic where clinic_id = #{value}
 	</select>
 
 	<select id="list" resultType="com.ht.clinic.domain.ClinicDO">
-		select `clinic_id`,`clinic_name`,`clinic_address`,`status`,`clinic_tel`,`clinic_head`,`clinic_head_mobile`,`clinic_contact`,`clinic_contact_mobile`,`clinic_parent_id`,`energy_money`,`super_admin_id`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time`,`note` from b_clinic
+		select `clinic_id`,`clinic_name`,`agency_number`,`clinic_address`,`status`,`clinic_tel`,`clinic_head`,`clinic_head_mobile`,`clinic_contact`,`clinic_contact_mobile`,`clinic_parent_id`,`energy_money`,`super_admin_id`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time`,`note` from b_clinic
         <where>  
 		  		  <if test="clinicId != null and clinicId != ''"> and clinic_id = #{clinicId} </if>
 		  		  <if test="clinicName != null and clinicName != ''"> and clinic_name = #{clinicName} </if>
+				  <if test="agencyNumber != null and agencyNumber != ''"> and agency_number = #{agencyNumber} </if>
 		  		  <if test="clinicAddress != null and clinicAddress != ''"> and clinic_address = #{clinicAddress} </if>
 		  		  <if test="status != null and status != ''"> and status = #{status} </if>
 		  		  <if test="clinicTel != null and clinicTel != ''"> and clinic_tel = #{clinicTel} </if>
@@ -46,6 +47,7 @@
 		 <where>  
 		  		  <if test="clinicId != null and clinicId != ''"> and clinic_id = #{clinicId} </if>
 		  		  <if test="clinicName != null and clinicName != ''"> and clinic_name = #{clinicName} </if>
+				  <if test="agencyNumber != null and agencyNumber != ''"> and agency_number = #{agencyNumber} </if>
 		  		  <if test="clinicAddress != null and clinicAddress != ''"> and clinic_address = #{clinicAddress} </if>
 		  		  <if test="status != null and status != ''"> and status = #{status} </if>
 		  		  <if test="clinicTel != null and clinicTel != ''"> and clinic_tel = #{clinicTel} </if>
@@ -69,6 +71,7 @@
 		(
 			`clinic_id`, 
 			`clinic_name`, 
+			`agency_number`,
 			`clinic_address`, 
 			`status`, 
 			`clinic_tel`, 
@@ -89,6 +92,7 @@
 		(
 			#{clinicId}, 
 			#{clinicName}, 
+			#{agencyNumber}, 
 			#{clinicAddress}, 
 			#{status}, 
 			#{clinicTel}, 
@@ -111,6 +115,7 @@
 		update b_clinic 
 		<set>
 			<if test="clinicName != null">`clinic_name` = #{clinicName}, </if>
+			<if test="agencyNumber != null and agencyNumber != ''">agency_number = #{agencyNumber},</if>
 			<if test="clinicAddress != null">`clinic_address` = #{clinicAddress}, </if>
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="clinicTel != null">`clinic_tel` = #{clinicTel}, </if>

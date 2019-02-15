@@ -28,6 +28,7 @@ import com.ht.common.utils.PageUtils;
 import com.ht.common.utils.Query;
 import com.ht.common.utils.R;
 import com.ht.system.domain.UserDO;
+import com.ht.system.service.UserService;
 
 /**
  * @date 2019-02-12 16:10:19
@@ -38,6 +39,9 @@ import com.ht.system.domain.UserDO;
 public class ClinicController extends BaseController {
 	@Autowired
 	private ClinicService clinicService;
+	
+	@Autowired
+	private UserService userService;
 
 	private String clinicId;
 
@@ -45,15 +49,6 @@ public class ClinicController extends BaseController {
 	public ModelAndView gotoTask() {
 		return new ModelAndView("clinic/clinic/clinic");
 	}
-
-	/**
-	 * @ResponseBody @GetMapping("/list") public PageUtils list(@RequestParam
-	 *               Map<String, Object> params){ //查询列表数据 Query query = new
-	 *               Query(params); List<ClinicDO> clinicList =
-	 *               clinicService.list(query); int total =
-	 *               clinicService.count(query); PageUtils pageUtils = new
-	 *               PageUtils(clinicList, total); return pageUtils; }
-	 */
 
 	@ResponseBody
 	@GetMapping("/list")
@@ -68,9 +63,34 @@ public class ClinicController extends BaseController {
 				j=j+1;
 			}
 		}
-
+		for (ClinicDO clinicDO : clinicList) {
+			if(clinicDO.getSuperAdminId()!=null || clinicDO.getSuperAdminId() != "") {
+				UserDO user = userService.getUserById(clinicDO.getSuperAdminId());
+				if(user != null) {
+					clinicDO.setSuperAdminId(user.getName());
+				}
+			}
+		}
 		return clinicList;
 	}
+	
+	/**@ResponseBody
+	@GetMapping("/list")
+	public PageUtils list() {
+		// 查询列表数据
+		Map<String, Object> query = new HashMap<>(16);
+		List<ClinicDO> clinicList = clinicService.list(query);
+		int j = 1;
+		for (int i = 0; i < clinicList.size(); i++) {
+			if (clinicList.get(i).getClinicParentId() == null || clinicList.get(i).getClinicParentId().equals("")) {
+				clinicList.get(i).setId(String.valueOf(j));
+				j=j+1;
+			}
+		}
+		int total = clinicService.count(query);
+		PageUtils pageUtils = new PageUtils(clinicList, total);
+		return pageUtils;
+	}*/
 
 	@GetMapping("/add")
 	ModelAndView add() {
@@ -90,6 +110,12 @@ public class ClinicController extends BaseController {
 		}
 		return new ModelAndView("clinic/clinic/add");
 	}
+	
+	@GetMapping("/set{clinicId}")
+	ModelAndView set(@PathVariable("clinicId") String clinicId) {
+		this.clinicId = clinicId;
+		return new ModelAndView("clinic/clinic/set");
+	}
 
 	@GetMapping("/edit/{clinicId}")
 	ModelAndView edit(@PathVariable("clinicId") String clinicId, Model model) {
@@ -97,7 +123,14 @@ public class ClinicController extends BaseController {
 		model.addAttribute("clinic", clinic);
 		return new ModelAndView("clinic/clinic/details");
 	}
-
+	
+	@GetMapping("/update/{clinicId}")
+	ModelAndView update(Model model,@PathVariable("clinicId") String clinicId) {
+		ClinicDO clinic = clinicService.get(clinicId);
+		model.addAttribute("clinic", clinic);
+		return new ModelAndView("clinic/clinic/update");
+	}
+	
 	/**
 	 * 保存
 	 */
@@ -135,12 +168,45 @@ public class ClinicController extends BaseController {
 	}
 
 	/**
-	 * 删除
+	 * 禁用
 	 */
-	@PostMapping("/remove")
+	@PostMapping("/ban{clinicId}")
 	@ResponseBody
-	public R remove(String clinicId) {
-		if (clinicService.remove(clinicId) > 0) {
+	public R ban(String clinicId) {
+		ClinicDO clinic = new ClinicDO();
+		clinic.setClinicId(clinicId);
+		clinic.setStatus(1);
+		if (clinicService.update(clinic) > 0) {
+			return R.ok();
+		}
+		return R.error();
+	}
+	
+	/**
+	 * 启用
+	 */
+	@PostMapping("/start{clinicId}")
+	@ResponseBody
+	public R start(String clinicId) {
+		ClinicDO clinic = new ClinicDO();
+		clinic.setClinicId(clinicId);
+		clinic.setStatus(0);
+		if (clinicService.update(clinic) > 0) {
+			return R.ok();
+		}
+		return R.error();
+	}
+	
+	/**
+	 * 设置超级管理员
+	 */
+	@PostMapping("/setAdmin")
+	@ResponseBody
+	public R setAdmin(@RequestParam("ids[]") String[] userIds) {
+		ClinicDO clinic = new ClinicDO();
+		clinic.setClinicId(clinicId);
+		clinic.setSuperAdminId(userIds[0]);
+		if (clinicService.update(clinic) > 0) {
 			return R.ok();
 		}
 		return R.error();

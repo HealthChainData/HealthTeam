@@ -9,12 +9,13 @@ import java.util.Date;
 public class ClinicDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	// 机构id
 	private String id;
 	// 机构id
 	private String clinicId;
 	// 机构名称
 	private String clinicName;
+	//机构号
+	private String agencyNumber;
 	// 机构地址
 	private String clinicAddress;
 	// 状态 0:可用 1:不可用
@@ -46,9 +47,7 @@ public class ClinicDO implements Serializable {
 	// 备注
 	private String note;
 
-	/**
-	 * 设置：机构id
-	 */
+	
 	public void setClinicId(String clinicId) {
 		this.clinicId = clinicId;
 	}
@@ -73,6 +72,14 @@ public class ClinicDO implements Serializable {
 	 */
 	public void setClinicName(String clinicName) {
 		this.clinicName = clinicName;
+	}
+
+	public String getAgencyNumber() {
+		return agencyNumber;
+	}
+
+	public void setAgencyNumber(String agencyNumber) {
+		this.agencyNumber = agencyNumber;
 	}
 
 	/**

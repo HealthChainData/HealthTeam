@@ -16,18 +16,15 @@ function load() {
 			striped: true, // 是否各行渐变色
 			bordered: true, // 是否显示边框
 			expandAll: false, // 是否全部展开
+			queryParams: function (params) {
+				return {
+					clinicName: $("#clinicName").val()
+				};
+			},
 			columns: [{
 					field: 'id',
 					title: '序号',
-				}, {
-					title: '编号',
-					field: 'clinicId',
-					visible: false,
-					align: 'center',
-					valign: 'center',
-					width: '50px',
-					checkbox: true,
-				},
+				}, 
 				{
 					field: 'clinicName',
 					title: '机构名称',
@@ -65,18 +62,34 @@ function load() {
 						var a = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="查看"  onclick="edit(\'' +
 							value.clinicId +
 							'\')">查看</a> ';
-						var b = '<a class="btn btn-warning btn-sm ' + s_ban_h + '" href="#" title="禁用"  mce_href="#" onclick="ban(\'' +
-							value.clinicId +
-							'\')">禁用</i></a> ';
-						var c = '<a class="btn btn-primary btn-sm ' + s_set_h + '" href="#" title="管理员设置"  mce_href="#" onclick="set(\'' +
-							value.clinicId +
-							'\')">管理员设置</a> ';
-						var d = '<a class="btn btn-primary btn-sm ' + s_add_h + '" href="#" title="增加分公司"  mce_href="#" onclick="adds(\'' +
+						if (value.status == 0) {
+							var b = '<a class="btn btn-warning btn-sm ' + s_ban_h + '" href="#" title="禁用"  mce_href="#" onclick="ban(\'' +
+								value.clinicId +
+								'\')">禁用</i></a> ';
+						} else if (value.status == 1) {
+							var b = '<a class="btn btn-info btn-sm ' + s_ban_h + '" href="#" title="启用"  mce_href="#" onclick="start(\'' +
+								value.clinicId +
+								'\')">启用</i></a> ';
+						}
+						var c = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="查看"  onclick="update(\'' +
 							value.clinicId +
 							'\',\'' +
-							value.clinicName +
-							'\')">增加分公司</a> ';
-						return a + b + c + d;
+								value.clinicName +
+							'\')">修改</a> ';
+						var d = '<a class="btn btn-primary btn-sm ' + s_set_h + '" href="#" title="管理员设置"  mce_href="#" onclick="set(\'' +
+							value.clinicId +
+							'\',\'' +
+								value.clinicName +
+							'\')">管理员设置</a> ';
+						var e = '';
+						if (value.clinicParentId == null || value.clinicParentId == '') {
+							e = '<a class="btn btn-primary btn-sm ' + s_add_h + '" href="#" title="增加分公司"  mce_href="#" onclick="adds(\'' +
+								value.clinicId +
+								'\',\'' +
+								value.clinicName +
+								'\')">增加分公司</a> ';
+						}
+						return a + b + c + d + e;
 					}
 				}
 			]
@@ -120,15 +133,15 @@ function edit(clinicId) {
 	});
 }
 
-function remove(id) {
-	layer.confirm('确定要删除选中的记录？', {
+function ban(clinicId) {
+	layer.confirm('禁用操作将使公司旗下所有账户不能使用，确认禁用操作吗？', {
 		btn: ['确定', '取消']
 	}, function () {
 		$.ajax({
-			url: prefix + "/remove",
+			url: prefix + "/ban" + clinicId,
 			type: "post",
 			data: {
-				'clinicId': id
+				'clinicId': clinicId
 			},
 			success: function (r) {
 				if (r.code == 0) {
@@ -140,6 +153,51 @@ function remove(id) {
 			}
 		});
 	})
+}
+
+function start(clinicId) {
+	layer.confirm('确定要启用吗？', {
+		btn: ['确定', '取消']
+	}, function () {
+		$.ajax({
+			url: prefix + "/start" + clinicId,
+			type: "post",
+			data: {
+				'clinicId': clinicId
+			},
+			success: function (r) {
+				if (r.code == 0) {
+					layer.msg(r.msg);
+					reLoad();
+				} else {
+					layer.msg(r.msg);
+				}
+			}
+		});
+	})
+}
+
+function update(clinicId, name) {
+	layer.open({
+		type : 2,
+		title : '"'+name+'"(修改)',
+		maxmin : true,
+		shadeClose : false,
+		area : [ '800px', '520px' ],
+		content : prefix + '/update/' + clinicId // iframe的url
+	});
+}
+
+function set(clinicId, name) {
+	// iframe层
+	layer.open({
+		type: 2,
+		title: '   "' + name + '"   超级管理员设置',
+		maxmin: true,
+		shadeClose: false, // 点击遮罩关闭层
+		area: ['1200px', '720px'],
+		content: prefix + '/set' + clinicId
+	});
 }
 
 function resetPwd(id) {}
