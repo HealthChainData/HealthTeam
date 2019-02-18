@@ -43,7 +43,6 @@ public class ClinicController extends BaseController {
 	@Autowired
 	private UserService userService;
 
-	private String clinicId;
 
 	@GetMapping("clinic")
 	public ModelAndView gotoTask() {
@@ -94,16 +93,15 @@ public class ClinicController extends BaseController {
 
 	@GetMapping("/add")
 	ModelAndView add() {
-		this.clinicId = null;
 		return new ModelAndView("clinic/clinic/add");
 	}
 
 	@GetMapping("/adds{clinicId}")
-	ModelAndView adds(@PathVariable("clinicId") String clinicId) {
+	ModelAndView adds(@PathVariable("clinicId") String clinicId,Model model) {
 		if (clinicId != null) {
 			ClinicDO clinic = clinicService.get(clinicId);
 			if (clinic.getClinicParentId() == null || clinic.getClinicParentId().equals("")) {
-				this.clinicId = clinicId;
+				model.addAttribute("clinicId", clinicId);
 			} else {
 				return new ModelAndView("error/202");
 			}
@@ -112,8 +110,8 @@ public class ClinicController extends BaseController {
 	}
 	
 	@GetMapping("/set{clinicId}")
-	ModelAndView set(@PathVariable("clinicId") String clinicId) {
-		this.clinicId = clinicId;
+	ModelAndView set(@PathVariable("clinicId") String clinicId,Model model) {
+		model.addAttribute("clinicId", clinicId);
 		return new ModelAndView("clinic/clinic/set");
 	}
 
@@ -144,8 +142,8 @@ public class ClinicController extends BaseController {
 			int number = random.nextInt(base.length());
 			sb.append(base.charAt(number));
 		}
-		if (clinicId != null) {
-			clinic.setClinicParentId(clinicId);
+		if (clinic.getClinicId()!=null) {
+			clinic.setClinicParentId(clinic.getClinicId());
 		}
 		clinic.setClinicId(sb.toString());
 		clinic.setStatus(0);
@@ -200,9 +198,9 @@ public class ClinicController extends BaseController {
 	/**
 	 * 设置超级管理员
 	 */
-	@PostMapping("/setAdmin")
+	@PostMapping("/setAdmin/{clinicId}")
 	@ResponseBody
-	public R setAdmin(@RequestParam("ids[]") String[] userIds) {
+	public R setAdmin(@RequestParam("ids[]") String[] userIds,@PathVariable("clinicId")String clinicId) {
 		ClinicDO clinic = new ClinicDO();
 		clinic.setClinicId(clinicId);
 		clinic.setSuperAdminId(userIds[0]);

@@ -71,6 +71,7 @@ function reLoad() {
 
 function setAdmin() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+	var clinicId = document.getElementById("clinicId").value;  
 	if (rows.length == 0) {
 		layer.msg("请选择用户");
 		return;
@@ -85,7 +86,7 @@ function setAdmin() {
 			ids[i] = row['userId'];
 		});
 		$.ajax({
-			url: "/clinic/setAdmin",
+			url: "/clinic/setAdmin/"+clinicId,
 			type: "post",
 			data: {
 				'ids': ids

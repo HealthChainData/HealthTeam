@@ -4,10 +4,11 @@ $(function () {
 	//loads();
 });
 function load() {
+	var id = document.getElementById("id").value; 
 	$('#exampleTable')
 		.bootstrapTable({
 			method: 'get', // 服务器数据的请求方式 get or post
-			url: prefix + "/requestStepList", // 服务器数据的加载地址
+			url: prefix + "/requestStepList/"+id, // 服务器数据的加载地址
 			// showRefresh : true,
 			// showToggle : true,
 			// showColumns : true,
@@ -89,10 +90,11 @@ function load() {
 
 
 function loads() {
+	var id = document.getElementById("id").value; 
 	$('#exampleTables')
 		.bootstrapTable({
 			method: 'get', // 服务器数据的请求方式 get or post
-			url: prefix + "/listById", // 服务器数据的加载地址
+			url: prefix + "/listById/"+id, // 服务器数据的加载地址
 			// showRefresh : true,
 			// showToggle : true,
 			// showColumns : true,

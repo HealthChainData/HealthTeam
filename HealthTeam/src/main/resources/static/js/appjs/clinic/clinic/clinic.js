@@ -4,6 +4,7 @@ $(function () {
 });
 
 function load() {
+	console.log("===========>")
 	$('#exampleTable')
 		.bootstrapTreeTable({
 			id: 'clinicId',
@@ -15,12 +16,7 @@ function load() {
 			expandColumn: '2', // 在哪一列上面显示展开按钮
 			striped: true, // 是否各行渐变色
 			bordered: true, // 是否显示边框
-			expandAll: false, // 是否全部展开
-			queryParams: function (params) {
-				return {
-					clinicName: $("#clinicName").val()
-				};
-			},
+			expandAll: false, // 是否全部展
 			columns: [{
 					field: 'id',
 					title: '序号',

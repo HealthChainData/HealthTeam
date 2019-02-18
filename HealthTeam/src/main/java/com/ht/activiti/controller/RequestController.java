@@ -85,7 +85,7 @@ public class RequestController extends BaseController {
 
 	@RequestMapping(value = "/details{id}")
 	public ModelAndView toDetails(Model model, @PathVariable("id") String id) {
-		this.id = id;
+		model.addAttribute("id", id);
 		RequestDO request = requestService.get(id);
 		UserDO user = userService.getUserById(request.getOwnerId());
 		request.setUsername(user.getName());
@@ -258,8 +258,8 @@ public class RequestController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/requestStepList")
-	public PageUtils RequestStepList() {
+	@RequestMapping("/requestStepList/{id}")
+	public PageUtils RequestStepList(@PathVariable("id")String id) {
 		// RequestStepDO requestStepDO = new RequestStepDO();
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("requestId", id);
@@ -282,8 +282,8 @@ public class RequestController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/listById")
-	public PageUtils ListById(@RequestParam Map<String, Object> params) {
+	@RequestMapping("/listById/{id}")
+	public PageUtils ListById(@RequestParam Map<String, Object> params,@PathVariable("id")String id) {
 		Query query = new Query(params);
 		query.put("id", id);
 		List<RequestDO> requestList = requestService.list(query);
