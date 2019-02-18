@@ -104,7 +104,7 @@ public class RequestController extends BaseController {
 
 	@RequestMapping(value = "/push{id}")
 	public ModelAndView toPush(Model model, @PathVariable("id") String id) {
-		this.id = id;
+		model.addAttribute("id", id);
 		RequestDO request = requestService.get(id);
 		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return new ModelAndView("error/200");
@@ -123,7 +123,7 @@ public class RequestController extends BaseController {
 
 	@RequestMapping(value = "/turnover{id}")
 	public ModelAndView toTurnnover(Model model, @PathVariable("id") String id) {
-		this.id = id;
+		model.addAttribute("id", id);
 		RequestDO request = requestService.get(id);
 		if (!request.getOwnerId().equals(getUser().getUserId().toString())) {
 			return new ModelAndView("error/200");
@@ -147,7 +147,7 @@ public class RequestController extends BaseController {
 	 * pageUtils); return "act/request/details"; }
 	 */
 
-	private String id;
+	//private String id;
 
 	@RequestMapping(value = "/add")
 	public ModelAndView toAdd() {
@@ -294,7 +294,7 @@ public class RequestController extends BaseController {
 
 	@PostMapping("/pushSave")
 	@ResponseBody
-	R pushSave(String stepName, String stepDesc, String progressAdd) {
+	R pushSave(String id,String stepName, String stepDesc, String progressAdd) {
 		RequestDO request = requestService.get(id);
 		String progress = request.getRequestProgress();
 		progress = progress.substring(0, progress.indexOf("%"));
@@ -343,7 +343,7 @@ public class RequestController extends BaseController {
 
 	@PostMapping("/turnoverSave")
 	@ResponseBody
-	R turnoverSave(String ownerId, String stepDesc) {
+	R turnoverSave(String id,String ownerId, String stepDesc) {
 		if (ownerId == null || ownerId == "") {
 			return R.userIsNull();
 		}

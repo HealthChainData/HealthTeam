@@ -13,6 +13,7 @@
 						
 
 						<form class="form-horizontal m-t row" id="requestForm">
+						
 							<div class="form-group col-sm-6">
 								<label class="col-sm-4 control-label">请求名称：</label>
 								<div class="col-sm-8">
@@ -44,6 +45,7 @@
 						
 						<p style="color:salmon">请填写您的步骤以及进度：</p>
 						<form class="form-horizontal m-t row" id="pushForm">
+						<input id="id" name="id" th:value="${id}" class="form-control hidden" type="text">
 							<div class="form-group col-sm-6">
 								<label class="col-sm-4 control-label">步驟名称：</label>
 								<div class="col-sm-8">
