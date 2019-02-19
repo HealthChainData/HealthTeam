@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ht.clinic.dao.DiseaseDefineDao">
+
+	<select id="get" resultType="com.ht.clinic.domain.DiseaseDefineDO">
+		select `disease_id`,`disease_name`,`icd_number`,`disease_parent_id`,`mnemonic_code`,`tender_limit`,`curative_limit`,`note` from t_disease_define where disease_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.ht.clinic.domain.DiseaseDefineDO">
+		select `disease_id`,`disease_name`,`icd_number`,`disease_parent_id`,`mnemonic_code`,`tender_limit`,`curative_limit`,`note` from t_disease_define
+        <where>  
+		  		  <if test="diseaseId != null and diseaseId != ''"> and disease_id = #{diseaseId} </if>
+		  		  <if test="diseaseName != null and diseaseName != ''"> and disease_name = #{diseaseName} </if>
+		  		  <if test="icdNumber != null and icdNumber != ''"> and icd_number = #{icdNumber} </if>
+		  		  <if test="diseaseParentId != null and diseaseParentId != ''"> and disease_parent_id = #{diseaseParentId} </if>
+		  		  <if test="mnemonicCode != null and mnemonicCode != ''"> and mnemonic_code = #{mnemonicCode} </if>
+		  		  <if test="tenderLimit != null and tenderLimit != ''"> and tender_limit = #{tenderLimit} </if>
+		  		  <if test="curativeLimit != null and curativeLimit != ''"> and curative_limit = #{curativeLimit} </if>
+		  		  <if test="note != null and note != ''"> and note = #{note} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by disease_id 
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_disease_define
+		 <where>  
+		  		  <if test="diseaseId != null and diseaseId != ''"> and disease_id = #{diseaseId} </if>
+		  		  <if test="diseaseName != null and diseaseName != ''"> and disease_name = #{diseaseName} </if>
+		  		  <if test="icdNumber != null and icdNumber != ''"> and icd_number = #{icdNumber} </if>
+		  		  <if test="diseaseParentId != null and diseaseParentId != ''"> and disease_parent_id = #{diseaseParentId} </if>
+		  		  <if test="mnemonicCode != null and mnemonicCode != ''"> and mnemonic_code = #{mnemonicCode} </if>
+		  		  <if test="tenderLimit != null and tenderLimit != ''"> and tender_limit = #{tenderLimit} </if>
+		  		  <if test="curativeLimit != null and curativeLimit != ''"> and curative_limit = #{curativeLimit} </if>
+		  		  <if test="note != null and note != ''"> and note = #{note} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.ht.clinic.domain.DiseaseDefineDO">
+		insert into t_disease_define
+		(	
+			`disease_name`, 
+			`icd_number`, 
+			`disease_parent_id`, 
+			`mnemonic_code`, 
+			`tender_limit`, 
+			`curative_limit`, 
+			`note`
+		)
+		values
+		(
+			#{diseaseName}, 
+			#{icdNumber}, 
+			#{diseaseParentId}, 
+			#{mnemonicCode}, 
+			#{tenderLimit}, 
+			#{curativeLimit}, 
+			#{note}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.ht.clinic.domain.DiseaseDefineDO">
+		update t_disease_define 
+		<set>
+			<if test="diseaseName != null">`disease_name` = #{diseaseName}, </if>
+			<if test="icdNumber != null">`icd_number` = #{icdNumber}, </if>
+			<if test="diseaseParentId != null">`disease_parent_id` = #{diseaseParentId}, </if>
+			<if test="mnemonicCode != null">`mnemonic_code` = #{mnemonicCode}, </if>
+			<if test="tenderLimit != null">`tender_limit` = #{tenderLimit}, </if>
+			<if test="curativeLimit != null">`curative_limit` = #{curativeLimit}, </if>
+			<if test="note != null">`note` = #{note}</if>
+		</set>
+		where disease_id = #{diseaseId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_disease_define where disease_id = #{value} 
+	</delete>
+	
+	<delete id="removes">
+		delete from t_disease_define where disease_parent_id = #{value} 
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_disease_define where disease_id in 
+		<foreach item="diseaseId" collection="array" open="(" separator="," close=")">
+			#{diseaseId}
+		</foreach>
+	</delete>
+
+</mapper>

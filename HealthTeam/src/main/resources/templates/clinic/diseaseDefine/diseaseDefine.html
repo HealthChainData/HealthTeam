@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<div class="columns col-md-4  col-sm-2 nopadding">
+								<button type="button" class="btn  btn-primary" onclick="add()">
+									<i class="fa fa-plus hidden" aria-hidden="true"></i>增加分类
+								</button>
+							</div>
+						</div>
+						<!-- <div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="searchName" type="text" class="form-control"
+								placeholder="">
+						</div> -->
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+	<div>
+		<script type="text/javascript">
+			var s_edit_h = 'hidden';
+			var s_remove_h = 'hidden';
+			var s_resetPwd_h = 'hidden';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:process:edit">
+		<script type="text/javascript">
+			var s_edit_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:process:edit">
+		<script type="text/javascript">
+			var s_delete_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:process:edit">
+		<script type="text/javascript">
+			var s_update_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:process:edit">
+		<script type="text/javascript">
+			var s_add_h = '';
+		</script>
+	</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript"
+		src="/js/appjs/clinic/diseaseDefine/diseaseDefine.js"></script>
+</body>
+</html>

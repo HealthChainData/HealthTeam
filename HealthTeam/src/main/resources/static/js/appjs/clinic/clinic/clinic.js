@@ -13,7 +13,7 @@ function load() {
 			type: "GET", // 请求数据的ajax类型
 			url: prefix + '/list', // 请求数据的ajax的url
 			ajaxParams: {}, // 请求数据的ajax的data属性
-			expandColumn: '2', // 在哪一列上面显示展开按钮
+			expandColumn: '1', // 在哪一列上面显示展开按钮
 			striped: true, // 是否各行渐变色
 			bordered: true, // 是否显示边框
 			expandAll: false, // 是否全部展
@@ -67,7 +67,7 @@ function load() {
 								value.clinicId +
 								'\')">启用</i></a> ';
 						}
-						var c = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="查看"  onclick="update(\'' +
+						var c = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="修改"  onclick="update(\'' +
 							value.clinicId +
 							'\',\'' +
 								value.clinicName +
