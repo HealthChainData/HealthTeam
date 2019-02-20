@@ -15,7 +15,7 @@ public class ClinicDO implements Serializable {
 	// 机构名称
 	private String clinicName;
 	//机构号
-	private String agencyNumber;
+	private String clinicIndex;
 	// 机构地址
 	private String clinicAddress;
 	// 状态 0:可用 1:不可用
@@ -74,12 +74,13 @@ public class ClinicDO implements Serializable {
 		this.clinicName = clinicName;
 	}
 
-	public String getAgencyNumber() {
-		return agencyNumber;
+	
+	public String getClinicIndex() {
+		return clinicIndex;
 	}
 
-	public void setAgencyNumber(String agencyNumber) {
-		this.agencyNumber = agencyNumber;
+	public void setClinicIndex(String clinicIndex) {
+		this.clinicIndex = clinicIndex;
 	}
 
 	/**

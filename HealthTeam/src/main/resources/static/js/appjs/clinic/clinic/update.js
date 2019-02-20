@@ -39,7 +39,7 @@ function validateRule() {
 			clinicName : {
 				required : true
 			},
-			agencyNumber : {
+			clinicIndex : {
 				required : true
 			}
 		},
@@ -47,7 +47,7 @@ function validateRule() {
 			clinicName : {
 				required : icon + "请输入部门名称"
 			},
-			agencyNumber : {
+			clinicIndex : {
 				required : icon + "请输入机构号"
 			},
 		}
