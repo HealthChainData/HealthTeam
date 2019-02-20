@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ht.clinic.dao.DrugDefineDao">
+
+	<select id="get" resultType="com.ht.clinic.domain.DrugDefineDO">
+		select `drug_id`,`drug_index`,`drug_name`,`drug_parent_id`,`drug_specification`,`manufacturer`,`approval_number`,`major_function`,`usage`,`note` from t_drug_define where drug_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.ht.clinic.domain.DrugDefineDO">
+		select `drug_id`,`drug_index`,`drug_name`,`drug_parent_id`,`drug_specification`,`manufacturer`,`approval_number`,`major_function`,`usage`,`note` from t_drug_define
+        <where>  
+		  		  <if test="drugId != null and drugId != ''"> and drug_id = #{drugId} </if>
+		  		  <if test="drugIndex != null and drugIndex != ''"> and drug_index = #{drugIndex} </if>
+		  		  <if test="drugName != null and drugName != ''"> and drug_name = #{drugName} </if>
+		  		  <if test="drugParentId != null and drugParentId != ''"> and drug_parent_id = #{drugParentId} </if>
+		  		  <if test="drugSpecification != null and drugSpecification != ''"> and drug_specification = #{drugSpecification} </if>
+		  		  <if test="manufacturer != null and manufacturer != ''"> and manufacturer = #{manufacturer} </if>
+		  		  <if test="approvalNumber != null and approvalNumber != ''"> and approval_number = #{approvalNumber} </if>
+		  		  <if test="majorFunction != null and majorFunction != ''"> and major_function = #{majorFunction} </if>
+		  		  <if test="usage != null and usage != ''"> and usage = #{usage} </if>
+		  		  <if test="note != null and note != ''"> and note = #{note} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by drug_id 
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_drug_define
+		 <where>  
+		  		  <if test="drugId != null and drugId != ''"> and drug_id = #{drugId} </if>
+		  		  <if test="drugIndex != null and drugIndex != ''"> and drug_index = #{drugIndex} </if>
+		  		  <if test="drugName != null and drugName != ''"> and drug_name = #{drugName} </if>
+		  		  <if test="drugParentId != null and drugParentId != ''"> and drug_parent_id = #{drugParentId} </if>
+		  		  <if test="drugSpecification != null and drugSpecification != ''"> and drug_specification = #{drugSpecification} </if>
+		  		  <if test="manufacturer != null and manufacturer != ''"> and manufacturer = #{manufacturer} </if>
+		  		  <if test="approvalNumber != null and approvalNumber != ''"> and approval_number = #{approvalNumber} </if>
+		  		  <if test="majorFunction != null and majorFunction != ''"> and major_function = #{majorFunction} </if>
+		  		  <if test="usage != null and usage != ''"> and usage = #{usage} </if>
+		  		  <if test="note != null and note != ''"> and note = #{note} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.ht.clinic.domain.DrugDefineDO">
+		insert into t_drug_define
+		(
+			`drug_index`, 
+			`drug_name`, 
+			`drug_parent_id`, 
+			`drug_specification`, 
+			`manufacturer`, 
+			`approval_number`, 
+			`major_function`, 
+			`usage`, 
+			`note`
+		)
+		values
+		(
+			#{drugIndex}, 
+			#{drugName}, 
+			#{drugParentId}, 
+			#{drugSpecification}, 
+			#{manufacturer}, 
+			#{approvalNumber}, 
+			#{majorFunction}, 
+			#{usage}, 
+			#{note}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.ht.clinic.domain.DrugDefineDO">
+		update t_drug_define 
+		<set>
+			<if test="drugIndex != null">`drug_index` = #{drugIndex}, </if>
+			<if test="drugName != null">`drug_name` = #{drugName}, </if>
+			<if test="drugParentId != null">`drug_parent_id` = #{drugParentId}, </if>
+			<if test="drugSpecification != null">`drug_specification` = #{drugSpecification}, </if>
+			<if test="manufacturer != null">`manufacturer` = #{manufacturer}, </if>
+			<if test="approvalNumber != null">`approval_number` = #{approvalNumber}, </if>
+			<if test="majorFunction != null">`major_function` = #{majorFunction}, </if>
+			<if test="usage != null">`usage` = #{usage}, </if>
+			<if test="note != null">`note` = #{note}</if>
+		</set>
+		where drug_id = #{drugId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_drug_define where drug_id = #{value}
+	</delete>
+	
+	<delete id="removes">
+		delete from t_drug_define where drug_parent_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_drug_define where drug_id in 
+		<foreach item="drugId" collection="array" open="(" separator="," close=")">
+			#{drugId}
+		</foreach>
+	</delete>
+
+</mapper>
