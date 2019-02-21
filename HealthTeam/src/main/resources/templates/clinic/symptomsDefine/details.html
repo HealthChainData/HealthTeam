@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head th:include="include :: header"></head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t row" id="clinicForm">
+							<div class="form-group col-md-6">
+								<label class="col-sm-3 control-label">症状名称：</label>
+								<div class="col-sm-8">
+									<input id="symptoms" name="symptoms" class="form-control"
+										type="text" th:value="${symptomsDefine.symptoms}" readonly>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="col-sm-3 control-label">症状编号：</label>
+								<div class="col-sm-8">
+									<input id="symptomsIndex" name="symptomsIndex" class="form-control"
+										type="text" th:value="${symptomsDefine.symptomsIndex}" readonly>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="col-sm-3 control-label">部位：</label>
+								<div class="col-sm-8">
+									<input id="bodyPartsId" name="bodyPartsId" class="form-control"
+										type="text" th:value="${symptomsDefine.bodyPartsId}" readonly>
+								</div>
+							</div>
+							<div class="col-xs-12 nopadding">
+								<div class="form-group col-md-6">
+									<label class="col-sm-3 control-label">症状描述：</label>
+									<div class="col-sm-8">
+										<textarea readonly style="width:100%;height:100px;" class="form-control" type="text" th:text="${symptomsDefine.symptomsDescribe}"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="col-sm-3 control-label">常见人群：</label>
+								<div class="col-sm-8">
+									<input id="oftenPeople" name="oftenPeople" class="form-control"
+										type="text" th:value="${symptomsDefine.oftenPeople}" readonly>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="col-sm-3 control-label">备注：</label>
+								<div class="col-sm-8">
+									<input id="note" name="note" class="form-control"
+										type="text" th:value="${symptomsDefine.note}" readonly>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div th:include="include::footer"></div>
+	<!-- <script type="text/javascript" src="/js/appjs/clinic/drugDefine/details.js">
+	</script> -->
+</body>
+
+</html>
