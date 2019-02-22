@@ -47,3 +47,15 @@ function validateRule() {
 		}
 	})
 }
+var openBodyParts = function(){
+	layer.open({
+		type:2,
+		title:"选择部位",
+		area : [ '300px', '450px' ],
+		content:"/bodyParts/treeView"
+	})
+}
+function loadBodyParts(bodyPartsId,bodyPartsName){
+	$("#bodyPartsId").val(bodyPartsId);
+	$("#bodyPartsName").val(bodyPartsName);
+}

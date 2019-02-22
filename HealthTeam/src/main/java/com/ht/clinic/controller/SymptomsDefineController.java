@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ht.clinic.domain.BodyPartsDO;
 import com.ht.clinic.domain.SymptomsDefineDO;
+import com.ht.clinic.service.BodyPartsService;
 import com.ht.clinic.service.SymptomsDefineService;
 import com.ht.common.utils.PageUtils;
 import com.ht.common.utils.Query;
@@ -37,6 +39,9 @@ public class SymptomsDefineController {
 	@Autowired
 	private SymptomsDefineService symptomsDefineService;
 	
+	@Autowired
+	private BodyPartsService bodyPartsService;
+	
 	@GetMapping()
 	String SymptomsDefine(){
 	    return "clinic/symptomsDefine/symptomsDefine";
@@ -48,10 +53,19 @@ public class SymptomsDefineController {
 		//查询列表数据
         Query query = new Query(params);
 		List<SymptomsDefineDO> symptomsDefineList = symptomsDefineService.list(query);
+		for (SymptomsDefineDO symptomsDefineDO : symptomsDefineList) {
+			if(symptomsDefineDO.getBodyPartsId() != null && !symptomsDefineDO.getBodyPartsId().equals("")) {
+				BodyPartsDO bodyParts = bodyPartsService.get(Integer.valueOf(symptomsDefineDO.getBodyPartsId()));
+				if(bodyParts!=null) {
+					symptomsDefineDO.setBodyPartsId(bodyParts.getBodyPartsName());
+				}
+			}
+		}
 		int total = symptomsDefineService.count(query);
 		PageUtils pageUtils = new PageUtils(symptomsDefineList, total);
 		return pageUtils;
 	}
+	
 	
 	@GetMapping("/add")
 	String add(){
@@ -61,6 +75,12 @@ public class SymptomsDefineController {
 	@GetMapping("/edit/{symptomsId}")
 	String edit(@PathVariable("symptomsId") Integer symptomsId,Model model){
 		SymptomsDefineDO symptomsDefine = symptomsDefineService.get(symptomsId);
+		if(symptomsDefine.getBodyPartsId() != null && !symptomsDefine.getBodyPartsId().equals("")) {
+			BodyPartsDO bodyParts = bodyPartsService.get(Integer.valueOf(symptomsDefine.getBodyPartsId()));
+			if(bodyParts!=null) {
+				symptomsDefine.setBodyPartsId(bodyParts.getBodyPartsName());
+			}
+		}
 		model.addAttribute("symptomsDefine", symptomsDefine);
 	    return "clinic/symptomsDefine/details";
 	}
@@ -68,6 +88,12 @@ public class SymptomsDefineController {
 	@GetMapping("/update/{symptomsId}")
 	String update(@PathVariable("symptomsId") Integer symptomsId,Model model){
 		SymptomsDefineDO symptomsDefine = symptomsDefineService.get(symptomsId);
+		if(symptomsDefine.getBodyPartsId() != null && !symptomsDefine.getBodyPartsId().equals("")) {
+			BodyPartsDO bodyParts = bodyPartsService.get(Integer.valueOf(symptomsDefine.getBodyPartsId()));
+			if(bodyParts!=null) {
+				symptomsDefine.setBodyPartsId(bodyParts.getBodyPartsName());
+			}
+		}
 		model.addAttribute("symptomsDefine", symptomsDefine);
 	    return "clinic/symptomsDefine/update";
 	}

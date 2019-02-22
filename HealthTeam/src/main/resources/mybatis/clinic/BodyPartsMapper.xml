@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ht.clinic.dao.BodyPartsDao">
+
+	<select id="get" resultType="com.ht.clinic.domain.BodyPartsDO">
+		select `body_parts_id`,`body_parts_name`,`body_parts_parent_id` from t_body_parts where body_parts_id = #{value}
+	</select>
+	
+	<select id="getTreeByFlag" resultType="com.ht.clinic.domain.BodyPartsDO">
+		select `body_parts_id`,`body_parts_name`,`body_parts_parent_id` from t_body_parts
+	</select>
+	
+	<select id="list" resultType="com.ht.clinic.domain.BodyPartsDO">
+		select `body_parts_id`,`body_parts_name`,`body_parts_parent_id` from t_body_parts
+        <where>  
+		  		  <if test="bodyPartsId != null and bodyPartsId != ''"> and body_parts_id = #{bodyPartsId} </if>
+		  		  <if test="bodyPartsName != null and bodyPartsName != ''"> and body_parts_name = #{bodyPartsName} </if>
+		  		  <if test="bodyPartsParentId != null and bodyPartsParentId != ''"> and body_parts_parent_id = #{bodyPartsParentId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by body_parts_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_body_parts
+		 <where>  
+		  		  <if test="bodyPartsId != null and bodyPartsId != ''"> and body_parts_id = #{bodyPartsId} </if>
+		  		  <if test="bodyPartsName != null and bodyPartsName != ''"> and body_parts_name = #{bodyPartsName} </if>
+		  		  <if test="bodyPartsParentId != null and bodyPartsParentId != ''"> and body_parts_parent_id = #{bodyPartsParentId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.ht.clinic.domain.BodyPartsDO">
+		insert into t_body_parts
+		(
+			`body_parts_id`, 
+			`body_parts_name`, 
+			`body_parts_parent_id`
+		)
+		values
+		(
+			#{bodyPartsId}, 
+			#{bodyPartsName}, 
+			#{bodyPartsParentId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.ht.clinic.domain.BodyPartsDO">
+		update t_body_parts 
+		<set>
+			<if test="bodyPartsName != null">`body_parts_name` = #{bodyPartsName}, </if>
+			<if test="bodyPartsParentId != null">`body_parts_parent_id` = #{bodyPartsParentId}</if>
+		</set>
+		where body_parts_id = #{bodyPartsId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_body_parts where body_parts_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_body_parts where body_parts_id in 
+		<foreach item="bodyPartsId" collection="array" open="(" separator="," close=")">
+			#{bodyPartsId}
+		</foreach>
+	</delete>
+
+</mapper>

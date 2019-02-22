@@ -31,6 +31,7 @@ public class SymptomsDefineDO implements Serializable {
 	private String departmentId;
 	//备注
 	private String note;
+	
 
 	/**
 	 * 设置：症状id
