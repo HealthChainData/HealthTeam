@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<div class="columns col-md-4  col-sm-2 nopadding">
+								<button type="button" class="btn  btn-primary" onclick="add()">
+									<i class="fa fa-plus hidden" aria-hidden="true"></i>增加
+								</button>
+							</div>
+						</div>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select data-placeholder="--字段类型--" name="fieldType" id="fieldType"
+								class="form-control chosen-select-status" tabindex="2" required>
+								<option value="">--选择类型--</option>
+								<option value="C">字符</option>
+								<option value="N">数字</option>
+								<option value="D">日期</option>
+								<option value="T">时间</option>
+							</select>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="classfyId" name="classfyId" type="text"
+								class="form-control" placeholder="字段分类">
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="fieldName" name="fieldName" type="text"
+								class="form-control" placeholder="字段名">
+						</div>
+						
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+	<div>
+		<script type="text/javascript">
+			var s_edit_h = 'hidden';
+			var s_remove_h = 'hidden';
+			var s_resetPwd_h = 'hidden';
+		</script>
+	</div>
+	<div>
+		<script type="text/javascript">
+			var s_edit_h = '';
+		</script>
+	</div>
+	<div>
+		<script type="text/javascript">
+			var s_update_h = '';
+		</script>
+	</div>
+	<div>
+		<script type="text/javascript">
+			var s_ban_h = '';
+		</script>
+	</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript"
+		src="/js/appjs/clinic/healthDataDefine/healthDataDefine.js"></script>
+</body>
+</html>
