@@ -112,6 +112,10 @@ public class ClinicController extends BaseController {
 	@GetMapping("/set{clinicId}")
 	ModelAndView set(@PathVariable("clinicId") String clinicId,Model model) {
 		model.addAttribute("clinicId", clinicId);
+		ClinicDO clinic = clinicService.get(clinicId);
+		if(clinic.getSuperAdminId()!=null) {
+			model.addAttribute("userId", clinic.getSuperAdminId());
+		}
 		return new ModelAndView("clinic/clinic/set");
 	}
 

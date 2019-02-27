@@ -1,5 +1,6 @@
 package com.ht.clinic.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ht.clinic.domain.ClinicDO;
 import com.ht.clinic.domain.HealthDataDefineDO;
 import com.ht.clinic.service.HealthDataDefineService;
+import com.ht.common.controller.BaseController;
 import com.ht.common.utils.PageUtils;
 import com.ht.common.utils.Query;
 import com.ht.common.utils.R;
@@ -33,7 +35,7 @@ import com.ht.common.utils.R;
  
 @Controller
 @RequestMapping("/healthDataDefine")
-public class HealthDataDefineController {
+public class HealthDataDefineController extends BaseController{
 	@Autowired
 	private HealthDataDefineService healthDataDefineService;
 	
@@ -122,6 +124,8 @@ public class HealthDataDefineController {
 	@ResponseBody
 	@PostMapping("/save")
 	public R save( HealthDataDefineDO healthDataDefine){
+		healthDataDefine.setCreateUserId(getUserId().toString());
+		healthDataDefine.setCreateTime(new Date());
 		if(healthDataDefineService.save(healthDataDefine)>0){
 			return R.ok();
 		}
@@ -133,8 +137,12 @@ public class HealthDataDefineController {
 	@ResponseBody
 	@RequestMapping("/update")
 	public R update( HealthDataDefineDO healthDataDefine){
-		healthDataDefineService.update(healthDataDefine);
-		return R.ok();
+		healthDataDefine.setModifyUserId(getUserId().toString());
+		healthDataDefine.setModifyTime(new Date());
+		if(healthDataDefineService.update(healthDataDefine)>0) {
+			return R.ok();
+		}
+		return R.error();
 	}
 	
 	/**

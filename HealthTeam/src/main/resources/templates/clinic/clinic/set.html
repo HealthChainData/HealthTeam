@@ -22,6 +22,7 @@
 					<div class="ibox-body">
 						<div class="fixed-table-toolbar">
 							<input id="clinicId" name="clinicId" th:value="${clinicId}" class="form-control hidden" type="text">
+							<input id="userId" name="userId" th:value="${userId}" class="form-control hidden" type="text">
 							<button shiro:hasPermission="sys:user:batchRemove" type="button" class="btn  btn-primary" onclick="setAdmin()">
 								<i class="fa fa-trash hidden" aria-hidden="true"></i>设置
 							</button>
