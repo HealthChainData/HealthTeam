@@ -1,5 +1,6 @@
 $().ready(function() {
 	validateRule();
+	loadType();
 });
 
 $.validator.setDefaults({
@@ -11,7 +12,7 @@ function save() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/drugDefine/saveType",
+		url : "/drugDefine/save",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {
@@ -32,16 +33,43 @@ function save() {
 	});
 
 }
+
+function loadType() {
+	var html = "";
+	$.ajax({
+		url: "/drugDefine/drugTypeList",
+		success: function (data) {
+			//加载数据
+			for (var i = 0; i < data.length; i++) {
+				html += '<option value="' + data[i].id + '">' + data[i].drugTypeName + '</option>'
+			}
+			$(".chosen-select-type").append(html);
+			$(".chosen-select-type").chosen({
+				maxHeight: 200
+			});
+			//点击事件
+			$('.chosen-select-type').on('change', function (e, params) {
+				console.log(params.selected);
+				var opt = {
+					query: {
+						type: params.selected,
+					}
+				}
+				$('#exampleTable').bootstrapTable('refresh', opt);
+			});
+		}
+	});
+}
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			drugTypeName : {
+			drugName : {
 				required : true
 			}
 		},
 		messages : {
-			drugTypeName : {
+			drugName : {
 				required : icon + "请输入名称"
 			}
 		}

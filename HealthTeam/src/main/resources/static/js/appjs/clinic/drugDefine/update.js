@@ -1,6 +1,7 @@
 // 以下为官方示例
 $().ready(function() {
 	validateRule();
+	loadType();
 });
 
 $.validator.setDefaults({
@@ -31,7 +32,33 @@ function update() {
 	});
 
 }
-
+function loadType() {
+	var html = "";
+	var drugTypeId = $('#drugTypeId').val();
+	$.ajax({
+		url: "/drugDefine/drugTypeList/"+drugTypeId,
+		success: function (data) {
+			//加载数据
+			for (var i = 0; i < data.length; i++) {
+				html += '<option value="' + data[i].id + '">' + data[i].drugTypeName + '</option>'
+			}
+			$(".chosen-select-type").append(html);
+			$(".chosen-select-type").chosen({
+				maxHeight: 200
+			});
+			//点击事件
+			$('.chosen-select-type').on('change', function (e, params) {
+				console.log(params.selected);
+				var opt = {
+					query: {
+						type: params.selected,
+					}
+				}
+				$('#exampleTable').bootstrapTable('refresh', opt);
+			});
+		}
+	});
+}
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({

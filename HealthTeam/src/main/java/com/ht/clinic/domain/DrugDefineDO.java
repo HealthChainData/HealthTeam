@@ -10,7 +10,7 @@ import java.util.Date;
  * 
  * @author chglee
  * @email 1992lcg@163.com
- * @date 2019-02-19 15:20:41
+ * @date 2019-02-27 10:23:57
  */
 public class DrugDefineDO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,8 +22,8 @@ public class DrugDefineDO implements Serializable {
 	private String drugIndex;
 	//药品名称
 	private String drugName;
-	//药品父ID
-	private Integer drugParentId;
+	//药品类型id
+	private Integer drugTypeId;
 	//药品规格
 	private String drugSpecification;
 	//生产厂家
@@ -36,8 +36,25 @@ public class DrugDefineDO implements Serializable {
 	private String usage;
 	//备注
 	private String note;
-
+	//修改人ID
+	private String modifyUserId;
+	//修改时间
+	private Date modifyTime;
+	//新建人ID
+	private String createUserId;
+	//新建时间
+	private Date createTime;
 	
+	private String drugTypeName;
+	
+	
+
+	public String getDrugTypeName() {
+		return drugTypeName;
+	}
+	public void setDrugTypeName(String drugTypeName) {
+		this.drugTypeName = drugTypeName;
+	}
 	public String getId() {
 		return id;
 	}
@@ -81,16 +98,16 @@ public class DrugDefineDO implements Serializable {
 		return drugName;
 	}
 	/**
-	 * 设置：药品父ID
+	 * 设置：药品类型id
 	 */
-	public void setDrugParentId(Integer drugParentId) {
-		this.drugParentId = drugParentId;
+	public void setDrugTypeId(Integer drugTypeId) {
+		this.drugTypeId = drugTypeId;
 	}
 	/**
-	 * 获取：药品父ID
+	 * 获取：药品类型id
 	 */
-	public Integer getDrugParentId() {
-		return drugParentId;
+	public Integer getDrugTypeId() {
+		return drugTypeId;
 	}
 	/**
 	 * 设置：药品规格
@@ -163,5 +180,53 @@ public class DrugDefineDO implements Serializable {
 	 */
 	public String getNote() {
 		return note;
+	}
+	/**
+	 * 设置：修改人ID
+	 */
+	public void setModifyUserId(String modifyUserId) {
+		this.modifyUserId = modifyUserId;
+	}
+	/**
+	 * 获取：修改人ID
+	 */
+	public String getModifyUserId() {
+		return modifyUserId;
+	}
+	/**
+	 * 设置：修改时间
+	 */
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+	/**
+	 * 获取：修改时间
+	 */
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+	/**
+	 * 设置：新建人ID
+	 */
+	public void setCreateUserId(String createUserId) {
+		this.createUserId = createUserId;
+	}
+	/**
+	 * 获取：新建人ID
+	 */
+	public String getCreateUserId() {
+		return createUserId;
+	}
+	/**
+	 * 设置：新建时间
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	/**
+	 * 获取：新建时间
+	 */
+	public Date getCreateTime() {
+		return createTime;
 	}
 }

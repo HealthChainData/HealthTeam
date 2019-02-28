@@ -19,7 +19,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ht.clinic.domain.DiseaseDefineDO;
 import com.ht.clinic.domain.DrugDefineDO;
+import com.ht.clinic.domain.DrugTypeDO;
+import com.ht.clinic.domain.HealthDataDefineDO;
 import com.ht.clinic.service.DrugDefineService;
+import com.ht.clinic.service.DrugTypeService;
+import com.ht.common.domain.DictDO;
 import com.ht.common.utils.PageUtils;
 import com.ht.common.utils.Query;
 import com.ht.common.utils.R;
@@ -38,6 +42,9 @@ public class DrugDefineController {
 	@Autowired
 	private DrugDefineService drugDefineService;
 
+	@Autowired
+	private DrugTypeService drugTypeService;
+
 	@GetMapping()
 	String DrugDefine() {
 		return "clinic/drugDefine/drugDefine";
@@ -45,47 +52,51 @@ public class DrugDefineController {
 
 	@ResponseBody
 	@GetMapping("/list")
-	public List<DrugDefineDO> list() {
+	public PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
 		Map<String, Object> query = new HashMap<>(16);
 		List<DrugDefineDO> drugDefineList = drugDefineService.list(query);
 		int j = 1;
 		for (int i = 0; i < drugDefineList.size(); i++) {
-			if (drugDefineList.get(i).getDrugParentId() == null || drugDefineList.get(i).getDrugParentId().equals("")) {
-				drugDefineList.get(i).setId(String.valueOf(j));
-				j = j + 1;
+			if(drugDefineList.get(i).getDrugTypeId()!=null) {
+				DrugTypeDO drugTypeDO = drugTypeService.get(drugDefineList.get(i).getDrugTypeId());
+				drugDefineList.get(i).setDrugTypeName(drugTypeDO.getDrugTypeName());
 			}
+			drugDefineList.get(i).setId(String.valueOf(j));
+			j = j + 1;
 		}
-		return drugDefineList;
+		int total = drugDefineService.count(query);
+		PageUtils pageUtils = new PageUtils(drugDefineList, total);
+		return pageUtils;
 	}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping("/list") public PageUtils list(@RequestParam Map<String, Object>
+	 * params){ //查询列表数据 Query query = new Query(params); List<DrugDefineDO>
+	 * drugDefineList = drugDefineService.list(query); int total =
+	 * drugDefineService.count(query); PageUtils pageUtils = new
+	 * PageUtils(drugDefineList, total); return pageUtils; }
+	 */
 
 	@GetMapping("/add")
 	String add() {
 		return "clinic/drugDefine/add";
 	}
 
-	@GetMapping("/adds/{drugId}")
-	ModelAndView adds(@PathVariable("drugId") Integer drugId, Model model) {
-		DrugDefineDO drugDefine = drugDefineService.get(drugId);
-		model.addAttribute("drugId", drugId);
-		if (drugDefine != null) {
-			model.addAttribute("drugName", drugDefine.getDrugName());
-		}
+	@GetMapping("/adds")
+	ModelAndView adds() {
 		return new ModelAndView("clinic/drugDefine/adds");
 	}
 
 	@GetMapping("/edit/{drugId}")
 	ModelAndView edit(@PathVariable("drugId") Integer drugId, Model model) {
 		DrugDefineDO drugDefine = drugDefineService.get(drugId);
-		model.addAttribute("drugDefine", drugDefine);
-		String drugParentName = drugDefine.getDrugName();
-		if (drugDefine.getDrugParentId() != null) {
-			DrugDefineDO drugDefine1 = drugDefineService.get(drugDefine.getDrugParentId());
-			if (drugDefine1 != null) {
-				drugParentName = drugDefine1.getDrugName();
-			}
+		if(drugDefine.getDrugTypeId()!=null) {
+			DrugTypeDO drugTypeDO = drugTypeService.get(drugDefine.getDrugTypeId());
+			model.addAttribute("drugTypeName", drugTypeDO.getDrugTypeName());
 		}
-		model.addAttribute("drugParentName", drugParentName);
+		model.addAttribute("drugDefine", drugDefine);
 		return new ModelAndView("clinic/drugDefine/details");
 	}
 
@@ -95,10 +106,45 @@ public class DrugDefineController {
 	@ResponseBody
 	@PostMapping("/save")
 	public R save(DrugDefineDO drugDefine) {
-		if (drugDefine.getDrugId() != null) {
-			drugDefine.setDrugParentId(drugDefine.getDrugId());
+		if (drugDefine.getDrugTypeId() == null || drugDefine.getDrugTypeId().equals("")) {
+			return R.drugTypeIsNull();
 		}
 		if (drugDefineService.save(drugDefine) > 0) {
+			return R.ok();
+		}
+		return R.error();
+	}
+
+	@ResponseBody
+	@GetMapping("/drugTypeList/{drugTypeId}")
+	public List<DrugTypeDO> drugTypeList(@PathVariable("drugTypeId") Integer drugTypeId) {
+		Map<String, Object> map = new HashMap<>(16);
+		List<DrugTypeDO> drugTypeList = drugTypeService.list(map);
+		if(drugTypeId!=null) {
+			for (int i = 0; i < drugTypeList.size(); i++) {
+				if(drugTypeList.get(i).getId().equals(drugTypeId)) {
+					drugTypeList.remove(i);
+				}
+			}
+		}
+		return drugTypeList;
+	}
+	
+	@ResponseBody
+	@GetMapping("/drugTypeList")
+	public List<DrugTypeDO> drugTypeList() {
+		Map<String, Object> map = new HashMap<>(16);
+		List<DrugTypeDO> drugTypeList = drugTypeService.list(map);
+		return drugTypeList;
+	}
+
+	/**
+	 * 保存药品类型
+	 */
+	@ResponseBody
+	@PostMapping("/saveType")
+	public R saveType(DrugTypeDO drugTypeDO) {
+		if (drugTypeService.save(drugTypeDO) > 0) {
 			return R.ok();
 		}
 		return R.error();
@@ -120,38 +166,28 @@ public class DrugDefineController {
 	@PostMapping("/remove")
 	@ResponseBody
 	public R remove(Integer drugId) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("drugParentId", drugId);
 		if (drugDefineService.remove(drugId) > 0) {
-			if(drugDefineService.count(map)>0) {
-				if(drugDefineService.removes(drugId)>0) {
-					return R.ok();
-				}
-			}
 			return R.ok();
 		}
 		return R.error();
 	}
-	
+
 	@GetMapping("/update/{drugId}")
-	ModelAndView update(Model model,@PathVariable("drugId") Integer drugId) {
+	ModelAndView update(Model model, @PathVariable("drugId") Integer drugId) {
 		DrugDefineDO drugDefine = drugDefineService.get(drugId);
 		model.addAttribute("drugDefine", drugDefine);
 		return new ModelAndView("clinic/drugDefine/update");
 	}
-	
+
 	@GetMapping("/updates/{drugId}")
-	ModelAndView updates(Model model,@PathVariable("drugId") Integer drugId) {
+	ModelAndView updates(Model model, @PathVariable("drugId") Integer drugId) {
 		DrugDefineDO drugDefine = drugDefineService.get(drugId);
 		model.addAttribute("drugDefine", drugDefine);
-		String drugParentName = drugDefine.getDrugName();
-		if (drugDefine.getDrugParentId() != null) {
-			DrugDefineDO drugDefine1 = drugDefineService.get(drugDefine.getDrugParentId());
-			if (drugDefine1 != null) {
-				drugParentName = drugDefine1.getDrugName();
-			}
+		DrugTypeDO drugTypeDO = null;
+		if(drugDefine.getDrugTypeId()!=null) {
+			drugTypeDO = drugTypeService.get(drugDefine.getDrugTypeId());	
 		}
-		model.addAttribute("drugParentName", drugParentName);
+		model.addAttribute("drugTypeDO", drugTypeDO);
 		return new ModelAndView("clinic/drugDefine/updates");
 	}
 

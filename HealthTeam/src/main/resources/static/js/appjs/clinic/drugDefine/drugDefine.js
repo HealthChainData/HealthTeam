@@ -5,18 +5,38 @@ $(function() {
 
 function load() {
 	$('#exampleTable')
-			.bootstrapTreeTable(
+			.bootstrapTable(
 					{
-						id : 'drugId',
-						code : 'drugId',
-						parentCode : 'drugParentId',
-						type : "GET", // 请求数据的ajax类型
-						url : prefix + '/list', // 请求数据的ajax的url
-						ajaxParams : {}, // 请求数据的ajax的data属性
-						expandColumn : '0', // 在哪一列上面显示展开按钮
-						striped : true, // 是否各行渐变色
-						bordered : true, // 是否显示边框
-						expandAll : false, // 是否全部展
+						method : 'get', // 服务器数据的请求方式 get or post
+						url : prefix + "/list", // 服务器数据的加载地址
+						// showRefresh : true,
+						// showToggle : true,
+						// showColumns : true,
+						iconSize : 'outline',
+						// toolbar : '#exampleToolbar',
+						striped : true, // 设置为true会有隔行变色效果
+						dataType : "json", // 服务器返回的数据类型
+						pagination : true, // 设置为true会在底部显示分页条
+						// queryParamsType : "limit",
+						// //设置为limit则会发送符合RESTFull格式的参数
+						singleSelect : false, // 设置为true将禁止多选
+						// contentType : "application/x-www-form-urlencoded",
+						// //发送到服务器的数据编码类型
+						pageSize : 10, // 如果设置了分页，每页数据条数
+						pageNumber : 1, // 如果设置了分布，首页页码
+						// search : true, // 是否显示搜索框
+						showColumns : false, // 是否显示内容下拉框（选择显示的列）
+						sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者
+						// "server"
+						queryParams : function(params) {
+							return {
+								// 说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
+								limit : params.limit,
+								offset : params.offset,
+								name : ''
+							// id : id
+							};
+						},
 						columns : [
 								{
 									field : 'id',
@@ -25,6 +45,10 @@ function load() {
 								{
 									field : 'drugName',
 									title : '药品名称'
+								},
+								{
+									field : 'drugTypeName',
+									title : '药品分类'
 								},
 								{
 									field : 'drugIndex',
@@ -50,31 +74,31 @@ function load() {
 										var a = '<a class="btn btn-primary btn-sm '
 												+ s_edit_h
 												+ '" href="#" mce_href="#" title="查看"  onclick="edit(\''
-												+ value.drugId
+												+ row.drugId
 												+ '\')">查看</a> ';
 										var b = '<a class="btn btn-primary btn-sm '
 												+ s_delete_h
 												+ '" href="#" mce_href="#" title="删除"  onclick="remove(\''
-												+ value.drugId
+												+ row.drugId
 												+ '\',\''
-												+ value.drugName
+												+ row.drugName
 												+ '\')">删除</a> ';
 										var c = '<a class="btn btn-primary btn-sm '
 												+ s_update_h
 												+ '" href="#" mce_href="#" title="修改"  onclick="updates(\''
-												+ value.drugId
+												+ row.drugId
 												+ '\',\''
-												+ value.drugName
+												+ row.drugName
 												+ '\')">修改</a> ';
-										if (value.drugParentId == null
+										/*if (value.drugParentId == null
 												|| value.drugParentId == '') {
 											c = '<a class="btn btn-primary btn-sm '
 													+ s_update_h
 													+ '" href="#" mce_href="#" title="修改"  onclick="update(\''
 													+ value.drugId
 													+ '\')">修改</a> ';
-										}
-										var d = '';
+										}*/
+										/*var d = '';
 										if (value.drugParentId == null
 												|| value.drugParentId == '') {
 											var d = '<a class="btn btn-primary btn-sm '
@@ -84,8 +108,8 @@ function load() {
 													+ '\',\''
 													+ value.drugName
 													+ '\')">增加药品</a> ';
-										}
-										return a + b + c + d;
+										}*/
+										return a + b + c ;
 									}
 								} ]
 					});
@@ -103,14 +127,24 @@ function add() {
 		content : prefix + '/add' // iframe的url
 	});
 }
-function adds(drugId, drugName) {
+function addType() {
 	layer.open({
 		type : 2,
-		title : drugName + '类型增加分类',
+		title : '增加',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '220px' ],
+		content : prefix + '/add' // iframe的url
+	});
+}
+function adds() {
+	layer.open({
+		type : 2,
+		title :  '增加药品',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '620px' ],
-		content : prefix + '/adds/' + drugId // iframe的url
+		content : prefix + '/adds' // iframe的url
 	});
 }
 function edit(drugId) {
@@ -124,7 +158,7 @@ function edit(drugId) {
 	});
 }
 function remove(id,name) {
-	layer.confirm('确定要删除' + name + '？如果该药品目录下还有其他药品时将会一起删除。', {
+	layer.confirm('确定要删除' + name + '？', {
 		btn : [ '确定', '取消' ]
 	}, function() {
 		$.ajax({
@@ -151,7 +185,7 @@ function updates(drugId,drugName) {
 		title :drugName + '修改',
 		maxmin : true,
 		shadeClose : false,
-		area : [ '800px', '520px' ],
+		area : [ '800px', '620px' ],
 		content : prefix + '/updates/' + drugId // iframe的url
 	});
 }

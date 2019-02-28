@@ -10,13 +10,16 @@
 					<form class="form-horizontal m-t" id="signupForm">
 						<input id="drugId" name="drugId" th:value="${drugDefine.drugId}"
 							type="hidden">
-						<div class="form-group col-md-6">
-							<label class="col-sm-3 control-label">药品所属类型：</label>
-							<div class="col-sm-8">
-								<input class="form-control" type="text"
-									th:value="${drugParentName}" readonly>
+						<div class="form-group">
+								<label class="col-sm-3 control-label">药品类型：</label>
+								<div class="col-sm-8">
+									<select data-placeholder="--药品类型--" name="drugTypeId"
+										id="drugTypeId" class="form-control chosen-select-type"
+										tabindex="2" required>
+										<option th:value="${drugTypeDO.id}" th:text="${drugTypeDO.drugTypeName}"></option>
+									</select>
+								</div>
 							</div>
-						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">药品名称：</label>
 							<div class="col-sm-8">
@@ -28,7 +31,7 @@
 							<label class="col-sm-3 control-label">药品编号：</label>
 							<div class="col-sm-8">
 								<input id="drugIndex" name="drugIndex" class="form-control"
-									type="text" th:value="${drugDefine.drugIndex}">
+									type="text" th:value="${drugDefine.drugIndex}" >
 							</div>
 						</div>
 						<div class="form-group">
@@ -87,7 +90,6 @@
 	<div th:include="include::footer"></div>
 	<script type="text/javascript"
 		src="/js/appjs/clinic/drugDefine/update.js">
-		
 	</script>
 </body>
 </html>

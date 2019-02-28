@@ -35,8 +35,14 @@ public class R extends HashMap<String, Object> {
 		return error(4, "请选择请求类型");
 	}
 	
+	
+	
 	public static R srcIsNull() {
 		return error(5, "请选择请求来源");
+	}
+	
+	public static R drugTypeIsNull() {
+		return error(6, "请选择药品类型");
 	}
 
 	public static R error(String msg) {
