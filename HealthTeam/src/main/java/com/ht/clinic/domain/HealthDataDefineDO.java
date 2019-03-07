@@ -26,8 +26,6 @@ public class HealthDataDefineDO implements Serializable {
 	private String fieldDesc;
 	//字段类型,C:字符  N:数字  D:日期  T:时间 (必须填）
 	private String fieldType;
-	//字段单位
-	private String fieldUnit;
 	//特殊类型,疾病 症状 药品 食物
 	private String specialType;
 	//字段长度
@@ -52,7 +50,15 @@ public class HealthDataDefineDO implements Serializable {
 	private String createUserId;
 	//新建时间
 	private Date createTime;
-
+	
+	private String version;
+	
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
 	/**
 	 * 设置：字段id
 	 */
@@ -124,18 +130,6 @@ public class HealthDataDefineDO implements Serializable {
 	 */
 	public String getFieldType() {
 		return fieldType;
-	}
-	/**
-	 * 设置：字段单位
-	 */
-	public void setFieldUnit(String fieldUnit) {
-		this.fieldUnit = fieldUnit;
-	}
-	/**
-	 * 获取：字段单位
-	 */
-	public String getFieldUnit() {
-		return fieldUnit;
 	}
 	/**
 	 * 设置：特殊类型,疾病 症状 药品 食物

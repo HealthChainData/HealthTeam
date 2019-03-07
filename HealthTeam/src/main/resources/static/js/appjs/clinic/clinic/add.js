@@ -37,7 +37,20 @@ function validateRule() {
 			clinicName : {
 				required : true
 			},
-			agencyNumber : {
+			clinicIndex : {
+				required : true,
+				remote : {
+					url : "/clinic/exit", // 后台处理程序
+					type : "post", // 数据发送方式
+					dataType : "json", // 接受数据格式
+					data : { // 要传递的数据
+						username : function() {
+							return $("#clinicIndex").val();
+						}
+					}
+				}
+			},
+			systemName: {
 				required : true
 			}
 		},
@@ -45,8 +58,12 @@ function validateRule() {
 			clinicName : {
 				required : icon + "请输入部门名称"
 			},
-			agencyNumber : {
-				required : icon + "请输入机构号"
+			clinicIndex : {
+				required : icon + "请输入机构号",
+				remote : icon + "机构号已经存在"
+			},
+			systemName : {
+				required : icon + "请输入系统名称"
 			},
 		}
 	})

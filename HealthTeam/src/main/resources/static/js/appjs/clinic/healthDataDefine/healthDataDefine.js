@@ -33,7 +33,9 @@ function load() {
 								// 说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit : params.limit,
 								offset : params.offset,
-								name : ''
+								fieldName : $('#fieldName').val(),
+								classfyId : $('#classfyId').val(),
+								fieldType : $('#fieldType').val()
 							// id : id
 							};
 						},
@@ -54,9 +56,9 @@ function load() {
 									field : 'flag',
 									title : '状态',
 									formatter : function(value, row, index) {
-										if (row.flag == '0') {
+										if (row.flag == '1') {
 											return '<span class="label label-primary">可用</span>';
-										} else if (row.flag == '1') {
+										} else if (row.flag == '0') {
 											return '<span class="label label-danger">禁用</span>';
 										}
 									}
@@ -93,13 +95,13 @@ function load() {
 												+ s_edit_h
 												+ '" href="#" mce_href="#" title="查看"  onclick="edit(\''
 												+ row.defineId + '\')">查看</a> ';
-										if (row.flag == 0) {
+										if (row.flag == 1) {
 											var b = '<a class="btn btn-warning btn-sm '
 													+ s_ban_h
 													+ '" href="#" title="禁用"  mce_href="#" onclick="ban(\''
 													+ row.defineId
 													+ '\')">禁用</i></a> ';
-										} else if (row.flag == 1) {
+										} else if (row.flag == 0) {
 											var b = '<a class="btn btn-info btn-sm '
 													+ s_ban_h
 													+ '" href="#" title="启用"  mce_href="#" onclick="start(\''

@@ -73,7 +73,7 @@ public class HealthDataDefineController extends BaseController{
 			healthDataDefine.setFieldType("时间");
 		}
 		String flag = "启用";
-		if(healthDataDefine.getFlag().equals(1)) {
+		if(healthDataDefine.getFlag().equals(0)) {
 			flag = "禁用";
 		}
 		model.addAttribute("flag", flag);
@@ -96,7 +96,7 @@ public class HealthDataDefineController extends BaseController{
 	public R ban(Integer defineId) {
 		HealthDataDefineDO healthDataDefine = new HealthDataDefineDO();
 		healthDataDefine.setDefineId(defineId);
-		healthDataDefine.setFlag(1);
+		healthDataDefine.setFlag(0);
 		if (healthDataDefineService.update(healthDataDefine) > 0) {
 			return R.ok();
 		}
@@ -111,7 +111,7 @@ public class HealthDataDefineController extends BaseController{
 	public R start(Integer defineId) {
 		HealthDataDefineDO healthDataDefine = new HealthDataDefineDO();
 		healthDataDefine.setDefineId(defineId);
-		healthDataDefine.setFlag(0);
+		healthDataDefine.setFlag(1);
 		if (healthDataDefineService.update(healthDataDefine) > 0) {
 			return R.ok();
 		}

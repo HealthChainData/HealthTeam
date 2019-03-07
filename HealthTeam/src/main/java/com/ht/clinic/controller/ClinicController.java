@@ -7,25 +7,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ht.activiti.domain.RequestDO;
 import com.ht.clinic.domain.ClinicDO;
 import com.ht.clinic.service.ClinicService;
+import com.ht.clinic.service.CommonService;
 import com.ht.common.controller.BaseController;
-import com.ht.common.utils.PageUtils;
-import com.ht.common.utils.Query;
 import com.ht.common.utils.R;
 import com.ht.system.domain.UserDO;
 import com.ht.system.service.UserService;
@@ -39,10 +35,12 @@ import com.ht.system.service.UserService;
 public class ClinicController extends BaseController {
 	@Autowired
 	private ClinicService clinicService;
-	
+
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private CommonService commonService;
 
 	@GetMapping("clinic")
 	public ModelAndView gotoTask() {
@@ -59,37 +57,31 @@ public class ClinicController extends BaseController {
 		for (int i = 0; i < clinicList.size(); i++) {
 			if (clinicList.get(i).getClinicParentId() == null || clinicList.get(i).getClinicParentId().equals("")) {
 				clinicList.get(i).setId(String.valueOf(j));
-				j=j+1;
+				j = j + 1;
 			}
 		}
 		for (ClinicDO clinicDO : clinicList) {
-			if(clinicDO.getSuperAdminId()!=null || clinicDO.getSuperAdminId() != "") {
+			if (clinicDO.getSuperAdminId() != null || clinicDO.getSuperAdminId() != "") {
 				UserDO user = userService.getUserById(clinicDO.getSuperAdminId());
-				if(user != null) {
+				if (user != null) {
 					clinicDO.setSuperAdminId(user.getName());
 				}
 			}
 		}
 		return clinicList;
 	}
-	
-	/**@ResponseBody
-	@GetMapping("/list")
-	public PageUtils list() {
-		// 查询列表数据
-		Map<String, Object> query = new HashMap<>(16);
-		List<ClinicDO> clinicList = clinicService.list(query);
-		int j = 1;
-		for (int i = 0; i < clinicList.size(); i++) {
-			if (clinicList.get(i).getClinicParentId() == null || clinicList.get(i).getClinicParentId().equals("")) {
-				clinicList.get(i).setId(String.valueOf(j));
-				j=j+1;
-			}
-		}
-		int total = clinicService.count(query);
-		PageUtils pageUtils = new PageUtils(clinicList, total);
-		return pageUtils;
-	}*/
+
+	/**
+	 * @ResponseBody @GetMapping("/list") public PageUtils list() { // 查询列表数据
+	 *               Map<String, Object> query = new HashMap<>(16); List<ClinicDO>
+	 *               clinicList = clinicService.list(query); int j = 1; for (int i =
+	 *               0; i < clinicList.size(); i++) { if
+	 *               (clinicList.get(i).getClinicParentId() == null ||
+	 *               clinicList.get(i).getClinicParentId().equals("")) {
+	 *               clinicList.get(i).setId(String.valueOf(j)); j=j+1; } } int
+	 *               total = clinicService.count(query); PageUtils pageUtils = new
+	 *               PageUtils(clinicList, total); return pageUtils; }
+	 */
 
 	@GetMapping("/add")
 	ModelAndView add() {
@@ -97,7 +89,7 @@ public class ClinicController extends BaseController {
 	}
 
 	@GetMapping("/adds{clinicId}")
-	ModelAndView adds(@PathVariable("clinicId") String clinicId,Model model) {
+	ModelAndView adds(@PathVariable("clinicId") String clinicId, Model model) {
 		if (clinicId != null) {
 			ClinicDO clinic = clinicService.get(clinicId);
 			if (clinic.getClinicParentId() == null || clinic.getClinicParentId().equals("")) {
@@ -108,12 +100,12 @@ public class ClinicController extends BaseController {
 		}
 		return new ModelAndView("clinic/clinic/add");
 	}
-	
+
 	@GetMapping("/set{clinicId}")
-	ModelAndView set(@PathVariable("clinicId") String clinicId,Model model) {
+	ModelAndView set(@PathVariable("clinicId") String clinicId, Model model) {
 		model.addAttribute("clinicId", clinicId);
 		ClinicDO clinic = clinicService.get(clinicId);
-		if(clinic.getSuperAdminId()!=null) {
+		if (clinic.getSuperAdminId() != null) {
 			model.addAttribute("userId", clinic.getSuperAdminId());
 		}
 		return new ModelAndView("clinic/clinic/set");
@@ -125,38 +117,55 @@ public class ClinicController extends BaseController {
 		model.addAttribute("clinic", clinic);
 		return new ModelAndView("clinic/clinic/details");
 	}
-	
+
 	@GetMapping("/update/{clinicId}")
-	ModelAndView update(Model model,@PathVariable("clinicId") String clinicId) {
+	ModelAndView update(Model model, @PathVariable("clinicId") String clinicId) {
 		ClinicDO clinic = clinicService.get(clinicId);
 		model.addAttribute("clinic", clinic);
 		return new ModelAndView("clinic/clinic/update");
 	}
-	
+
 	/**
 	 * 保存
 	 */
 	@ResponseBody
 	@PostMapping("/save")
 	public R save(ClinicDO clinic) {
-		String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		Random random = new Random();
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < 8; i++) {
-			int number = random.nextInt(base.length());
-			sb.append(base.charAt(number));
+		try {
+			String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+			Random random = new Random();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < 8; i++) {
+				int number = random.nextInt(base.length());
+				sb.append(base.charAt(number));
+			}
+			if (clinic.getClinicId() != null) {
+				clinic.setClinicParentId(clinic.getClinicId());
+			}
+			clinic.setClinicId(sb.toString());
+			clinic.setStatus(0);
+			clinic.setSuperAdminId(getUserId().toString());
+			clinic.setCreateUserId(getUserId().toString());
+			clinic.setCreateTime(new Date());
+			clinic.setModifyUserId(getUserId().toString());
+			clinic.setModifyTime(new Date());
+			if (clinicService.save(clinic) < 0) {
+				return R.error();
+			}
+			InitializationData initializationData = new InitializationData();
+			//initializationData.InitializationSQL(clinic.getClinicIndex());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return R.error();
 		}
-		if (clinic.getClinicId()!=null) {
-			clinic.setClinicParentId(clinic.getClinicId());
-		}
-		clinic.setClinicId(sb.toString());
-		clinic.setStatus(0);
-		clinic.setCreateUserId(getUserId().toString());
-		clinic.setCreateTime(new Date());
-		if (clinicService.save(clinic) > 0) {
-			return R.ok();
-		}
-		return R.error();
+		return R.ok();
+	}
+	
+	@PostMapping("/exit")
+	@ResponseBody
+	boolean exit(@RequestParam Map<String, Object> params) {
+		// 存在，不通过，false
+		return !clinicService.exit(params);
 	}
 
 	/**
@@ -183,7 +192,7 @@ public class ClinicController extends BaseController {
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 启用
 	 */
@@ -198,13 +207,13 @@ public class ClinicController extends BaseController {
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 设置超级管理员
 	 */
 	@PostMapping("/setAdmin/{clinicId}")
 	@ResponseBody
-	public R setAdmin(@RequestParam("ids[]") String[] userIds,@PathVariable("clinicId")String clinicId) {
+	public R setAdmin(@RequestParam("ids[]") String[] userIds, @PathVariable("clinicId") String clinicId) {
 		ClinicDO clinic = new ClinicDO();
 		clinic.setClinicId(clinicId);
 		clinic.setSuperAdminId(userIds[0]);

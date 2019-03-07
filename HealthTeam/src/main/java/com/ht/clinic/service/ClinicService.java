@@ -23,4 +23,6 @@ public interface ClinicService {
 	int remove(String clinicId);
 	
 	int batchRemove(String[] clinicIds);
+	
+	boolean exit(Map<String, Object> params);
 }
