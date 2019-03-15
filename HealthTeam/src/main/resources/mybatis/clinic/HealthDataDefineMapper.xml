@@ -4,19 +4,18 @@
 <mapper namespace="com.ht.clinic.dao.HealthDataDefineDao">
 
 	<select id="get" resultType="com.ht.clinic.domain.HealthDataDefineDO">
-		select `define_id`,`field_seq`,`field_name`,`classfy_id`,`field_desc`,`field_type`,`version`,`special_type`,`field_lenth`,`field_dec`,`defult_value`,`code_type`,`related_field`,`parent_field`,`flag`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time` from t_health_data_define where define_id = #{value}
+		select `define_id`,`field_seq`,`field_name`,`classfy_id`,`field_desc`,`field_type`,`special_type`,`field_lenth`,`field_dec`,`defult_value`,`code_type`,`related_field`,`parent_field`,`flag`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time`,`data_type`,`version` from t_health_data_define where define_id = #{value}
 	</select>
 
 	<select id="list" resultType="com.ht.clinic.domain.HealthDataDefineDO">
-		select `define_id`,`field_seq`,`field_name`,`classfy_id`,`field_desc`,`field_type`,`version`,`special_type`,`field_lenth`,`field_dec`,`defult_value`,`code_type`,`related_field`,`parent_field`,`flag`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time` from t_health_data_define
+		select `define_id`,`field_seq`,`field_name`,`classfy_id`,`field_desc`,`field_type`,`special_type`,`field_lenth`,`field_dec`,`defult_value`,`code_type`,`related_field`,`parent_field`,`flag`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time`,`data_type`,`version` from t_health_data_define
         <where>  
 		  		  <if test="defineId != null and defineId != ''"> and define_id = #{defineId} </if>
 		  		  <if test="fieldSeq != null and fieldSeq != ''"> and field_seq = #{fieldSeq} </if>
-		  		  <if test="fieldName != null and fieldName != ''"> and field_name like '%${fieldName}%' </if>
-		  		  <if test="classfyId != null and classfyId != ''"> and classfy_id like '%${classfyId}%' </if>
+		  		  <if test="fieldName != null and fieldName != ''"> and field_name = #{fieldName} </if>
+		  		  <if test="classfyId != null and classfyId != ''"> and classfy_id = #{classfyId} </if>
 		  		  <if test="fieldDesc != null and fieldDesc != ''"> and field_desc = #{fieldDesc} </if>
 		  		  <if test="fieldType != null and fieldType != ''"> and field_type = #{fieldType} </if>
-		  		  <if test="version != null and version != ''"> and version = #{version} </if>
 		  		  <if test="specialType != null and specialType != ''"> and special_type = #{specialType} </if>
 		  		  <if test="fieldLenth != null and fieldLenth != ''"> and field_lenth = #{fieldLenth} </if>
 		  		  <if test="fieldDec != null and fieldDec != ''"> and field_dec = #{fieldDec} </if>
@@ -29,6 +28,8 @@
 		  		  <if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
 		  		  <if test="createUserId != null and createUserId != ''"> and create_user_id = #{createUserId} </if>
 		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="dataType != null and dataType != ''"> and data_type = #{dataType} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -48,11 +49,10 @@
 		 <where>  
 		  		  <if test="defineId != null and defineId != ''"> and define_id = #{defineId} </if>
 		  		  <if test="fieldSeq != null and fieldSeq != ''"> and field_seq = #{fieldSeq} </if>
-		  		  <if test="fieldName != null and fieldName != ''"> and field_name like '%${fieldName}%' </if>
-		  		  <if test="classfyId != null and classfyId != ''"> and classfy_id like '%${classfyId}%' </if>
+		  		  <if test="fieldName != null and fieldName != ''"> and field_name = #{fieldName} </if>
+		  		  <if test="classfyId != null and classfyId != ''"> and classfy_id = #{classfyId} </if>
 		  		  <if test="fieldDesc != null and fieldDesc != ''"> and field_desc = #{fieldDesc} </if>
 		  		  <if test="fieldType != null and fieldType != ''"> and field_type = #{fieldType} </if>
-		  		  <if test="version != null and version != ''"> and version = #{version} </if>
 		  		  <if test="specialType != null and specialType != ''"> and special_type = #{specialType} </if>
 		  		  <if test="fieldLenth != null and fieldLenth != ''"> and field_lenth = #{fieldLenth} </if>
 		  		  <if test="fieldDec != null and fieldDec != ''"> and field_dec = #{fieldDec} </if>
@@ -65,19 +65,19 @@
 		  		  <if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
 		  		  <if test="createUserId != null and createUserId != ''"> and create_user_id = #{createUserId} </if>
 		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="dataType != null and dataType != ''"> and data_type = #{dataType} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.ht.clinic.domain.HealthDataDefineDO">
+	<insert id="save" parameterType="com.ht.clinic.domain.HealthDataDefineDO" useGeneratedKeys="true" keyProperty="defineId">
 		insert into t_health_data_define
 		(
-			`define_id`, 
 			`field_seq`, 
 			`field_name`, 
 			`classfy_id`, 
 			`field_desc`, 
 			`field_type`, 
-			`version`, 
 			`special_type`, 
 			`field_lenth`, 
 			`field_dec`, 
@@ -89,17 +89,17 @@
 			`modify_user_id`, 
 			`modify_time`, 
 			`create_user_id`, 
-			`create_time`
+			`create_time`, 
+			`data_type`, 
+			`version`
 		)
 		values
 		(
-			#{defineId}, 
 			#{fieldSeq}, 
 			#{fieldName}, 
 			#{classfyId}, 
 			#{fieldDesc}, 
 			#{fieldType}, 
-			#{version}, 
 			#{specialType}, 
 			#{fieldLenth}, 
 			#{fieldDec}, 
@@ -111,7 +111,9 @@
 			#{modifyUserId}, 
 			#{modifyTime}, 
 			#{createUserId}, 
-			#{createTime}
+			#{createTime}, 
+			#{dataType}, 
+			#{version}
 		)
 	</insert>
 	 
@@ -123,7 +125,6 @@
 			<if test="classfyId != null">`classfy_id` = #{classfyId}, </if>
 			<if test="fieldDesc != null">`field_desc` = #{fieldDesc}, </if>
 			<if test="fieldType != null">`field_type` = #{fieldType}, </if>
-			<if test="version != null">`version` = #{version}, </if>
 			<if test="specialType != null">`special_type` = #{specialType}, </if>
 			<if test="fieldLenth != null">`field_lenth` = #{fieldLenth}, </if>
 			<if test="fieldDec != null">`field_dec` = #{fieldDec}, </if>
@@ -135,7 +136,9 @@
 			<if test="modifyUserId != null">`modify_user_id` = #{modifyUserId}, </if>
 			<if test="modifyTime != null">`modify_time` = #{modifyTime}, </if>
 			<if test="createUserId != null">`create_user_id` = #{createUserId}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}</if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="dataType != null">`data_type` = #{dataType}, </if>
+			<if test="version != null">`version` = #{version}</if>
 		</set>
 		where define_id = #{defineId}
 	</update>

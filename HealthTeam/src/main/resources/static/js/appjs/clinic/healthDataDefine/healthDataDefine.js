@@ -45,10 +45,6 @@ function load() {
 									title : '字段名'
 								},
 								{
-									field : 'classfyId',
-									title : '字段分类'
-								},
-								{
 									field : 'fieldDesc',
 									title : '字段描述'
 								},

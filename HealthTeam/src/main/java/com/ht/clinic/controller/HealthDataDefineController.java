@@ -76,6 +76,11 @@ public class HealthDataDefineController extends BaseController{
 		if(healthDataDefine.getFlag().equals(0)) {
 			flag = "禁用";
 		}
+		if(healthDataDefine.getDataType().equals("1")) {
+			healthDataDefine.setDataType("系统配置");
+		}else if(healthDataDefine.getDataType().equals("2")) {
+			healthDataDefine.setDataType("健康数据配置");
+		}
 		model.addAttribute("flag", flag);
 		model.addAttribute("healthDataDefine", healthDataDefine);
 	    return "clinic/healthDataDefine/details";

@@ -1,32 +1,33 @@
 package com.ht.clinic.domain;
+
 import java.io.Serializable;
 import java.util.Date;
 
 
 
 /**
- * 
+ * 用户健康字段定义表
  * 
  * @author chglee
  * @email 1992lcg@163.com
- * @date 2019-02-25 11:26:55
+ * @date 2019-03-08 09:44:29
  */
 public class HealthDataDefineDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	//字段id
+	//
 	private Integer defineId;
-	//字段排列顺序
+	//字段在筛选或显示时的顺序
 	private Integer fieldSeq;
-	//字段名
+	//字段排列顺序(字段在筛选或显示时的顺序)
 	private String fieldName;
-	//字段分类
+	//
 	private String classfyId;
 	//字段描述
 	private String fieldDesc;
-	//字段类型,C:字符  N:数字  D:日期  T:时间 (必须填）
+	//C:字符  N:数字  D:日期  T:时间 (必须填）
 	private String fieldType;
-	//特殊类型,疾病 症状 药品 食物
+	//疾病 症状 药品 食物
 	private String specialType;
 	//字段长度
 	private Integer fieldLenth;
@@ -34,75 +35,71 @@ public class HealthDataDefineDO implements Serializable {
 	private Integer fieldDec;
 	//预设值
 	private String defultValue;
-	//对应代码集,不为空者需从代码集中去lookup值
+	//对应代码集 不为空者需从代码集中去lookup值
 	private String codeType;
-	//相关字段名
+	//关联字段
 	private String relatedField;
-	//父字段名,父字段的字段类型必须是“G"
+	//父字段的字段类型必须是“G"
 	private String parentField;
-	//启用标志,1-已启用 -1禁用
+	//1-已启用 -1禁用
 	private Integer flag;
-	//修改人ID,来自于后台管理系统的工作人员ID
+	//来自于后台管理系统的工作人员ID
 	private String modifyUserId;
-	//修改时间
+	//是否显示字段 0-否 1-是
 	private Date modifyTime;
-	//新建人ID,来自于后台管理系统的工作人员ID
+	//来自于后台管理系统的工作人员ID
 	private String createUserId;
-	//新建时间
+	//
 	private Date createTime;
-	
-	private String version;
-	
-	public String getVersion() {
-		return version;
-	}
-	public void setVersion(String version) {
-		this.version = version;
-	}
+	//数据类型,1：系统配置 2：健康数据配置
+	private String dataType;
+	//
+	private Integer version;
+
 	/**
-	 * 设置：字段id
+	 * 设置：
 	 */
 	public void setDefineId(Integer defineId) {
 		this.defineId = defineId;
 	}
 	/**
-	 * 获取：字段id
+	 * 获取：
 	 */
 	public Integer getDefineId() {
 		return defineId;
 	}
 	/**
-	 * 设置：字段排列顺序
+	 * 设置：字段在筛选或显示时的顺序
 	 */
 	public void setFieldSeq(Integer fieldSeq) {
 		this.fieldSeq = fieldSeq;
 	}
 	/**
-	 * 获取：字段排列顺序
+	 * 获取：字段在筛选或显示时的顺序
 	 */
 	public Integer getFieldSeq() {
 		return fieldSeq;
 	}
 	/**
-	 * 设置：字段名
+	 * 设置：字段排列顺序(字段在筛选或显示时的顺序)
 	 */
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
 	/**
-	 * 获取：字段名
+	 * 获取：字段排列顺序(字段在筛选或显示时的顺序)
 	 */
 	public String getFieldName() {
 		return fieldName;
 	}
 	/**
-	 * 设置：字段分类
+	 * 设置：
 	 */
 	public void setClassfyId(String classfyId) {
 		this.classfyId = classfyId;
 	}
 	/**
-	 * 获取：字段分类
+	 * 获取：
 	 */
 	public String getClassfyId() {
 		return classfyId;
@@ -120,25 +117,25 @@ public class HealthDataDefineDO implements Serializable {
 		return fieldDesc;
 	}
 	/**
-	 * 设置：字段类型,C:字符  N:数字  D:日期  T:时间 (必须填）
+	 * 设置：C:字符  N:数字  D:日期  T:时间 (必须填）
 	 */
 	public void setFieldType(String fieldType) {
 		this.fieldType = fieldType;
 	}
 	/**
-	 * 获取：字段类型,C:字符  N:数字  D:日期  T:时间 (必须填）
+	 * 获取：C:字符  N:数字  D:日期  T:时间 (必须填）
 	 */
 	public String getFieldType() {
 		return fieldType;
 	}
 	/**
-	 * 设置：特殊类型,疾病 症状 药品 食物
+	 * 设置：疾病 症状 药品 食物
 	 */
 	public void setSpecialType(String specialType) {
 		this.specialType = specialType;
 	}
 	/**
-	 * 获取：特殊类型,疾病 症状 药品 食物
+	 * 获取：疾病 症状 药品 食物
 	 */
 	public String getSpecialType() {
 		return specialType;
@@ -180,99 +177,123 @@ public class HealthDataDefineDO implements Serializable {
 		return defultValue;
 	}
 	/**
-	 * 设置：对应代码集,不为空者需从代码集中去lookup值
+	 * 设置：对应代码集 不为空者需从代码集中去lookup值
 	 */
 	public void setCodeType(String codeType) {
 		this.codeType = codeType;
 	}
 	/**
-	 * 获取：对应代码集,不为空者需从代码集中去lookup值
+	 * 获取：对应代码集 不为空者需从代码集中去lookup值
 	 */
 	public String getCodeType() {
 		return codeType;
 	}
 	/**
-	 * 设置：相关字段名
+	 * 设置：关联字段
 	 */
 	public void setRelatedField(String relatedField) {
 		this.relatedField = relatedField;
 	}
 	/**
-	 * 获取：相关字段名
+	 * 获取：关联字段
 	 */
 	public String getRelatedField() {
 		return relatedField;
 	}
 	/**
-	 * 设置：父字段名,父字段的字段类型必须是“G"
+	 * 设置：父字段的字段类型必须是“G"
 	 */
 	public void setParentField(String parentField) {
 		this.parentField = parentField;
 	}
 	/**
-	 * 获取：父字段名,父字段的字段类型必须是“G"
+	 * 获取：父字段的字段类型必须是“G"
 	 */
 	public String getParentField() {
 		return parentField;
 	}
 	/**
-	 * 设置：启用标志,1-已启用 -1禁用
+	 * 设置：1-已启用 -1禁用
 	 */
 	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
 	/**
-	 * 获取：启用标志,1-已启用 -1禁用
+	 * 获取：1-已启用 -1禁用
 	 */
 	public Integer getFlag() {
 		return flag;
 	}
 	/**
-	 * 设置：修改人ID,来自于后台管理系统的工作人员ID
+	 * 设置：来自于后台管理系统的工作人员ID
 	 */
 	public void setModifyUserId(String modifyUserId) {
 		this.modifyUserId = modifyUserId;
 	}
 	/**
-	 * 获取：修改人ID,来自于后台管理系统的工作人员ID
+	 * 获取：来自于后台管理系统的工作人员ID
 	 */
 	public String getModifyUserId() {
 		return modifyUserId;
 	}
 	/**
-	 * 设置：修改时间
+	 * 设置：是否显示字段 0-否 1-是
 	 */
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
 	}
 	/**
-	 * 获取：修改时间
+	 * 获取：是否显示字段 0-否 1-是
 	 */
 	public Date getModifyTime() {
 		return modifyTime;
 	}
 	/**
-	 * 设置：新建人ID,来自于后台管理系统的工作人员ID
+	 * 设置：来自于后台管理系统的工作人员ID
 	 */
 	public void setCreateUserId(String createUserId) {
 		this.createUserId = createUserId;
 	}
 	/**
-	 * 获取：新建人ID,来自于后台管理系统的工作人员ID
+	 * 获取：来自于后台管理系统的工作人员ID
 	 */
 	public String getCreateUserId() {
 		return createUserId;
 	}
 	/**
-	 * 设置：新建时间
+	 * 设置：
 	 */
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	/**
-	 * 获取：新建时间
+	 * 获取：
 	 */
 	public Date getCreateTime() {
 		return createTime;
+	}
+	/**
+	 * 设置：数据类型,1：系统配置 2：健康数据配置
+	 */
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+	/**
+	 * 获取：数据类型,1：系统配置 2：健康数据配置
+	 */
+	public String getDataType() {
+		return dataType;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+	/**
+	 * 获取：
+	 */
+	public Integer getVersion() {
+		return version;
 	}
 }

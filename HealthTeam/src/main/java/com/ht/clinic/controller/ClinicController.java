@@ -153,7 +153,7 @@ public class ClinicController extends BaseController {
 				return R.error();
 			}
 			InitializationData initializationData = new InitializationData();
-			//initializationData.InitializationSQL(clinic.getClinicIndex());
+			initializationData.InitializationSQL(clinic.getClinicIndex());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return R.error();
