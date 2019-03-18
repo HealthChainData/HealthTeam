@@ -39,9 +39,9 @@ public class InitializationData {
 		 * 新建角色
 		 */
 		// 系统管理员
-		addRole(clinicIndex, "2", "系统管理员", "", "2", dateStr, "2", dateStr, "1");
+		addRole(clinicIndex, "1", "系统管理员", "", "2", dateStr, "2", dateStr, "1");
 		// 超级管理员
-		addRole(clinicIndex, "1", "超级管理员", "", "2", dateStr, "2", dateStr, "1");
+		addRole(clinicIndex, "2", "超级管理员", "", "2", dateStr, "2", dateStr, "1");
 
 		/**
 		 * 新建流程
