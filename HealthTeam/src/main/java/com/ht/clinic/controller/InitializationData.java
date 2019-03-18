@@ -437,7 +437,7 @@ public class InitializationData {
 		addServiceFields(clinicIndex, "1004", "10401", "10412", "12", "status", "0", "0","", "1");
 		// 用户管理服务字段---守护人设置
 		addServiceFields(clinicIndex, "1004", "10401", "10414", "1", "personnel_index", "0", "0","", "1");
-		//  
+		//
 		addServiceFields(clinicIndex, "1003", "10305", "2", "1", "field_name", "0", "0","", "1");
 		addServiceFields(clinicIndex, "1003", "10305", "2", "2", "read_only", "0", "0","", "1");
 		addServiceFields(clinicIndex, "1003", "10305", "2", "3", "can_empty", "0", "0","", "1");
