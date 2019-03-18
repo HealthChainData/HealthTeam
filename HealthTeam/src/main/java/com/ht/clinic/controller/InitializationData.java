@@ -169,7 +169,7 @@ public class InitializationData {
 		addServicePoint(clinicIndex, "1001", "10101", "10114", "重置密码", "4", "", "重置密码", "1", "1", "1", "2", dateStr,
 				"2", dateStr, "7", "1");
 		addServicePoint(clinicIndex, "1001", "10101", "10115", "新增", "5", "", "新增", "1", "1", "1", "2", dateStr, "2",
-				dateStr, "5", "1");
+				dateStr, "2", "1");
 
 		// 患者管理服务点
 		addServicePoint(clinicIndex, "1004", "10401", "10411", "查看", "1", "", "查看", "1", "1", "1", "2", dateStr, "2",
@@ -179,7 +179,7 @@ public class InitializationData {
 		addServicePoint(clinicIndex, "1004", "10401", "10413", "启/禁用", "3", "", "启/禁用", "1", "1", "1", "2", dateStr,
 				"2", dateStr, "8", "1");
 		addServicePoint(clinicIndex, "1004", "10401", "10415", "新增", "5", "", "新增", "1", "1", "1", "2", dateStr, "2",
-				dateStr, "5", "1");
+				dateStr, "2", "1");
 
 		/**
 		 * 流程点字段配置
@@ -224,7 +224,7 @@ public class InitializationData {
 		addFlowPointFields(clinicIndex, "1002", "10202", "5", "status", "0", "1", "1");
 
 		// 人员管理字段配置
-		addFlowPointFields(clinicIndex, "1001", "10101", "0", "department_id", "0", "1", "1");
+		addFlowPointFields(clinicIndex, "1001", "10101", "0", "personnel_id", "0", "1", "1");
 		addFlowPointFields(clinicIndex, "1001", "10101", "1", "department_index", "1", "0", "1");
 		addFlowPointFields(clinicIndex, "1001", "10101", "2", "personnel_name", "1", "1", "1");
 		addFlowPointFields(clinicIndex, "1001", "10101", "3", "login_name", "0", "1", "1");
@@ -236,8 +236,7 @@ public class InitializationData {
 		addFlowPointFields(clinicIndex, "1004", "10401", "1", "user_name", "0", "1", "1");
 		addFlowPointFields(clinicIndex, "1004", "10401", "2", "user_mobile", "0", "1", "1");
 		addFlowPointFields(clinicIndex, "1004", "10401", "3", "user_address", "0", "1", "1");
-		addFlowPointFields(clinicIndex, "1004", "10401", "4", "personnel_name", "0", "1", "1");
-		addFlowPointFields(clinicIndex, "1004", "10401", "5", "status", "0", "1", "1");
+		addFlowPointFields(clinicIndex, "1004", "10401", "4", "status", "0", "1", "1");
 
 		/**
 		 * 服务点字段配置
