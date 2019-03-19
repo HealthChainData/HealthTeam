@@ -71,17 +71,6 @@ public class ClinicController extends BaseController {
 		return clinicList;
 	}
 
-	/**
-	 * @ResponseBody @GetMapping("/list") public PageUtils list() { // 查询列表数据
-	 *               Map<String, Object> query = new HashMap<>(16); List<ClinicDO>
-	 *               clinicList = clinicService.list(query); int j = 1; for (int i =
-	 *               0; i < clinicList.size(); i++) { if
-	 *               (clinicList.get(i).getClinicParentId() == null ||
-	 *               clinicList.get(i).getClinicParentId().equals("")) {
-	 *               clinicList.get(i).setId(String.valueOf(j)); j=j+1; } } int
-	 *               total = clinicService.count(query); PageUtils pageUtils = new
-	 *               PageUtils(clinicList, total); return pageUtils; }
-	 */
 
 	@GetMapping("/add")
 	ModelAndView add() {
