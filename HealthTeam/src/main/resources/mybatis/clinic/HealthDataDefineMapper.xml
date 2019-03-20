@@ -106,7 +106,7 @@
 			#{classfyId}, 
 			#{fieldDesc}, 
 			#{fieldType},
-			#{fieldType},
+			#{fieldUnit},
 			#{specialType}, 
 			#{fieldLenth}, 
 			#{fieldDec}, 
