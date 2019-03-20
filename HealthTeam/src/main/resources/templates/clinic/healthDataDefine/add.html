@@ -62,12 +62,32 @@
 									</label>
 								</div>
 							</div>
-							
+
+							<!--<div class="form-group">-->
+								<!--<label class="col-sm-3 control-label">特殊类型</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input id="specialType" name="specialType" class="form-control"-->
+										<!--type="text">-->
+								<!--</div>-->
+							<!--</div>-->
 							<div class="form-group">
-								<label class="col-sm-3 control-label">特殊类型</label>
+								<label class="col-sm-3 control-label">药品分类名称</label>
 								<div class="col-sm-8">
-									<input id="specialType" name="specialType" class="form-control"
-										type="text">
+									<select data-placeholder="--特殊类型--" name="specialType" id="specialType"
+											class="form-control chosen-select-status" tabindex="2" required>
+										<option value="">--选择类型--</option>
+										<option value="LL">LL(LABEL)</option>
+										<option value="TT">TT(TEXT)</option>
+										<option value="TA">TA(TEXTAREA)</option>
+										<option value="RO">RO(RADIO)</option>
+										<option value="CX">CX(CHECKBOX)</option>
+										<option value="CB">CB(CHECKBOX)</option>
+										<option value="ST">ST(SELECT)</option>
+										<option value="SB">SB(SELECT)</option>
+										<option value="DE">DE(DATE)</option>
+										<option value="TE">TE(TIME)</option>
+										<option value="TB">TB(TABLE)</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">

@@ -114,8 +114,14 @@ function load() {
 								} ]
 					});
 }
+
 function reLoad() {
-	load();
+	var opt = {
+		query: {
+
+		}
+	}
+	$('#exampleTable').bootstrapTable('refresh', opt);
 }
 function add() {
 	layer.open({

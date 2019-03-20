@@ -56,6 +56,16 @@ public class HealthDataDefineDO implements Serializable {
 	//
 	private Integer version;
 
+	private String fieldUnit;
+
+	public String getFieldUnit() {
+		return fieldUnit;
+	}
+
+	public void setFieldUnit(String fieldUnit) {
+		this.fieldUnit = fieldUnit;
+	}
+
 	/**
 	 * 设置：
 	 */

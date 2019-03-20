@@ -87,7 +87,6 @@
 	<insert id="save" parameterType="com.ht.clinic.domain.ClinicDO">
 		insert into b_clinic
 		(
-		`clinic_id`,
 		`clinic_index`,
 		`clinic_name`,
 		`system_name`,
@@ -114,7 +113,6 @@
 		)
 		values
 		(
-		#{clinicId},
 		#{clinicIndex},
 		#{clinicName},
 		#{systemName},
