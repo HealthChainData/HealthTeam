@@ -358,7 +358,7 @@ public class InitializationData {
 		addServiceFields(clinicIndex, "1002", "10202", "10221", "2", "department_name", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1002", "10202", "10221", "3", "sort", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1002", "10202", "10221", "4", "status", "0", "0", "0", "", "1");
-		// 人员管理服务字段---新增
+		//  人员管理服务字段---新增
 		addServiceFields(clinicIndex, "1001", "10101", "10115", "1", "personnel_name", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1001", "10101", "10115", "2", "birth_date", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1001", "10101", "10115", "3", "gender", "0", "0", "0", "", "1");
