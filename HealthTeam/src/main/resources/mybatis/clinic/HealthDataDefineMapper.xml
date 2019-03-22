@@ -14,7 +14,7 @@
         <where>
             <if test="defineId != null and defineId != ''">and define_id = #{defineId}</if>
             <if test="fieldSeq != null and fieldSeq != ''">and field_seq = #{fieldSeq}</if>
-            <if test="fieldName != null and fieldName != ''">and field_name = #{fieldName}</if>
+            <if test="fieldName != null and fieldName != ''">and field_name like '%${fieldName}%'</if>
             <if test="classfyId != null and classfyId != ''">and classfy_id = #{classfyId}</if>
             <if test="fieldDesc != null and fieldDesc != ''">and field_desc = #{fieldDesc}</if>
             <if test="fieldType != null and fieldType != ''">and field_type = #{fieldType}</if>
@@ -52,7 +52,7 @@
         <where>
             <if test="defineId != null and defineId != ''">and define_id = #{defineId}</if>
             <if test="fieldSeq != null and fieldSeq != ''">and field_seq = #{fieldSeq}</if>
-            <if test="fieldName != null and fieldName != ''">and field_name = #{fieldName}</if>
+            <if test="fieldName != null and fieldName != ''">and field_name like '%${fieldName}%'</if>
             <if test="classfyId != null and classfyId != ''">and classfy_id = #{classfyId}</if>
             <if test="fieldDesc != null and fieldDesc != ''">and field_desc = #{fieldDesc}</if>
             <if test="fieldType != null and fieldType != ''">and field_type = #{fieldType}</if>
