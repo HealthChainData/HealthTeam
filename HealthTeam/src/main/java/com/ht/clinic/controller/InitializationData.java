@@ -343,7 +343,6 @@ public class InitializationData {
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "5", "is_service_finish", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "6", "is_reject", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "7", "flag", "0", "0", "0", "", "1");
-		addServiceFields(clinicIndex, "1003", "10303", "10332", "8", "service_point_id", "0", "0", "1", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "8", "service_point_type", "0", "0", "1", "", "1");
 		//
 		addServiceFields(clinicIndex, "1003", "10304", "2", "1", "field_name", "0", "0", "0", "", "0");
@@ -412,7 +411,7 @@ public class InitializationData {
 		addServiceFields(clinicIndex, "1001", "10101", "10112", "10", "email", "0", "1", "0", "", "1");
 		addServiceFields(clinicIndex, "1001", "10101", "10112", "11", "role_index", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1001", "10101", "10112", "12", "personnel_mobile", "0", "1", "0", "", "1");
-		addServiceFields(clinicIndex, "1001", "10101", "10112", "13", "superior_index", "0", "0", "0", "", "1");
+		addServiceFields(clinicIndex, "1001", "10101", "10112", "13", "superior_index", "0", "1", "0", "", "1");
 		addServiceFields(clinicIndex, "1001", "10101", "10112", "14", "status", "0", "0", "0", "", "1");
 		// 人员管理服务字段---密码重置
 		addServiceFields(clinicIndex, "1001", "10101", "10114", "1", "login_passwd", "0", "0", "0", "", "1");

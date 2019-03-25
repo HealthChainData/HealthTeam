@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.ht.clinic.domain.HealthCodeDefineDO;
+import com.ht.clinic.service.HealthCodeDefineService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -38,6 +40,9 @@ import com.ht.common.utils.R;
 public class HealthDataDefineController extends BaseController{
 	@Autowired
 	private HealthDataDefineService healthDataDefineService;
+
+	@Autowired
+	private HealthCodeDefineService healthCodeDefineService;
 	
 	@GetMapping()
 	String HealthDataDefine(){
@@ -48,16 +53,32 @@ public class HealthDataDefineController extends BaseController{
 	@GetMapping("/list")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params);
+		Query query = new Query(params);
 		List<HealthDataDefineDO> healthDataDefineList = healthDataDefineService.list(query);
 		int total = healthDataDefineService.count(query);
 		PageUtils pageUtils = new PageUtils(healthDataDefineList, total);
+		return pageUtils;
+	}
+
+	@ResponseBody
+	@GetMapping("/codeList")
+	public PageUtils codeList(@RequestParam Map<String, Object> params){
+		//查询列表数据
+		Query query = new Query(params);
+		List<HealthCodeDefineDO> healthCodeDefineList = healthCodeDefineService.list(query);
+		int total = healthCodeDefineService.count(query);
+		PageUtils pageUtils = new PageUtils(healthCodeDefineList, total);
 		return pageUtils;
 	}
 	
 	@GetMapping("/add")
 	String add(){
 	    return "clinic/healthDataDefine/add";
+	}
+
+	@GetMapping("/codeDefine")
+	String codeDefine(){
+		return "clinic/healthDataDefine/codeDefine";
 	}
 
 	@GetMapping("/edit/{defineId}")
