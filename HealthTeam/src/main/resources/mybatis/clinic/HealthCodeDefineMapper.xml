@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ht.clinic.dao.HealthCodeDefineDao">
+
+	<select id="get" resultType="com.ht.clinic.domain.HealthCodeDefineDO">
+		select `id`,`code_type`,`code_no`,`parent_code_no`,`code_val`,`css`,`flag`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time`,`version` from t_health_code_define where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.ht.clinic.domain.HealthCodeDefineDO">
+		select `id`,`code_type`,`code_no`,`parent_code_no`,`code_val`,`css`,`flag`,`modify_user_id`,`modify_time`,`create_user_id`,`create_time`,`version` from t_health_code_define
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="codeType != null and codeType != ''"> and code_type = #{codeType} </if>
+		  		  <if test="codeNo != null and codeNo != ''"> and code_no = #{codeNo} </if>
+		  		  <if test="parentCodeNo != null and parentCodeNo != ''"> and parent_code_no = #{parentCodeNo} </if>
+		  		  <if test="codeVal != null and codeVal != ''"> and code_val = #{codeVal} </if>
+		  		  <if test="css != null and css != ''"> and css = #{css} </if>
+		  		  <if test="flag != null and flag != ''"> and flag = #{flag} </if>
+		  		  <if test="modifyUserId != null and modifyUserId != ''"> and modify_user_id = #{modifyUserId} </if>
+		  		  <if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
+		  		  <if test="createUserId != null and createUserId != ''"> and create_user_id = #{createUserId} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_health_code_define
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="codeType != null and codeType != ''"> and code_type = #{codeType} </if>
+		  		  <if test="codeNo != null and codeNo != ''"> and code_no = #{codeNo} </if>
+		  		  <if test="parentCodeNo != null and parentCodeNo != ''"> and parent_code_no = #{parentCodeNo} </if>
+		  		  <if test="codeVal != null and codeVal != ''"> and code_val = #{codeVal} </if>
+		  		  <if test="css != null and css != ''"> and css = #{css} </if>
+		  		  <if test="flag != null and flag != ''"> and flag = #{flag} </if>
+		  		  <if test="modifyUserId != null and modifyUserId != ''"> and modify_user_id = #{modifyUserId} </if>
+		  		  <if test="modifyTime != null and modifyTime != ''"> and modify_time = #{modifyTime} </if>
+		  		  <if test="createUserId != null and createUserId != ''"> and create_user_id = #{createUserId} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="version != null and version != ''"> and version = #{version} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.ht.clinic.domain.HealthCodeDefineDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_health_code_define
+		(
+			`code_type`, 
+			`code_no`, 
+			`parent_code_no`, 
+			`code_val`, 
+			`css`, 
+			`flag`, 
+			`modify_user_id`, 
+			`modify_time`, 
+			`create_user_id`, 
+			`create_time`, 
+			`version`
+		)
+		values
+		(
+			#{codeType}, 
+			#{codeNo}, 
+			#{parentCodeNo}, 
+			#{codeVal}, 
+			#{css}, 
+			#{flag}, 
+			#{modifyUserId}, 
+			#{modifyTime}, 
+			#{createUserId}, 
+			#{createTime}, 
+			#{version}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.ht.clinic.domain.HealthCodeDefineDO">
+		update t_health_code_define 
+		<set>
+			<if test="codeType != null">`code_type` = #{codeType}, </if>
+			<if test="codeNo != null">`code_no` = #{codeNo}, </if>
+			<if test="parentCodeNo != null">`parent_code_no` = #{parentCodeNo}, </if>
+			<if test="codeVal != null">`code_val` = #{codeVal}, </if>
+			<if test="css != null">`css` = #{css}, </if>
+			<if test="flag != null">`flag` = #{flag}, </if>
+			<if test="modifyUserId != null">`modify_user_id` = #{modifyUserId}, </if>
+			<if test="modifyTime != null">`modify_time` = #{modifyTime}, </if>
+			<if test="createUserId != null">`create_user_id` = #{createUserId}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="version != null">`version` = #{version}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_health_code_define where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_health_code_define where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
