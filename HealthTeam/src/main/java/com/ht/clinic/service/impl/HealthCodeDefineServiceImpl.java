@@ -18,7 +18,7 @@ public class HealthCodeDefineServiceImpl implements HealthCodeDefineService {
 	private HealthCodeDefineDao healthCodeDefineDao;
 	
 	@Override
-	public HealthCodeDefineDO get(Long id){
+	public HealthCodeDefineDO get(Integer id){
 		return healthCodeDefineDao.get(id);
 	}
 	

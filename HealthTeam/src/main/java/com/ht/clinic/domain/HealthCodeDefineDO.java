@@ -16,7 +16,7 @@ public class HealthCodeDefineDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//
-	private Long id;
+	private Integer id;
 	//代码类型
 	private String codeType;
 	//代码代号
@@ -43,13 +43,13 @@ public class HealthCodeDefineDO implements Serializable {
 	/**
 	 * 设置：
 	 */
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**
 	 * 获取：
 	 */
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 	/**

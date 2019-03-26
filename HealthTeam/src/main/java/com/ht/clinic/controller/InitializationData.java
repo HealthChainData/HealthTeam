@@ -28,20 +28,22 @@ public class InitializationData {
 		/**
 		 * 新建用户
 		 */
-		// 系统管理员
-		addUser(clinicIndex, "1", "0", "2", "", "系统管理员", "systemAdmin", "123456", null, null, dateStr, null, null, null,
-				null, "0", "2", dateStr, "2", dateStr, null, "1");
 		// 超级管理员
-		addUser(clinicIndex, "2", "0", "1", "", "超级管理员", "admin", "123456", null, null, dateStr, null, null, null, null,
+		addUser(clinicIndex, "1", "0", "1", "", "超级管理员", "admin", "123456", null, null, dateStr, null, null, null, null,
 				"0", "2", dateStr, "2", dateStr, null, "1");
+		// 系统管理员
+		addUser(clinicIndex, "2", "0", "2", "", "系统管理员", "systemAdmin", "123456", null, null, dateStr, null, null, null,
+				null, "0", "2", dateStr, "2", dateStr, null, "1");
+
 
 		/**
 		 * 新建角色
 		 */
-		// 系统管理员
-		addRole(clinicIndex, "1", "系统管理员", "", "2", dateStr, "2", dateStr, "1");
 		// 超级管理员
-		addRole(clinicIndex, "2", "超级管理员", "", "2", dateStr, "2", dateStr, "1");
+		addRole(clinicIndex, "1", "超级管理员", "", "2", dateStr, "2", dateStr, "1");
+		// 系统管理员
+		addRole(clinicIndex, "2", "系统管理员", "", "2", dateStr, "2", dateStr, "1");
+
 
 		/**
 		 * 新建流程
@@ -215,9 +217,9 @@ public class InitializationData {
 		addFlowPointFields(clinicIndex, "1003", "10303", "7", "flow_point_id", "1", "0", "1");
 		// 角色管理字段配置
 		addFlowPointFields(clinicIndex, "1002", "10201", "1", "role_id", "0", "0", "1");
-		addFlowPointFields(clinicIndex, "1002", "10201", "2", "role_index", "0", "0", "1");
-		addFlowPointFields(clinicIndex, "1002", "10201", "3", "role_name", "1", "0", "1");
-		addFlowPointFields(clinicIndex, "1002", "10201", "4", "note", "0", "0", "0");
+		addFlowPointFields(clinicIndex, "1002", "10201", "2", "role_index", "0", "1", "1");
+		addFlowPointFields(clinicIndex, "1002", "10201", "3", "role_name", "1", "1", "1");
+		addFlowPointFields(clinicIndex, "1002", "10201", "4", "note", "0", "1", "0");
 		addFlowPointFields(clinicIndex, "1002", "10201", "5", "modify_time", "0", "1", "1");
 
 		// 部门管理字段配置
@@ -274,7 +276,7 @@ public class InitializationData {
 		addServiceFields(clinicIndex, "1003", "10302", "10324", "3", "flow_point_type", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10302", "10324", "3", "flow_point_seq", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10302", "10324", "4", "role_index", "0", "0", "0", "", "1");
-		addServiceFields(clinicIndex, "1003", "10302", "10324", "5", "interface_type", "0", "1", "0", "", "1");
+		addServiceFields(clinicIndex, "1003", "10302", "10324", "5", "interface_type", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10302", "10324", "6", "interface_index", "0", "1", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10302", "10324", "7", "is_flow_finish", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10302", "10324", "8", "flag", "0", "0", "0", "", "1");
@@ -299,7 +301,7 @@ public class InitializationData {
 		addServiceFields(clinicIndex, "1003", "10302", "10322", "3", "flow_point_seq", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10302", "10322", "3", "role_index", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10302", "10322", "4", "flow_point_type", "0", "0", "0", "", "1");
-		addServiceFields(clinicIndex, "1003", "10302", "10322", "5", "interface_type", "0", "1", "0", "", "1");
+		addServiceFields(clinicIndex, "1003", "10302", "10322", "5", "interface_type", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10302", "10322", "6", "interface_index", "0", "1", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10302", "10322", "7", "is_flow_finish", "0", "0", "0", "", "1");
 		// 流程服务点服务字段---新增
@@ -334,16 +336,17 @@ public class InitializationData {
 		addServiceFields(clinicIndex, "1003", "10303", "10331", "16", "create_user_id", "1", "1", "0", "LL", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10331", "17", "create_time", "1", "1", "0", "LL", "1");
 		// 流程服务点服务字段---编辑
+		addServiceFields(clinicIndex, "1003", "10303", "10332", "1", "service_point_id", "1", "0", "1", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "1", "service_point_name", "0", "0", "0", "", "1");
-		addServiceFields(clinicIndex, "1003", "10303", "10332", "1", "flow_no", "0", "0", "1", "", "1");
-		addServiceFields(clinicIndex, "1003", "10303", "10332", "2", "flow_point_id", "0", "0", "1", "", "1");
+		addServiceFields(clinicIndex, "1003", "10303", "10332", "1", "flow_no", "0", "0", "0", "", "1");
+		addServiceFields(clinicIndex, "1003", "10303", "10332", "2", "flow_point_id", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "2", "service_point_tips", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "3", "service_point_seq", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "4", "enter_condition", "0", "1", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "5", "is_service_finish", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "6", "is_reject", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10303", "10332", "7", "flag", "0", "0", "0", "", "1");
-		addServiceFields(clinicIndex, "1003", "10303", "10332", "8", "service_point_type", "0", "0", "1", "", "1");
+		addServiceFields(clinicIndex, "1003", "10303", "10332", "8", "service_point_type", "0", "0", "0", "", "1");
 		//
 		addServiceFields(clinicIndex, "1003", "10304", "2", "1", "field_name", "0", "0", "0", "", "0");
 		addServiceFields(clinicIndex, "1003", "10304", "2", "2", "is_search_field", "0", "0", "0", "", "0");
@@ -363,7 +366,6 @@ public class InitializationData {
 		addServiceFields(clinicIndex, "1002", "10202", "10223", "4", "status", "0", "0", "1", "", "1");
 		// 部门管理服务字段---编辑
 		addServiceFields(clinicIndex, "1002", "10202", "10221", "0", "department_id", "1", "0", "1", "", "1");
-		addServiceFields(clinicIndex, "1002", "10202", "10221", "1", "department_index", "0", "0", "1", "", "1");
 		addServiceFields(clinicIndex, "1002", "10202", "10221", "1", "department_parent_id", "0", "1", "0", "", "1");
 		addServiceFields(clinicIndex, "1002", "10202", "10221", "2", "department_name", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1002", "10202", "10221", "3", "sort", "0", "0", "0", "", "1");
@@ -464,7 +466,7 @@ public class InitializationData {
 		addServiceFields(clinicIndex, "1003", "10305", "2", "1", "field_name", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10305", "2", "2", "read_only", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10305", "2", "3", "can_empty", "0", "0", "0", "", "1");
-		addServiceFields(clinicIndex, "1003", "10305", "2", "4", "is_show", "0", "0", "0", "", "1");
+		addServiceFields(clinicIndex, "1003", "10305", "2", "4", "is_hidden", "0", "0", "0", "", "1");
 		addServiceFields(clinicIndex, "1003", "10305", "2", "5", "seq", "0", "0", "0", "", "1");
 	}
 
@@ -576,12 +578,12 @@ public class InitializationData {
 	 * 服务点字段配置
 	 */
 	public void addServiceFields(String clinic_index, String flow_no, String flow_point_id, String service_point_id,
-			String seq, String field_name, String read_only, String can_empty, String is_show, String special_type,
+			String seq, String field_name, String read_only, String can_empty, String is_hidden, String special_type,
 			String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_service_fields` (`clinic_index`, `flow_no`, `flow_point_id`, `service_point_id`, `seq`, `field_name`, `read_only`, `can_empty`,`is_show`,`special_type`, `version`) VALUES ('"
+				"INSERT INTO test.`b_service_fields` (`clinic_index`, `flow_no`, `flow_point_id`, `service_point_id`, `seq`, `field_name`, `read_only`, `can_empty`,`is_hidden`,`special_type`, `version`) VALUES ('"
 						+ clinic_index + "', '" + flow_no + "', '" + flow_point_id + "', '" + service_point_id + "', '"
-						+ seq + "', '" + field_name + "', '" + read_only + "', '" + can_empty + "','" + is_show + "', '"
+						+ seq + "', '" + field_name + "', '" + read_only + "', '" + can_empty + "','" + is_hidden + "', '"
 						+ special_type + "','" + version + "');");
 	}
 

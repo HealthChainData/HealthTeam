@@ -76,6 +76,11 @@ public class HealthDataDefineController extends BaseController{
 	    return "clinic/healthDataDefine/add";
 	}
 
+	@GetMapping("/addCode")
+	String addCode(){
+		return "clinic/healthDataDefine/addCode";
+	}
+
 	@GetMapping("/codeDefine")
 	String codeDefine(){
 		return "clinic/healthDataDefine/codeDefine";
@@ -157,6 +162,17 @@ public class HealthDataDefineController extends BaseController{
 		}
 		return R.error();
 	}
+
+	@ResponseBody
+	@PostMapping("/saveCode")
+	public R saveCode( HealthCodeDefineDO healthCodeDefine){
+		healthCodeDefine.setCreateUserId(getUserId().toString());
+		healthCodeDefine.setCreateTime(new Date());
+		if(healthCodeDefineService.save(healthCodeDefine)>0){
+			return R.ok();
+		}
+		return R.error();
+	}
 	/**
 	 * 修改
 	 */
@@ -182,6 +198,15 @@ public class HealthDataDefineController extends BaseController{
 		}
 		return R.error();
 	}
+
+	@PostMapping( "/removeCode")
+	@ResponseBody
+	public R removeCode( Long id){
+		if(healthCodeDefineService.remove(id)>0){
+			return R.ok();
+		}
+		return R.error();
+	}
 	
 	/**
 	 * 删除
@@ -191,6 +216,34 @@ public class HealthDataDefineController extends BaseController{
 	public R remove(@RequestParam("ids[]") Integer[] defineIds){
 		healthDataDefineService.batchRemove(defineIds);
 		return R.ok();
+	}
+
+	@PostMapping( "/batchRemoveCode")
+	@ResponseBody
+	public R removeCode(@RequestParam("ids[]") Long[] defineIds){
+		healthCodeDefineService.batchRemove(defineIds);
+		return R.ok();
+	}
+
+	@GetMapping("/editCode/{id}")
+	String editCode(@PathVariable("id") Integer id,Model model){
+		HealthCodeDefineDO healthCodeDefine = healthCodeDefineService.get(id);
+		model.addAttribute("healthCodeDefine", healthCodeDefine);
+		return "clinic/healthDataDefine/editCode";
+	}
+
+	/**
+	 * 修改
+	 */
+	@ResponseBody
+	@RequestMapping("/updateCode")
+	public R updateCode( HealthCodeDefineDO healthCodeDefine){
+		healthCodeDefine.setModifyUserId(getUserId().toString());
+		healthCodeDefine.setModifyTime(new Date());
+		if(healthCodeDefineService.update(healthCodeDefine)>0) {
+			return R.ok();
+		}
+		return R.error();
 	}
 	
 }

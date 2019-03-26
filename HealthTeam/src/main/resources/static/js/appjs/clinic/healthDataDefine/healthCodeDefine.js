@@ -31,7 +31,9 @@ function load() {
                     return {
                         //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
                         limit: params.limit,
-                        offset: params.offset
+                        offset: params.offset,
+                        codeType: $('#codeType').val(),
+                        codeVal: $('#codeVal').val()
                         // name:$('#searchName').val(),
                         // username:$('#searchName').val()
                     };
@@ -60,7 +62,14 @@ function load() {
                     },
                     {
                         field: 'flag',
-                        title: '启用状态'
+                        title: '启用状态',
+                        formatter: function (value, row, index) {
+                            if (row.flag == '0') {
+                                return '<span class="label label-primary">可用</span>';
+                            } else if (row.flag == '1') {
+                                return '<span class="label label-danger">禁用</span>';
+                            }
+                        }
                     },
                     {
                         title: '操作',
@@ -83,6 +92,12 @@ function load() {
 }
 
 function reLoad() {
+    var opt = {
+        query: {
+            codeType: $('#codeType').val(),
+            codeVal: $('#codeVal').val()
+        }
+    }
     $('#exampleTables').bootstrapTable('refresh');
 }
 
@@ -92,8 +107,8 @@ function add() {
         title: '增加',
         maxmin: true,
         shadeClose: false, // 点击遮罩关闭层
-        area: ['800px', '520px'],
-        content: prefix + '/add' // iframe的url
+        area: ['800px', '320px'],
+        content: prefix + '/addCode' // iframe的url
     });
 }
 
@@ -104,7 +119,7 @@ function edit(id) {
         maxmin: true,
         shadeClose: false, // 点击遮罩关闭层
         area: ['800px', '520px'],
-        content: prefix + '/edit/' + id // iframe的url
+        content: prefix + '/editCode/' + id // iframe的url
     });
 }
 
@@ -113,7 +128,7 @@ function remove(id) {
         btn: ['确定', '取消']
     }, function () {
         $.ajax({
-            url: prefix + "/remove",
+            url: prefix + "/removeCode",
             type: "post",
             data: {
                 'id': id
@@ -134,7 +149,7 @@ function resetPwd(id) {
 }
 
 function batchRemove() {
-    var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+    var rows = $('#exampleTables').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
     if (rows.length == 0) {
         layer.msg("请选择要删除的数据");
         return;
@@ -153,7 +168,7 @@ function batchRemove() {
             data: {
                 "ids": ids
             },
-            url: prefix + '/batchRemove',
+            url: prefix + '/batchRemoveCode',
             success: function (r) {
                 if (r.code == 0) {
                     layer.msg(r.msg);

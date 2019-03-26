@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface HealthCodeDefineService {
 	
-	HealthCodeDefineDO get(Long id);
+	HealthCodeDefineDO get(Integer id);
 	
 	List<HealthCodeDefineDO> list(Map<String, Object> map);
 	

@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface HealthCodeDefineDao {
 
-	HealthCodeDefineDO get(Long id);
+	HealthCodeDefineDO get(Integer id);
 	
 	List<HealthCodeDefineDO> list(Map<String, Object> map);
 	
