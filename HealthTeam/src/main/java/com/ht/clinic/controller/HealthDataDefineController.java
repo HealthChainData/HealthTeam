@@ -6,19 +6,16 @@ import java.util.Map;
 
 import com.ht.clinic.domain.HealthCodeDefineDO;
 import com.ht.clinic.service.HealthCodeDefineService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ht.clinic.domain.ClinicDO;
 import com.ht.clinic.domain.HealthDataDefineDO;
 import com.ht.clinic.service.HealthDataDefineService;
 import com.ht.common.controller.BaseController;
@@ -43,12 +40,12 @@ public class HealthDataDefineController extends BaseController{
 
 	@Autowired
 	private HealthCodeDefineService healthCodeDefineService;
-	
+
 	@GetMapping()
 	String HealthDataDefine(){
 	    return "clinic/healthDataDefine/healthDataDefine";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	public PageUtils list(@RequestParam Map<String, Object> params){

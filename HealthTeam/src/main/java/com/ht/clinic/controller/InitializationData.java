@@ -479,7 +479,7 @@ public class InitializationData {
 			String graduation_school, String work_year, String status, String modify_user_id, String modify_time,
 			String create_user_id, String create_time, String note, String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_personal` (`clinic_index`, `personnel_index`, `department_index`, `role_index`, `superior_index`, `personnel_name`, `login_name`, `login_passwd`, `email`, `personnel_mobile`, `birth_date`, `gender`, `education_background_id`, `graduation_school`, `work_year`, `status`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `note`,`version`) VALUES ('"
+				"INSERT INTO `b_personal` (`clinic_index`, `personnel_index`, `department_index`, `role_index`, `superior_index`, `personnel_name`, `login_name`, `login_passwd`, `email`, `personnel_mobile`, `birth_date`, `gender`, `education_background_id`, `graduation_school`, `work_year`, `status`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `note`,`version`) VALUES ('"
 						+ clinic_index + "','" + personnel_index + "','" + department_index + "','" + role_index + "','"
 						+ superior_index + "','" + personnel_name + "','" + login_name + "','" + login_passwd + "',"
 						+ email + "," + personnel_mobile + ",'" + birth_date + "'," + gender + ","
@@ -494,7 +494,7 @@ public class InitializationData {
 	private void addRole(String clinic_index, String role_index, String role_name, String note, String modify_user_id,
 			String modify_time, String create_user_id, String create_time, String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_role` (`clinic_index`, `role_index`, `role_name`, `note`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `version`) VALUES ('"
+				"INSERT INTO `b_role` (`clinic_index`, `role_index`, `role_name`, `note`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `version`) VALUES ('"
 						+ clinic_index + "','" + role_index + "','" + role_name + "', '" + note + "', '"
 						+ modify_user_id + "','" + modify_time + "', '" + create_user_id + "', '" + create_time + "', '"
 						+ version + "');");
@@ -506,7 +506,7 @@ public class InitializationData {
 	private void addFlow(String clinic_index, String flow_no, String flow_name, String flag, String flow_seq,
 			String modify_user_id, String modify_time, String create_user_id, String create_time, String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_flow` (`clinic_index`, `flow_no`, `flow_name`, `flag`, `flow_seq`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `version`) VALUES ('"
+				"INSERT INTO `b_flow` (`clinic_index`, `flow_no`, `flow_name`, `flag`, `flow_seq`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `version`) VALUES ('"
 						+ clinic_index + "', '" + flow_no + "','" + flow_name + "', '" + flag + "', '" + flow_seq
 						+ "', '" + modify_user_id + "', '" + modify_time + "', '" + create_user_id + "', '"
 						+ create_time + "', '" + version + "');");
@@ -517,7 +517,7 @@ public class InitializationData {
 	 */
 	private void addFlowRole(String clinic_index, String flow_no, String role_index, String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_flow_role` (`clinic_index`, `flow_no`, `role_index`, `version`) VALUES ('"
+				"INSERT INTO `b_flow_role` (`clinic_index`, `flow_no`, `role_index`, `version`) VALUES ('"
 						+ clinic_index + "', '" + flow_no + "', '" + role_index + "', '" + version + "');");
 	}
 
@@ -529,7 +529,7 @@ public class InitializationData {
 			String is_flow_finish, String flag, String modify_user_id, String modify_time, String create_user_id,
 			String create_time, String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_flow_point` (`clinic_index`, `flow_no`, `flow_point_id`, `flow_point_seq`, `flow_point_name`, `flow_point_type`, `interface_type`, `interface_index`, `is_flow_finish`, `flag`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `version`) VALUES ('"
+				"INSERT INTO `b_flow_point` (`clinic_index`, `flow_no`, `flow_point_id`, `flow_point_seq`, `flow_point_name`, `flow_point_type`, `interface_type`, `interface_index`, `is_flow_finish`, `flag`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `version`) VALUES ('"
 						+ clinic_index + "', '" + flow_no + "', '" + flow_point_id + "', '" + flow_point_seq + "', '"
 						+ flow_point_name + "', '" + flow_point_type + "'," + interface_type + ", " + interface_index
 						+ ", '" + is_flow_finish + "', '" + flag + "','" + modify_user_id + "', '" + modify_time
@@ -542,7 +542,7 @@ public class InitializationData {
 	public void addFlowPointRole(String clinic_index, String flow_no, String flow_point_id, String role_index,
 			String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_flow_point_role` (`clinic_index`, `flow_no`, `flow_point_id`, `role_index`, `version`) VALUES ('"
+				"INSERT INTO `b_flow_point_role` (`clinic_index`, `flow_no`, `flow_point_id`, `role_index`, `version`) VALUES ('"
 						+ clinic_index + "', '" + flow_no + "', '" + flow_point_id + "', '" + role_index + "', '"
 						+ version + "');");
 	}
@@ -555,7 +555,7 @@ public class InitializationData {
 			String is_service_finish, String is_reject, String flag, String modify_user_id, String modify_time,
 			String create_user_id, String create_time, String service_point_type, String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_service_point` (`clinic_index`, `flow_no`, `flow_point_id`, `service_point_id`, `service_point_name`, `service_point_seq`, `enter_condition`, `service_point_tips`, `is_service_finish`, `is_reject`, `flag`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `service_point_type`, `version`) VALUES ('"
+				"INSERT INTO `b_service_point` (`clinic_index`, `flow_no`, `flow_point_id`, `service_point_id`, `service_point_name`, `service_point_seq`, `enter_condition`, `service_point_tips`, `is_service_finish`, `is_reject`, `flag`, `modify_user_id`, `modify_time`, `create_user_id`, `create_time`, `service_point_type`, `version`) VALUES ('"
 						+ clinic_index + "','" + flow_no + "', '" + flow_point_id + "', '" + service_point_id + "', '"
 						+ service_point_name + "','" + service_point_seq + "', '" + enter_condition + "', '"
 						+ service_point_tips + "', '" + is_service_finish + "', '" + is_reject + "', '" + flag + "', '"
@@ -569,7 +569,7 @@ public class InitializationData {
 	public void addFlowPointFields(String clinic_index, String flow_no, String flow_point_id, String seq,
 			String field_name, String is_search_field, String is_show, String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_flow_point_fields` (`clinic_index`, `flow_no`, `flow_point_id`, `seq`, `field_name`, `is_search_field`, `is_show`, `version`) VALUES ('"
+				"INSERT INTO `b_flow_point_fields` (`clinic_index`, `flow_no`, `flow_point_id`, `seq`, `field_name`, `is_search_field`, `is_show`, `version`) VALUES ('"
 						+ clinic_index + "', '" + flow_no + "', '" + flow_point_id + "', '" + seq + "', '" + field_name
 						+ "', '" + is_search_field + "', '" + is_show + "', '" + version + "');");
 	}
@@ -581,7 +581,7 @@ public class InitializationData {
 			String seq, String field_name, String read_only, String can_empty, String is_hidden, String special_type,
 			String version) {
 		initializationData.commonService.executeAction(
-				"INSERT INTO test.`b_service_fields` (`clinic_index`, `flow_no`, `flow_point_id`, `service_point_id`, `seq`, `field_name`, `read_only`, `can_empty`,`is_hidden`,`special_type`, `version`) VALUES ('"
+				"INSERT INTO `b_service_fields` (`clinic_index`, `flow_no`, `flow_point_id`, `service_point_id`, `seq`, `field_name`, `read_only`, `can_empty`,`is_hidden`,`special_type`, `version`) VALUES ('"
 						+ clinic_index + "', '" + flow_no + "', '" + flow_point_id + "', '" + service_point_id + "', '"
 						+ seq + "', '" + field_name + "', '" + read_only + "', '" + can_empty + "','" + is_hidden + "', '"
 						+ special_type + "','" + version + "');");

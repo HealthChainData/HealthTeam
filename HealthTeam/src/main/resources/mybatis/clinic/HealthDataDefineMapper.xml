@@ -16,7 +16,7 @@
             <if test="fieldSeq != null and fieldSeq != ''">and field_seq = #{fieldSeq}</if>
             <if test="fieldName != null and fieldName != ''">and field_name like '%${fieldName}%'</if>
             <if test="classfyId != null and classfyId != ''">and classfy_id = #{classfyId}</if>
-            <if test="fieldDesc != null and fieldDesc != ''">and field_desc = #{fieldDesc}</if>
+            <if test="fieldDesc != null and fieldDesc != ''">and field_desc  like '%${fieldDesc}%'</if>
             <if test="fieldType != null and fieldType != ''">and field_type = #{fieldType}</if>
             <if test="fieldUnit != null and fieldUnit != ''">and field_unit = #{fieldUnit}</if>
             <if test="specialType != null and specialType != ''">and special_type = #{specialType}</if>
@@ -54,7 +54,7 @@
             <if test="fieldSeq != null and fieldSeq != ''">and field_seq = #{fieldSeq}</if>
             <if test="fieldName != null and fieldName != ''">and field_name like '%${fieldName}%'</if>
             <if test="classfyId != null and classfyId != ''">and classfy_id = #{classfyId}</if>
-            <if test="fieldDesc != null and fieldDesc != ''">and field_desc = #{fieldDesc}</if>
+            <if test="fieldDesc != null and fieldDesc != ''">and field_desc like '%${fieldDesc}%'</if>
             <if test="fieldType != null and fieldType != ''">and field_type = #{fieldType}</if>
             <if test="fieldUnit != null and fieldUnit != ''">and field_unit = #{fieldUnit}</if>
             <if test="specialType != null and specialType != ''">and special_type = #{specialType}</if>

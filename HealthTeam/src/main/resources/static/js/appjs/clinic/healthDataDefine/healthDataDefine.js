@@ -36,7 +36,9 @@ function load() {
                         offset: params.offset,
                         fieldName: $('#fieldName').val(),
                         classfyId: $('#classfyId').val(),
-                        fieldType: $('#fieldType').val()
+                        fieldType: $('#fieldType').val(),
+                        fieldDesc: $('#fieldDesc').val(),
+                        dataType: $('#dataType').val()
                         // id : id
                     };
                 },
@@ -123,6 +125,8 @@ function reLoad() {
             fieldName: $('#fieldName').val(),
             classfyId: $('#classfyId').val(),
             fieldType: $('#fieldType').val(),
+            fieldDesc: $('#fieldDesc').val(),
+            dataType: $('#dataType').val(),
         }
     }
     $('#exampleTable').bootstrapTable('refresh', opt);

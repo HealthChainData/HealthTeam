@@ -20,6 +20,14 @@
                         <button class="btn btn-success" onclick="reLoad()">查询</button>
                     </div>
                     <div class="columns pull-right col-md-2 nopadding">
+                        <select data-placeholder="--数据类型--" name="dataType" id="dataType"
+                                class="form-control chosen-select-status" tabindex="2" required>
+                            <option value="">--选择类型--</option>
+                            <option value="1">系统配置</option>
+                            <option value="2">健康数据配置</option>
+                        </select>
+                    </div>
+                    <div class="columns pull-right col-md-2 nopadding">
                         <select data-placeholder="--字段类型--" name="fieldType" id="fieldType"
                                 class="form-control chosen-select-status" tabindex="2" required>
                             <option value="">--选择类型--</option>
@@ -32,6 +40,10 @@
                     <div class="columns pull-right col-md-2 nopadding">
                         <input id="fieldName" name="fieldName" type="text"
                                class="form-control" placeholder="字段名">
+                    </div>
+                    <div class="columns pull-right col-md-2 nopadding">
+                        <input id="fieldDesc" name="fieldDesc" type="text"
+                               class="form-control" placeholder="字段描述">
                     </div>
 
                 </div>
